@@ -7,4 +7,10 @@ public class Player {
 		this.playerId = playerId;
 		hasFlag = false;
 	}
+	
+	public void pickUpFlag() {
+		this.hasFlag = true;
+	}
+	
+	
 }
