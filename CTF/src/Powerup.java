@@ -1,4 +1,4 @@
 
-public abstract class Powerup {
+public abstract class Powerup implements Carryable {
 	
 }

@@ -3,6 +3,7 @@ public class Player {
 	private int playerId;
 	private boolean hasFlag;
 	double x, y;
+	Powerup q = null;
 	
 	public int getPlayerId() {
 		return playerId;
@@ -45,7 +46,14 @@ public class Player {
 	}
 	
 	public void pickUpPowerup(Powerup p) {
-		
+		q = p;
+	}
+	
+	public void usePowerup() {
+		if(q != null) {
+			q.use();
+			q = null;
+		}
 	}
 	
 	public void moveRight() {
