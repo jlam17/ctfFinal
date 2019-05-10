@@ -18,7 +18,7 @@ public class DrawingSurface extends PApplet {
 	public DrawingSurface() {
 		super();
 		player1 = new Player(1, 10, 50);
-//		player2 = new Player(2, 100, 50);
+		player2 = new Player(2, 100, 50);
 	}
 
 //	public void paintComponent(Graphics g)
@@ -30,7 +30,7 @@ public class DrawingSurface extends PApplet {
 //	    
 //	    Graphics2D g2 = (Graphics2D)g;
 //	    
-//	    player1.draw(g2, this);
+	    //player1.draw(this);
 //		// TODO Add any custom drawings here
 //	  }
 
@@ -61,7 +61,7 @@ public class DrawingSurface extends PApplet {
 
 	public void draw() {
 		background(255);
-		image(images[currentFrame], 0, 0);
+		image(images[currentFrame], (float)player1.getX(), (float)player1.getY());
 	}
 
 	public void mousePressed() {
@@ -70,21 +70,34 @@ public class DrawingSurface extends PApplet {
 
 	public void keyPressed() {
 		if (key == 119 || key == 87) {
-			System.out.println("W");
 			player1.moveUp();
-		} else if (key == 115 || key == 83) {
-			System.out.println("S");
+		} 
+		if (key == 115 || key == 83) {
 			player1.moveDown();
-		} else if (key == 97 || key == 65) {
-			System.out.println("A");
+		} 
+		if (key == 97 || key == 65) {
 			player1.moveLeft();
-		} else if (key == 100 || key == 68) {
+		} 
+		if (key == 100 || key == 68) {
 			player1.moveRight();
 			if (currentFrame == 1) {
 				currentFrame = 0;
 			} else {
 				currentFrame = 1;
 			}
+		}
+		
+		if (keyCode == UP) {
+			player2.moveUp();
+		}
+		if (keyCode == DOWN) {
+			player2.moveDown();
+		}
+		if (keyCode == RIGHT) {
+			player2.moveRight();
+		}
+		if (keyCode == LEFT) {
+			player2.moveLeft();
 		}
 	}
 	
