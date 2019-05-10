@@ -94,6 +94,7 @@ public class Player {
 
 	/**
 	 * Sets the y cord of your player
+	 * @param y the new y cord of your player
 	 */
 	public void setY(double y) {
 		this.y = y;
@@ -110,7 +111,7 @@ public class Player {
 	
 	/**
 	 * Picks up the powerup "p"
-	 * @param p
+	 * @param p the powerup
 	 */
 	public void pickUpPowerup(Powerup p) {
 		q = p;

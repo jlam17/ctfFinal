@@ -14,6 +14,7 @@ public abstract class Powerup implements Carryable {
 	}
 	
 	/**
+	 * @param the player trying pick up the powerup
 	 * @return True or false whether you can pick this powerup up 
 	 */
 	public boolean pickUp(Player p) {

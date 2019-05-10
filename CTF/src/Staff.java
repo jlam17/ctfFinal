@@ -24,6 +24,7 @@ public class Staff extends Powerup {
 	
 	/**
 	 * This will return whether or not you can actually pick it up or not and picks it up if you can.
+	 * @param p the player trying to pick it up
 	 * @return boolean Whether or not you can actually use the staff
 	 */
 	public boolean pickUp(Player p) {
