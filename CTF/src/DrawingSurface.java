@@ -9,12 +9,20 @@ import javax.swing.JPanel;
 
 import processing.core.*;
 
+/**
+ * the surface where drawings are made
+ * @author hdesouza538
+ *
+ */
 public class DrawingSurface extends PApplet {
 	Player player1, player2;
 	int numFrames = 4; // The number of frames in the animation
 	int currentFrame = 0;
 	PImage[] images = new PImage[numFrames];
 
+	/**
+	 * constructs the DrawingSurface, initializes player variables
+	 */
 	public DrawingSurface() {
 		super();
 		player1 = new Player(1, 10, 50);
@@ -34,10 +42,16 @@ public class DrawingSurface extends PApplet {
 //		// TODO Add any custom drawings here
 //	  }
 
+	/**
+	 * the settings of the DrawingSurface
+	 */
 	public void settings() {
 		size(640, 360);
 	}
 
+	/**
+	 * initial one-time run commands
+	 */
 	public void setup() {
 		
 		settings();
@@ -63,15 +77,24 @@ public class DrawingSurface extends PApplet {
 		// }
 	}
 
+	/**
+	 * draws the background and players
+	 */
 	public void draw() {
 		background(255);
 		image(images[currentFrame], (float)player1.getX(), (float)player1.getY());
 	}
 
+	/**
+	 * checks for what to do if a mouse button is pressed
+	 */
 	public void mousePressed() {
 
 	}
 
+	/**
+	 * checks for what to do if a certain key is pressed
+	 */
 	public void keyPressed() {
 		if (key == 119 || key == 87) {
 			player1.moveUp();
