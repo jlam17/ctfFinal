@@ -10,21 +10,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.Timer;
 
+import processing.core.PApplet;
+
 public class Player {
 	private int playerId;
 	private boolean hasFlag;
 	double x, y;
-	
-	
-	
-	
 	private Powerup q;
 	
 	public Player(int playerId, double x, double y) {
-//		this.playerId = playerId;
-//		hasFlag = false;
+		this.playerId = playerId;
+		hasFlag = false;
 		this.x = x;
 		this.y = y;
+		q = null;
+	}
+	
+	public void draw(PApplet drawer) {
+		
 	}
 	
 	public int getPlayerId() {

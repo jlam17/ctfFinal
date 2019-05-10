@@ -76,28 +76,35 @@ public class DrawingSurface extends PApplet {
 		if (key == 119 || key == 87) {
 			player1.moveUp();
 		} else if (key == 115 || key == 83) {
+		} 
+		else if (key == 115 || key == 83) {
 			player1.moveDown();
 		} else if (key == 97 || key == 65) {
+		} 
+		else if (key == 97 || key == 65) {
 			player1.moveLeft();
-		} else if (key == 100 || key == 68) {
+		} 
+		else if (key == 100 || key == 68) {
 			player1.moveRight();
 			if (currentFrame == 1) {
 				currentFrame = 0;
 			} else {
 				currentFrame = 1;
 			}
-		} else if (key == 32) {
-			if (currentFrame == 2) {
-				currentFrame = 3;
-				
-			} else {
-				currentFrame = 2;
-			}
 		}
-	}
-	
-	public void keyReleased() {
-		currentFrame = 0;
+		
+//		if (keyCode == UP) {
+//			player2.moveUp();
+//		}
+//		if (keyCode == DOWN) {
+//			player2.moveDown();
+//		}
+//		if (keyCode == RIGHT) {
+//			player2.moveRight();
+//		}
+//		if (keyCode == LEFT) {
+//			player2.moveLeft();
+//		}
 	}
 	
 
