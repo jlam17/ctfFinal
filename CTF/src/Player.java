@@ -18,7 +18,7 @@ public class Player {
 	
 	
 	
-	  private Powerup q;
+	private Powerup q;
 	
 	public Player(int playerId, double x, double y) {
 //		this.playerId = playerId;
