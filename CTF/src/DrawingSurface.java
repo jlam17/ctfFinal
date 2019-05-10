@@ -44,9 +44,13 @@ public class DrawingSurface extends PApplet {
 		frameRate(24);
 
 		images[0] = loadImage("knightStand.png");
+		images[0].resize(126, 126);
 		images[1] = loadImage("knightWalkRight.png");
+		images[1].resize(96, 126);
 		images[2] = loadImage("knightAttack1.png");
+		images[2].resize(128,126);
 		images[3] = loadImage("knightAttack2.png");
+		images[3].resize(192,126);
 
 		// If you don't want to load each image separately
 		// and you know how many frames you have, you
@@ -61,7 +65,7 @@ public class DrawingSurface extends PApplet {
 
 	public void draw() {
 		background(255);
-		image(images[currentFrame], 0, 0);
+		image(images[currentFrame], (float)player1.getX(), (float)player1.getY());
 	}
 
 	public void mousePressed() {
@@ -70,13 +74,10 @@ public class DrawingSurface extends PApplet {
 
 	public void keyPressed() {
 		if (key == 119 || key == 87) {
-			System.out.println("W");
 			player1.moveUp();
 		} else if (key == 115 || key == 83) {
-			System.out.println("S");
 			player1.moveDown();
 		} else if (key == 97 || key == 65) {
-			System.out.println("A");
 			player1.moveLeft();
 		} else if (key == 100 || key == 68) {
 			player1.moveRight();
@@ -85,7 +86,18 @@ public class DrawingSurface extends PApplet {
 			} else {
 				currentFrame = 1;
 			}
+		} else if (key == 32) {
+			if (currentFrame == 2) {
+				currentFrame = 3;
+				
+			} else {
+				currentFrame = 2;
+			}
 		}
+	}
+	
+	public void keyReleased() {
+		currentFrame = 0;
 	}
 	
 
