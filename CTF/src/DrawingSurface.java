@@ -1,46 +1,92 @@
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JPanel;
+
 import processing.core.*;
 
-public class DrawingSurface extends PApplet 
-{
+public class DrawingSurface extends PApplet {
 	Player player1, player2;
-	public DrawingSurface() 
-	{
+	int numFrames = 4; // The number of frames in the animation
+	int currentFrame = 0;
+	PImage[] images = new PImage[numFrames];
+
+	public DrawingSurface() {
+		super();
 		player1 = new Player(1, 10, 50);
-		player2 = new Player(2, 100, 50);
+//		player2 = new Player(2, 100, 50);
 	}
-	
-	public void setup() 
-	{
+
+//	public void paintComponent(Graphics g)
+//	  {
+//	    super.paintComponent(g);  // Call JPanel's paintComponent method to paint the background
+//
+//	    int width = getWidth();
+//	    int height = getHeight();
+//	    
+//	    Graphics2D g2 = (Graphics2D)g;
+//	    
+//	    player1.draw(g2, this);
+//		// TODO Add any custom drawings here
+//	  }
+
+	public void settings() {
+		size(640, 360);
+	}
+
+	public void setup() {
 		
+		settings();
+		frameRate(24);
+
+		images[0] = loadImage("knightStand.png");
+		images[1] = loadImage("knightWalkRight.png");
+		images[2] = loadImage("knightAttack1.png");
+		images[3] = loadImage("knightAttack2.png");
+
+		// If you don't want to load each image separately
+		// and you know how many frames you have, you
+		// can create the filenames as the program runs.
+		// The nf() command does number formatting, which will
+		// ensure that the number is (in this case) 4 digits.
+		// for (int i = 0; i < numFrames; i++) {
+		// String imageName = "PT_anim" + nf(i, 4) + ".gif";
+		// images[i] = loadImage(imageName);
+		// }
 	}
-	
-	public void draw() 
-	{
-		
+
+	public void draw() {
+		background(255);
+		image(images[currentFrame], 0, 0);
 	}
-	
+
 	public void mousePressed() {
-//		if(mouseButton==) {
-//			
-//		}
+
+	}
+
+	public void keyPressed() {
+		if (key == 119 || key == 87) {
+			System.out.println("W");
+			player1.moveUp();
+		} else if (key == 115 || key == 83) {
+			System.out.println("S");
+			player1.moveDown();
+		} else if (key == 97 || key == 65) {
+			System.out.println("A");
+			player1.moveLeft();
+		} else if (key == 100 || key == 68) {
+			player1.moveRight();
+			if (currentFrame == 1) {
+				currentFrame = 0;
+			} else {
+				currentFrame = 1;
+			}
+		}
 	}
 	
-	public void keyPressed() {
-		if(keyCode==UP) {
-			player2.moveUp();
-		}
-		if(keyCode==DOWN) {
-			player2.moveDown();
-		}
-		if(keyCode==LEFT) {
-			player2.moveLeft();
-		}
-		if(keyCode==RIGHT) {
-			player2.moveRight();
-		}
-		if(key==87 || key==119) {
-			player1.moveUp();
-		}
-	}
+
 }
