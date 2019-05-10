@@ -91,7 +91,7 @@ public class Player {
 	}
 	
 	public boolean hasWon() {
-		if(hasFlag && x == 0) { //set x to 0 so there wouldnt be a compiler error for now
+		if(hasFlag) { //set x to 0 so there wouldnt be a compiler error for now
 			return true;
 		}
 		else {
