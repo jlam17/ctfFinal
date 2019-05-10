@@ -18,7 +18,7 @@ public class DrawingSurface extends PApplet {
 	public DrawingSurface() {
 		super();
 		player1 = new Player(1, 10, 50);
-		//player2 = new Player(2, 100, 50);
+//		player2 = new Player(2, 100, 50);
 	}
 
 //	public void paintComponent(Graphics g)
@@ -30,7 +30,7 @@ public class DrawingSurface extends PApplet {
 //	    
 //	    Graphics2D g2 = (Graphics2D)g;
 //	    
-	    //player1.draw(this);
+//	    player1.draw(g2, this);
 //		// TODO Add any custom drawings here
 //	  }
 
@@ -44,9 +44,13 @@ public class DrawingSurface extends PApplet {
 		frameRate(24);
 
 		images[0] = loadImage("knightStand.png");
+		images[0].resize(126, 126);
 		images[1] = loadImage("knightWalkRight.png");
+		images[1].resize(96, 126);
 		images[2] = loadImage("knightAttack1.png");
+		images[2].resize(128,126);
 		images[3] = loadImage("knightAttack2.png");
+		images[3].resize(192,126);
 
 		// If you don't want to load each image separately
 		// and you know how many frames you have, you
@@ -71,9 +75,11 @@ public class DrawingSurface extends PApplet {
 	public void keyPressed() {
 		if (key == 119 || key == 87) {
 			player1.moveUp();
+		} else if (key == 115 || key == 83) {
 		} 
 		else if (key == 115 || key == 83) {
 			player1.moveDown();
+		} else if (key == 97 || key == 65) {
 		} 
 		else if (key == 97 || key == 65) {
 			player1.moveLeft();
