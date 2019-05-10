@@ -18,7 +18,7 @@ public class DrawingSurface extends PApplet {
 	public DrawingSurface() {
 		super();
 		player1 = new Player(1, 10, 50);
-		player2 = new Player(2, 100, 50);
+		//player2 = new Player(2, 100, 50);
 	}
 
 //	public void paintComponent(Graphics g)
@@ -72,13 +72,13 @@ public class DrawingSurface extends PApplet {
 		if (key == 119 || key == 87) {
 			player1.moveUp();
 		} 
-		if (key == 115 || key == 83) {
+		else if (key == 115 || key == 83) {
 			player1.moveDown();
 		} 
-		if (key == 97 || key == 65) {
+		else if (key == 97 || key == 65) {
 			player1.moveLeft();
 		} 
-		if (key == 100 || key == 68) {
+		else if (key == 100 || key == 68) {
 			player1.moveRight();
 			if (currentFrame == 1) {
 				currentFrame = 0;
@@ -87,18 +87,18 @@ public class DrawingSurface extends PApplet {
 			}
 		}
 		
-		if (keyCode == UP) {
-			player2.moveUp();
-		}
-		if (keyCode == DOWN) {
-			player2.moveDown();
-		}
-		if (keyCode == RIGHT) {
-			player2.moveRight();
-		}
-		if (keyCode == LEFT) {
-			player2.moveLeft();
-		}
+//		if (keyCode == UP) {
+//			player2.moveUp();
+//		}
+//		if (keyCode == DOWN) {
+//			player2.moveDown();
+//		}
+//		if (keyCode == RIGHT) {
+//			player2.moveRight();
+//		}
+//		if (keyCode == LEFT) {
+//			player2.moveLeft();
+//		}
 	}
 	
 

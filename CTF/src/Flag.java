@@ -20,6 +20,8 @@ public class Flag implements Carryable {
 	public Flag(Player home, Player enemy, double x, double y) {
 		this.initialx = x;
 		this.initialy = y;
+		this.x = x;
+		this.y = y;
 		this.enemy = enemy;
 		this.home = home;
 		this.possession = false;
