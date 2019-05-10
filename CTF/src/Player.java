@@ -12,12 +12,23 @@ import javax.swing.Timer;
 
 import processing.core.PApplet;
 
+/**
+ * This is the character that you control and use to play the game
+ * @author jadonlam
+ *
+ */
 public class Player {
 	private int playerId;
 	private boolean hasFlag;
-	double x, y;
+	private double x, y;
 	private Powerup q;
 	
+	/**
+	 * Creates the player
+	 * @param playerId The specific id used to identify the player
+	 * @param x The x cord of the player
+	 * @param y The y cord of the player
+	 */
 	public Player(int playerId, double x, double y) {
 		this.playerId = playerId;
 		hasFlag = false;
@@ -26,47 +37,88 @@ public class Player {
 		q = null;
 	}
 	
+	/**
+	 * Draws the player on the screen
+	 * @param drawer The PApplet drawer used to draw the player on the screen
+	 */
 	public void draw(PApplet drawer) {
 		
 	}
 	
+	/**
+	 * Returns your player id
+	 * @return number which is your id
+	 */
 	public int getPlayerId() {
 		return playerId;
 	}
 
+	/**
+	 * 
+	 * @return Whether or not the player has the flag
+	 */
 	public boolean isHasFlag() {
 		return hasFlag;
 	}
 
+	/**
+	 * 
+	 * @param hasFlag Sets whoever has the flag at the moment based on hasFlag
+	 */
 	public void setHasFlag(boolean hasFlag) {
 		this.hasFlag = hasFlag;
 	}
 
+	/**
+	 * 
+	 * @return The x cord of your player
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * Sets the x cord of your player
+	 */
 	public void setX(double x) {
 		this.x = x;
 	}
 
+	/**
+	 * 
+	 * @return The y cord of your player
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 * Sets the y cord of your player
+	 */
 	public void setY(double y) {
 		this.y = y;
 	}
 	
+	/**
+	 * Toggles if you have the flag or not
+	 * @param f The current flag
+	 */
 	public void toggleFlag(Flag f) {
 		this.hasFlag = !hasFlag;
 		f.pickUp(this);
 	}
 	
+	/**
+	 * Picks up the powerup "p"
+	 * @param p
+	 */
 	public void pickUpPowerup(Powerup p) {
 		q = p;
 	}
 	
+	/**
+	 * Uses the powerup once, and sets it to null(gets rid of it) if you used it
+	 */
 	public void usePowerup() {
 		if(q != null) {
 			q.use();
@@ -74,22 +126,38 @@ public class Player {
 		}
 	}
 	
+	/**
+	 * Moves the player right
+	 */
 	public void moveRight() {
 		x++;
 	}
 	
+	/**
+	 * Moves the player left
+	 */
 	public void moveLeft() {
 		x--;
 	}
 	
+	/**
+	 * Moves the player up
+	 */
 	public void moveUp() {
 		y--;
 	}
 	
+	/**
+	 * Moves the player down
+	 */
 	public void moveDown() {
 		y++;
 	}
 	
+	/**
+	 * Keeps track of whether or not you have won
+	 * @return True or false if you have won
+	 */
 	public boolean hasWon() {
 		if(hasFlag && x == 0) { //set x to 0 so there wouldnt be a compiler error for now
 			return true;
@@ -98,56 +166,4 @@ public class Player {
 			return false;
 		}
 	}
-	
-//	//Below = sprite movement
-//	//****** WE can add sound later
-//
-//	 /*
-//	   * Link standing, doing nothing.
-//	   */
-//	  public void stand() {
-//		  action = 0;
-//	  }
-//	  
-//	  /*
-//	   * Link slashes his sword.
-//	   */
-//	  public void walkRight() {
-//		  if (action == 0) {
-//			  action = 1;
-//			  actionTimer.restart();
-//		  }
-//	  }
-//	  
-//	  /*
-//	   * Link blocks with his shield.
-//	   */
-//	  public void attackRight() {
-//		  if (action == 0) {
-//			  action = 2;
-//			  actionTimer.restart();
-//		  } else if(action == 2) {
-//			  action = 3;
-//			  actionTimer.restart();
-//		  }
-//	  }
-//	  
-//	  /*
-//	   * Draw link using the correct sprite.
-//	   */
-//	  public void draw(Graphics2D g2, ImageObserver io) {
-//		    AffineTransform at = g2.getTransform();
-//		    double xScale = (double)width / spriteRects[0].width;
-//		    double yScale = (double)height / spriteRects[0].height;
-//		    g2.drawImage(sprites, (int)x,(int)(y-yScale*spriteRects[action].height),(int)(x+xScale*spriteRects[action].width),
-//		    		(int)y,spriteRects[action].x,spriteRects[action].y,spriteRects[action].x+spriteRects[action].width,
-//		    		spriteRects[action].y+spriteRects[action].height,io);
-//	  }
-//	
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		
-//		surface.repaint();
-//		
-//	}
 }
