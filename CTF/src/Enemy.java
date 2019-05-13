@@ -6,6 +6,8 @@ import java.util.Random;
  */
 public class Enemy {
 	private double x, y;
+	private int health;
+	
 	/**
 	 * initializes Enemy as well as its x and y variables
 	 * @param x the initial x value of the enemy
@@ -14,6 +16,13 @@ public class Enemy {
 	public Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.health = 100;
+	}
+	
+	public void pursue(Player player1, Player player2) {
+		Player toAttack = findClosestPlayer(player1, player2);
+		while (this.health>0 ||)
+		
 	}
 	
 	/**

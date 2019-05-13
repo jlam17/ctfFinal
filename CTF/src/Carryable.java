@@ -6,7 +6,7 @@
 public interface Carryable {
 	/**
 	 * "p" picks up the item 
-	 * @param p
+	 * @param p the item to be picked up
 	 * @return True or false if you could pick up the item
 	 */
 	boolean pickUp(Player p);

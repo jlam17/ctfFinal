@@ -79,6 +79,7 @@ public class Player {
 
 	/**
 	 * Sets the x cord of your player
+	 * @param x the new x coord of player
 	 */
 	public void setX(double x) {
 		this.x = x;
