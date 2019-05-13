@@ -16,37 +16,28 @@ import processing.core.*;
  */
 public class DrawingSurface extends PApplet {
 	Player player1, player2;
-	int numFrames = 4; // The number of frames in the animation
+	int numFrames; // The number of frames in the animation
 	int currentFrame = 0;
-	PImage[] images = new PImage[numFrames];
+	PImage[] images;
+	boolean[] keyDown;
 
 	/**
 	 * constructs the DrawingSurface, initializes player variables
 	 */
 	public DrawingSurface() {
 		super();
+		numFrames = 13;
 		player1 = new Player(1, 10, 50);
 //		player2 = new Player(2, 100, 50);
+		images = new PImage[numFrames];
+		keyDown = new boolean[4];
 	}
-
-//	public void paintComponent(Graphics g)
-//	  {
-//	    super.paintComponent(g);  // Call JPanel's paintComponent method to paint the background
-//
-//	    int width = getWidth();
-//	    int height = getHeight();
-//	    
-//	    Graphics2D g2 = (Graphics2D)g;
-//	    
-//	    player1.draw(g2, this);
-//		// TODO Add any custom drawings here
-//	  }
 
 	/**
 	 * the settings of the DrawingSurface
 	 */
 	public void settings() {
-		size(640, 360);
+		size(1000, 1000);
 	}
 
 	/**
@@ -57,6 +48,7 @@ public class DrawingSurface extends PApplet {
 		settings();
 		frameRate(24);
 
+		//Loading and resizing the images
 		images[0] = loadImage("knightStand.png");
 		images[0].resize(126, 126);
 		images[1] = loadImage("knightWalkRight.png");
@@ -65,16 +57,24 @@ public class DrawingSurface extends PApplet {
 		images[2].resize(128,126);
 		images[3] = loadImage("knightAttack2.png");
 		images[3].resize(192,126);
-
-		// If you don't want to load each image separately
-		// and you know how many frames you have, you
-		// can create the filenames as the program runs.
-		// The nf() command does number formatting, which will
-		// ensure that the number is (in this case) 4 digits.
-		// for (int i = 0; i < numFrames; i++) {
-		// String imageName = "PT_anim" + nf(i, 4) + ".gif";
-		// images[i] = loadImage(imageName);
-		// }
+		images[4] = loadImage("knightWalkDown1.png");
+		images[4].resize(96, 128);
+		images[5] = loadImage("knightWalkDown2.png");
+		images[5].resize(128,128);
+		images[6] = loadImage("knightStandUp.png");
+		images[6].resize(126, 127);
+		images[7] = loadImage("knightWalkUp1.png");
+		images[7].resize(96, 126);
+		images[8] = loadImage("knightWalkUp2.png");
+		images[8].resize(128, 126);
+		images[9] = loadImage("background.png");
+		images[9].resize(1000, 1000);
+		images[10] = loadImage("knightStandLeft.png");
+		images[10].resize(126, 126);
+		images[11] = loadImage("knightWalkLeft.png");
+		images[11].resize(96, 126);
+		images[12] = loadImage("knightStandDown.png");
+		images[12].resize(126, 128);
 	}
 
 	/**
@@ -82,7 +82,8 @@ public class DrawingSurface extends PApplet {
 	 */
 	public void draw() {
 		background(255);
-		image(images[currentFrame], (float)player1.getX(), (float)player1.getY());
+		this.image(images[9], 0, 0);
+		player1.draw(this, images, currentFrame);
 	}
 
 	/**
@@ -96,25 +97,43 @@ public class DrawingSurface extends PApplet {
 	 * checks for what to do if a certain key is pressed
 	 */
 	public void keyPressed() {
-		if (key == 119 || key == 87) {
+		if (key == 119 || key == 87) { // w
 			player1.moveUp();
-		} else if (key == 115 || key == 83) {
+			keyDown[0] = true;
+			if (currentFrame == 7) {
+				currentFrame = 8;
+			} else {
+				currentFrame = 7;
+			}
 		} 
-		else if (key == 115 || key == 83) {
+		else if (key == 115 || key == 83) { // s
 			player1.moveDown();
-		} else if (key == 97 || key == 65) {
-		} 
-		else if (key == 97 || key == 65) {
+			keyDown[2] = true;
+			if (currentFrame == 4) {
+				currentFrame = 5;
+			} else {
+				currentFrame = 4;
+			}
+		}
+		else if (key == 97 || key == 65) { // a
 			player1.moveLeft();
+			keyDown[1] = true;
+			if (currentFrame == 11) {
+				currentFrame = 10;
+			} else {
+				currentFrame = 11;
+			}
 		} 
-		else if (key == 100 || key == 68) {
+		else if (key == 100 || key == 68) { // d
 			player1.moveRight();
+			keyDown[3] = true;
 			if (currentFrame == 1) {
 				currentFrame = 0;
 			} else {
 				currentFrame = 1;
 			}
 		}
+		
 		
 //		if (keyCode == UP) {
 //			player2.moveUp();
@@ -128,6 +147,52 @@ public class DrawingSurface extends PApplet {
 //		if (keyCode == LEFT) {
 //			player2.moveLeft();
 //		}
+	}
+	
+	public void keyReleased() {
+		if (key == 119) { // w
+			keyDown[0] = false;
+		}
+		if (key == 97) { // a
+			keyDown[1] = false;
+		}
+		if (key == 115) { // s
+			keyDown[2] = false; 
+		}
+		if (key == 100) { // d
+			keyDown[3] = false;
+		}
+		
+		
+		if (keyDown[0] && !keyDown[2]) {
+			player1.moveUp();
+		}
+		if (keyDown[2] && !keyDown[0]) {
+			player1.moveDown();
+		}
+		if (keyDown[1] && !keyDown[3]) {
+			player1.moveLeft();
+		}
+		if (keyDown[3] && !keyDown[1]) {
+			player1.moveRight();
+		}
+		
+		if (!keyDown[0] && !keyDown[2]) {
+			player1.stopMoveUp();
+		}
+		if (!keyDown[1] && !keyDown[3]) {
+			player1.stopMoveLeft();
+		}
+		
+		if (currentFrame == 1) {
+			currentFrame = 0;
+		} else if(currentFrame == 11) {
+			currentFrame = 10;
+		} else if (currentFrame == 4 || currentFrame == 5) {
+			currentFrame = 12;//change to standing down pic later
+		} else if (currentFrame == 7 || currentFrame == 8) {
+			currentFrame = 6;
+		}
 	}
 	
 
