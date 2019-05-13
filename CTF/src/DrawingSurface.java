@@ -81,8 +81,8 @@ public class DrawingSurface extends PApplet {
 	 * draws the background and players
 	 */
 	public void draw() {
-		background(255);
-		this.image(images[9], 0, 0);
+		//background(255);
+		//this.image(images[9], 0, 0);
 		player1.draw(this, images, currentFrame);
 	}
 

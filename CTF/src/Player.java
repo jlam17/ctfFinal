@@ -38,7 +38,6 @@ public class Player {
 	public void draw(PApplet drawer, PImage[] images, int currentFrame) {
 		tick();
 		drawer.image(images[currentFrame], (float)x, (float)y);
-		System.out.println(y);
 	}
 	
 	public void tick() {

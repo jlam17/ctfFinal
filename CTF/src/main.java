@@ -72,7 +72,7 @@ public class main {
 
 		window.setVisible(true);
 		
-		System.out.println(maze(10, 10, 0, 0, Algorithm.values()[1]));
+		drawing.text(maze(10, 10, 0, 0, Algorithm.values()[0]).toString(), 100, 100);
 	}
 
 }
