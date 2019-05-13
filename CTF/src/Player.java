@@ -14,6 +14,8 @@ public class Player {
 	private double velX, velY;
 	private Powerup q;
 	
+	private int health;
+	
 	/**
 	 * Creates the player
 	 * @param playerId The specific id used to identify the player
@@ -21,6 +23,7 @@ public class Player {
 	 * @param y The y cord of the player
 	 */
 	public Player(int playerId, double x, double y) {
+		this.health = 100;
 		this.playerId = playerId;
 		hasFlag = false;
 		this.x = x;
@@ -42,6 +45,8 @@ public class Player {
 		y += velY;
 		
 	}
+	
+	
 	/**
 	 * Returns your player id
 	 * @return number which is your id
@@ -200,5 +205,13 @@ public class Player {
 		else {
 			return false;
 		}
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void changeHealth(int deltaHealth) {
+		this.health += deltaHealth;
 	}
 }

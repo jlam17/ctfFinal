@@ -21,10 +21,24 @@ public class Enemy {
 	
 	public void pursue(Player player1, Player player2) {
 		Player toAttack = findClosestPlayer(player1, player2);
-		while (this.health>0 ||)
+		while (this.health>0 && toAttack.getHealth()>0) {
+			moveToPlayer();
+			attack();
+		}
 		
 	}
 	
+	private void attack(Player p) {
+		if() {//touching
+			p.changeHealth(-20);
+		}
+	}
+
+	private void moveToPlayer() {
+		// move through maze to player
+		
+	}
+
 	/**
 	 * finds the closest player to head for and attack
 	 * @param player1 the first player playing
