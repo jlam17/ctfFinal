@@ -1,16 +1,6 @@
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.ImageObserver;
-
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.Timer;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 /**
  * This is the character that you control and use to play the game
@@ -21,6 +11,7 @@ public class Player {
 	private int playerId;
 	private boolean hasFlag;
 	private double x, y;
+	private double velX, velY;
 	private Powerup q;
 	
 	/**
@@ -41,10 +32,16 @@ public class Player {
 	 * Draws the player on the screen
 	 * @param drawer The PApplet drawer used to draw the player on the screen
 	 */
-	public void draw(PApplet drawer) {
-		
+	public void draw(PApplet drawer, PImage[] images, int currentFrame) {
+		tick();
+		drawer.image(images[currentFrame], (float)x, (float)y);
 	}
 	
+	public void tick() {
+		x += velX;
+		y += velY;
+		
+	}
 	/**
 	 * Returns your player id
 	 * @return number which is your id
@@ -57,7 +54,7 @@ public class Player {
 	 * 
 	 * @return Whether or not the player has the flag
 	 */
-	public boolean isHasFlag() {
+	public boolean hasFlag() {
 		return hasFlag;
 	}
 
@@ -100,6 +97,14 @@ public class Player {
 		this.y = y;
 	}
 	
+	public void setVelX(double velX) {
+		this.velX = velX;
+	}
+	
+	public void setVelY(double velY) {
+		this.velY = velY;
+	}
+	
 	/**
 	 * Toggles if you have the flag or not
 	 * @param f The current flag
@@ -131,28 +136,56 @@ public class Player {
 	 * Moves the player right
 	 */
 	public void moveRight() {
-		x++;
+		setVelX(10);
 	}
 	
 	/**
 	 * Moves the player left
 	 */
 	public void moveLeft() {
-		x--;
+		setVelX(-10);
 	}
 	
 	/**
 	 * Moves the player up
 	 */
 	public void moveUp() {
-		y--;
+		setVelY(-10);
 	}
 	
 	/**
 	 * Moves the player down
 	 */
 	public void moveDown() {
-		y++;
+		setVelY(10);
+	}
+	
+	/**
+	 * Stop the player from moving down
+	 */
+	public void stopMoveDown() {
+		setVelY(0);
+	}
+	
+	/**
+	 * Stop the player from moving right
+	 */
+	public void stopMoveRight() {
+		setVelX(0);
+	}
+	
+	/**
+	 * Stop the player from moving left
+	 */
+	public void stopMoveLeft() {
+		setVelX(0);
+	}
+	
+	/**
+	 * Stop the player from moving up
+	 */
+	public void stopMoveUp() {
+		setVelY(0);
 	}
 	
 	/**
