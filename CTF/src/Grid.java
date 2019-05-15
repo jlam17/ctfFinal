@@ -92,4 +92,23 @@ public class Grid {
 		sb.append("+\n");
 		return sb.toString();
 	}
+	
+//	public String[][] toGrid(){
+//		String[][] g = new String[numRows][numCols];
+//		for (int row = 0; row < numRows; row++) {
+//			for (int col = 0; col < numCols; col++) {
+//				sb.append(!hasEdge(vertex(col, row), Direction.NORTH) ? "+---" : "+   ");
+//			}
+//			sb.append("+\n");
+//			for (int col = 0; col < numCols; col++) {
+//				sb.append(!hasEdge(vertex(col, row), Direction.WEST) ? "|   " : "    ");
+//			}
+//			sb.append("|\n");
+//		}
+//		for (int col = 0; col < numCols; col++) {
+//			sb.append("+---");
+//		}
+//		sb.append("+\n");
+//		return sb.toString();
+//	}
 }

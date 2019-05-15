@@ -72,7 +72,27 @@ public class main {
 
 		window.setVisible(true);
 		
-		drawing.text(maze(10, 10, 0, 0, Algorithm.values()[0]).toString(), 100, 100);
+		String maze = maze(10, 10, 0, 0, Algorithm.values()[0]).toString();
+		System.out.println(maze);
+		
+		int y = 100;
+		int x = 100;
+		for(int i=0; i<882; i++) {
+			x=100;
+			y+=20;
+			while(!maze.substring(i, i+1).equals("\n")) {
+				if(!maze.substring(i, i+1).equals(" ")) {
+					if(maze.substring(i, i+1).equals("-")) {
+						drawing.line(x, y, x+10, y);
+					}
+					else {
+						drawing.line(x, y, x, y+10);
+					}
+				}
+				i++;
+				x+=10;
+			}
+		}
 	}
 
 }

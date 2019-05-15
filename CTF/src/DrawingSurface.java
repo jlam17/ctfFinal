@@ -83,7 +83,7 @@ public class DrawingSurface extends PApplet {
 	public void draw() {
 		//background(255);
 		//this.image(images[9], 0, 0);
-		player1.draw(this, images, currentFrame);
+		//player1.draw(this, images, currentFrame);
 	}
 
 	/**
