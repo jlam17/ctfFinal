@@ -73,7 +73,9 @@ public class main {
 		window.setVisible(true);
 		
 		String maze = maze(10, 10, 0, 0, Algorithm.values()[0]).toString();
-		System.out.println(maze);
+		//System.out.println(maze);
+		
+		drawing.text("", 100, 100);
 		
 		int y = 100;
 		int x = 100;
