@@ -72,27 +72,29 @@ public class main {
 
 		window.setVisible(true);
 		
-		String maze = maze(10, 10, 0, 0, Algorithm.values()[0]).toString();
+		
+		//change the first two values in the maze call to change width/height
+		String maze = maze(11, 9, 0, 0, Algorithm.values()[0]).toString();
 		//System.out.println(maze);
 		
 		drawing.text("", 100, 100);
 		
-		int y = 100;
-		int x = 100;
-		for(int i=0; i<882; i++) {
-			x=100;
-			y+=20;
+		int y = 5;
+		int x = 20;
+		for(int i=0; i<874; i++) {
+			x=20;
+			y+=36;
 			while(!maze.substring(i, i+1).equals("\n")) {
 				if(!maze.substring(i, i+1).equals(" ")) {
 					if(maze.substring(i, i+1).equals("-")) {
-						drawing.line(x, y, x+10, y);
+						drawing.line(x, y, x+18, y);
 					}
 					else {
-						drawing.line(x, y, x, y+10);
+						drawing.line(x, y, x, y+18);
 					}
 				}
 				i++;
-				x+=10;
+				x+=18;
 			}
 		}
 	}
