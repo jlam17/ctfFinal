@@ -72,6 +72,7 @@ public class DrawingSurface extends PApplet {
 	int currentFrame = 0;
 	PImage[] images;
 	PImage wall, flag1, flag2;
+	Flag f1, f2;
 	boolean[] keyDown;
 	String maze;
 
@@ -106,10 +107,12 @@ public class DrawingSurface extends PApplet {
 		images[9].resize(1000, 1000);
 		this.image(images[9], 0, 0);
 		
+		//put these PImages in Flag variables, add to draw method
 		flag1 = loadImage("flag.png");
 		flag2 = loadImage("flag.png");
 		
-		flag1.resize(,126); //0.659090909
+		flag1.resize(100,152); //0.659090909
+		flag2.resize(100,152); //0.659090909
 		
 		this.image(flag1, 100, 300);
 		this.image(flag2, 300, 100);
