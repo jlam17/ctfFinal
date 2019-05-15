@@ -276,7 +276,7 @@ public class DrawingSurface extends PApplet {
 			while(!maze.substring(i, i+1).equals("\n")) {
 				if(!maze.substring(i, i+1).equals(" ")) {
 					if(maze.substring(i, i+1).equals("-")) {
-						this.image(wall, x, y, width/25, height/50); //change back to 50 a
+						this.image(wall, x, y, width/25, height/50); //change back to 50 as
 					} 
 					else {
 						this.image(wall, x, y, width/50, height/25);
