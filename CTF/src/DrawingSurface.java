@@ -112,27 +112,6 @@ public class DrawingSurface extends PApplet {
 		//this.text("", 100, 100);
 		wall = loadImage("wall.png");
 		
-		int y = 5;
-		int x = 20;
-		for(int i=0; i<874 && i<maze.length(); i++) {
-			x=20;
-			y+=36;
-			while(!maze.substring(i, i+1).equals("\n")) {
-				if(!maze.substring(i, i+1).equals(" ")) {
-					if(maze.substring(i, i+1).equals("-")) {
-						//this.line(x, y, x+18, y);
-						this.image(wall, x, y, width/18, height/36);
-					}
-					else {
-						//this.line(x, y, x, y+18);
-						this.image(wall, x, y, width/36, height/18);
-						
-					}
-				}
-				i++;
-				x+=18;
-			}
-		}
 		
 		
 		
@@ -157,7 +136,6 @@ public class DrawingSurface extends PApplet {
 		images[8].resize(128, 126);
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
-		//this.image(images[9], 0, 0);
 		images[10] = loadImage("knightStandLeft.png");
 		images[10].resize(126, 126);
 		images[11] = loadImage("knightWalkLeft.png");
@@ -171,9 +149,11 @@ public class DrawingSurface extends PApplet {
 	 * draws the background and players
 	 */
 	public void draw() {
-		//background(255);
+		background(255);
 		
+		this.image(images[9], 0, 0);
 		player1.draw(this, images, currentFrame);
+		drawMaze();
 		
 		//System.out.println(maze);
 		
@@ -308,6 +288,30 @@ public class DrawingSurface extends PApplet {
 			currentFrame = 12;//change to standing down pic later
 		} else if (currentFrame == 7 || currentFrame == 8) {
 			currentFrame = 6;
+		}
+	}
+	
+	public void drawMaze() {
+		int y = 5;
+		int x = 20;
+		for(int i=0; i<874 && i<maze.length(); i++) {
+			x=20;
+			y+=36;
+			while(!maze.substring(i, i+1).equals("\n")) {
+				if(!maze.substring(i, i+1).equals(" ")) {
+					if(maze.substring(i, i+1).equals("-")) {
+						//this.line(x, y, x+18, y);
+						this.image(wall, x, y, width/18, height/36);
+					}
+					else {
+						//this.line(x, y, x, y+18);
+						this.image(wall, x, y, width/36, height/18);
+						
+					}
+				}
+				i++;
+				x+=18;
+			}
 		}
 	}
 	
