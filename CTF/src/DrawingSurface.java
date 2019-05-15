@@ -101,6 +101,11 @@ public class DrawingSurface extends PApplet {
 		
 		settings();
 		frameRate(24);
+		
+		images[9] = loadImage("background.png");
+		images[9].resize(1000, 1000);
+		this.image(images[9], 0, 0);
+		
 		//change the first two values in the maze call to change width/height
 		maze = maze(11, 9, 0, 0, Algorithm.values()[0]).toString();
 		
@@ -109,7 +114,7 @@ public class DrawingSurface extends PApplet {
 		
 		int y = 5;
 		int x = 20;
-		for(int i=0; i<874; i++) {
+		for(int i=0; i<874 && i<maze.length(); i++) {
 			x=20;
 			y+=36;
 			while(!maze.substring(i, i+1).equals("\n")) {
