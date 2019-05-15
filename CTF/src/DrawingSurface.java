@@ -166,9 +166,6 @@ public class DrawingSurface extends PApplet {
 		player1.draw(this, images, currentFrame);
 		drawMaze();
 		
-		//System.out.println(maze);
-		
-//		this.text("", 100, 100);
 //		
 //		int y = 5;
 //		int x = 20;
