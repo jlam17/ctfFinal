@@ -71,7 +71,7 @@ public class DrawingSurface extends PApplet {
 	int numFrames; // The number of frames in the animation
 	int currentFrame = 0;
 	PImage[] images;
-	PImage wall;
+	PImage wall, flag1, flag2;
 	boolean[] keyDown;
 	String maze;
 
@@ -105,6 +105,14 @@ public class DrawingSurface extends PApplet {
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
 		this.image(images[9], 0, 0);
+		
+		flag1 = loadImage("flag.png");
+		flag2 = loadImage("flag.png");
+		
+		flag1.resize(,126); //0.659090909
+		
+		this.image(flag1, 100, 300);
+		this.image(flag2, 300, 100);
 		
 		//change the first two values in the maze call to change width/height
 		maze = maze(11, 9, 0, 0, Algorithm.values()[0]).toString();
