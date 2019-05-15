@@ -111,37 +111,38 @@ public class DrawingSurface extends PApplet {
 		
 		//this.text("", 100, 100);
 		wall = loadImage("wall.png");
+
 		
 		
 		
 		
 		//Loading and resizing the images
 		images[0] = loadImage("knightStand.png");
-		images[0].resize(126, 126);
+		images[0].resize(126/4, 126/4);
 		images[1] = loadImage("knightWalkRight.png");
-		images[1].resize(96, 126);
+		images[1].resize(96/4, 126/4);
 		images[2] = loadImage("knightAttack1.png");
-		images[2].resize(128,126);
+		images[2].resize(128/4,126/4);
 		images[3] = loadImage("knightAttack2.png");
-		images[3].resize(192,126);
+		images[3].resize(192/4,126/4);
 		images[4] = loadImage("knightWalkDown1.png");
-		images[4].resize(96, 128);
+		images[4].resize(96/4, 128/4);
 		images[5] = loadImage("knightWalkDown2.png");
-		images[5].resize(128,128);
+		images[5].resize(128/4,128/4);
 		images[6] = loadImage("knightStandUp.png");
-		images[6].resize(126, 127);
+		images[6].resize(126/4, 127/4);
 		images[7] = loadImage("knightWalkUp1.png");
-		images[7].resize(96, 126);
+		images[7].resize(96/4, 126/4);
 		images[8] = loadImage("knightWalkUp2.png");
-		images[8].resize(128, 126);
+		images[8].resize(128/4, 126/4);
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
 		images[10] = loadImage("knightStandLeft.png");
-		images[10].resize(126, 126);
+		images[10].resize(126/4, 126/4);
 		images[11] = loadImage("knightWalkLeft.png");
-		images[11].resize(96, 126);
+		images[11].resize(96/4, 126/4);
 		images[12] = loadImage("knightStandDown.png");
-		images[12].resize(126, 128);
+		images[12].resize(126/4, 128/4);
 		
 	}
 
@@ -155,31 +156,6 @@ public class DrawingSurface extends PApplet {
 		player1.draw(this, images, currentFrame);
 		drawMaze();
 		
-		//System.out.println(maze);
-		
-//		this.text("", 100, 100);
-//		
-//		int y = 5;
-//		int x = 20;
-//		for(int i=0; i<874; i++) {
-//			x=20;
-//			y+=36;
-//			while(!maze.substring(i, i+1).equals("\n")) {
-//				if(!maze.substring(i, i+1).equals(" ")) {
-//					if(maze.substring(i, i+1).equals("-")) {
-//						//this.line(x, y, x+18, y);
-//						this.image(wall, x, y, width/4, height/8);
-//					}
-//					else {
-//						//this.line(x, y, x, y+18);
-//						this.image(wall, x, y, width/8, height/4);
-//						
-//					}
-//				}
-//				i++;
-//				x+=18;
-//			}
-//		}
 	}
 
 	/**
@@ -300,12 +276,10 @@ public class DrawingSurface extends PApplet {
 			while(!maze.substring(i, i+1).equals("\n")) {
 				if(!maze.substring(i, i+1).equals(" ")) {
 					if(maze.substring(i, i+1).equals("-")) {
-						//this.line(x, y, x+18, y);
-						this.image(wall, x, y, width/18, height/36);
-					}
+						this.image(wall, x, y, width/25, height/50);
+					} 
 					else {
-						//this.line(x, y, x, y+18);
-						this.image(wall, x, y, width/36, height/18);
+						this.image(wall, x, y, width/50, height/25);
 						
 					}
 				}
