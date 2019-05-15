@@ -12,51 +12,6 @@ import processing.awt.PSurfaceAWT;
 import processing.core.PApplet;
 
 public class main {
-	enum Algorithm {
-		RANDOM_DFS_RECURSIVE,
-		RANDOM_DFS_NONRECURSIVE,
-		RANDOM_BFS,
-		PRIM,
-		RECURSIVE_DIVISION,
-		ALDOUS_BRODER,
-		WILSON,
-		SIDEWINDER,
-		BINARY_TREE
-	}
-
-	public static Grid maze(int numCols, int numRows, int startCol, int startRow, Algorithm algorithm) {
-		Grid grid = new Grid(numCols, numRows);
-		int startVertex = grid.vertex(startCol, startRow);
-		BitSet visited = new BitSet(numCols * numRows);
-		randomDFSRecursive(grid, startVertex, visited);
-		return grid;
-	}
-	
-	static void randomDFSRecursive(Grid grid, int v, BitSet visited) {
-		visited.set(v);
-		for (Direction dir = unvisitedDir(grid, v, visited); dir != null; dir = unvisitedDir(grid, v,
-				visited)) {
-			grid.addEdge(v, dir);
-			randomDFSRecursive(grid, grid.neighbor(v, dir), visited);
-		}
-	}
-	
-	static Direction unvisitedDir(Grid grid, int v, BitSet visited) {
-		List<Direction> unvisitedDirections = unvisitedDirections(grid, v, visited);
-		return unvisitedDirections.isEmpty() ? null : unvisitedDirections.get(0);
-	}
-	
-	static List<Direction> unvisitedDirections(Grid grid, int v, BitSet visited) {
-		List<Direction> candidates = new ArrayList<>(4);
-		for (Direction dir : Direction.values()) {
-			int neighbor = grid.neighbor(v, dir);
-			if (neighbor != Grid.NO_VERTEX && !visited.get(neighbor)) {
-				candidates.add(dir);
-			}
-		}
-		Collections.shuffle(candidates);
-		return candidates;
-	}
 	
 	public static void main(String[] args) {
 		DrawingSurface drawing = new DrawingSurface();
@@ -73,30 +28,7 @@ public class main {
 		window.setVisible(true);
 		
 		
-		//change the first two values in the maze call to change width/height
-//		String maze = maze(11, 9, 0, 0, Algorithm.values()[0]).toString();
-//		//System.out.println(maze);
-//		
-//		drawing.text("", 100, 100);
-//		
-//		int y = 5;
-//		int x = 20;
-//		for(int i=0; i<874; i++) {
-//			x=20;
-//			y+=36;
-//			while(!maze.substring(i, i+1).equals("\n")) {
-//				if(!maze.substring(i, i+1).equals(" ")) {
-//					if(maze.substring(i, i+1).equals("-")) {
-//						drawing.line(x, y, x+18, y);
-//					}
-//					else {
-//						drawing.line(x, y, x, y+18);
-//					}
-//				}
-//				i++;
-//				x+=18;
-//			}
-//		}
+
 	}
 
 }

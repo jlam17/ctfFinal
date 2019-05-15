@@ -71,6 +71,7 @@ public class DrawingSurface extends PApplet {
 	int numFrames; // The number of frames in the animation
 	int currentFrame = 0;
 	PImage[] images;
+	PImage wall;
 	boolean[] keyDown;
 	String maze;
 
@@ -100,7 +101,35 @@ public class DrawingSurface extends PApplet {
 		
 		settings();
 		frameRate(24);
-		 maze = maze(11, 9, 0, 0, Algorithm.values()[0]).toString();
+		//change the first two values in the maze call to change width/height
+		maze = maze(11, 9, 0, 0, Algorithm.values()[0]).toString();
+		
+		//this.text("", 100, 100);
+		wall = loadImage("wall.png");
+		
+		int y = 5;
+		int x = 20;
+		for(int i=0; i<874; i++) {
+			x=20;
+			y+=36;
+			while(!maze.substring(i, i+1).equals("\n")) {
+				if(!maze.substring(i, i+1).equals(" ")) {
+					if(maze.substring(i, i+1).equals("-")) {
+						//this.line(x, y, x+18, y);
+						this.image(wall, x, y, width/18, height/36);
+					}
+					else {
+						//this.line(x, y, x, y+18);
+						this.image(wall, x, y, width/36, height/18);
+						
+					}
+				}
+				i++;
+				x+=18;
+			}
+		}
+		
+		
 		
 		//Loading and resizing the images
 		images[0] = loadImage("knightStand.png");
@@ -123,12 +152,14 @@ public class DrawingSurface extends PApplet {
 		images[8].resize(128, 126);
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
+		//this.image(images[9], 0, 0);
 		images[10] = loadImage("knightStandLeft.png");
 		images[10].resize(126, 126);
 		images[11] = loadImage("knightWalkLeft.png");
 		images[11].resize(96, 126);
 		images[12] = loadImage("knightStandDown.png");
 		images[12].resize(126, 128);
+		
 	}
 
 	/**
@@ -136,31 +167,34 @@ public class DrawingSurface extends PApplet {
 	 */
 	public void draw() {
 		//background(255);
-		//this.image(images[9], 0, 0);
-		//player1.draw(this, images, currentFrame);
+		
+		player1.draw(this, images, currentFrame);
 		
 		//System.out.println(maze);
 		
-		this.text("", 100, 100);
-		
-		int y = 5;
-		int x = 20;
-		for(int i=0; i<874; i++) {
-			x=20;
-			y+=36;
-			while(!maze.substring(i, i+1).equals("\n")) {
-				if(!maze.substring(i, i+1).equals(" ")) {
-					if(maze.substring(i, i+1).equals("-")) {
-						this.line(x, y, x+18, y);
-					}
-					else {
-						this.line(x, y, x, y+18);
-					}
-				}
-				i++;
-				x+=18;
-			}
-		}
+//		this.text("", 100, 100);
+//		
+//		int y = 5;
+//		int x = 20;
+//		for(int i=0; i<874; i++) {
+//			x=20;
+//			y+=36;
+//			while(!maze.substring(i, i+1).equals("\n")) {
+//				if(!maze.substring(i, i+1).equals(" ")) {
+//					if(maze.substring(i, i+1).equals("-")) {
+//						//this.line(x, y, x+18, y);
+//						this.image(wall, x, y, width/4, height/8);
+//					}
+//					else {
+//						//this.line(x, y, x, y+18);
+//						this.image(wall, x, y, width/8, height/4);
+//						
+//					}
+//				}
+//				i++;
+//				x+=18;
+//			}
+//		}
 	}
 
 	/**
