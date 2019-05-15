@@ -1,3 +1,5 @@
+import processing.core.PImage;
+
 /**
  * the flag that players carry to their base (from their opponent's) to win
  * @author hdesouza538
@@ -17,7 +19,7 @@ public class Flag implements Carryable {
 	 * @param x the x value the flag is created at
 	 * @param y the y value the flag is created at
 	 */
-	public Flag(Player home, Player enemy, double x, double y) {
+	public Flag(PImage p, Player home, Player enemy, double x, double y) {
 		this.initialx = x;
 		this.initialy = y;
 		this.x = x;
@@ -27,6 +29,11 @@ public class Flag implements Carryable {
 		this.possession = false;
 	}
 
+	
+	public void draw(DrawingSurface drawer) {
+		
+	}
+	
 	/**
 	 * checks whether the player trying to pick the flag up can (if it is already held or not) and 
 	 * changes the possession of the flag

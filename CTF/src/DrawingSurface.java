@@ -71,7 +71,8 @@ public class DrawingSurface extends PApplet {
 	int numFrames; // The number of frames in the animation
 	int currentFrame = 0;
 	PImage[] images;
-	PImage wall;
+	PImage wall, flag1, flag2;
+	Flag f1, f2;
 	boolean[] keyDown;
 	String maze;
 
@@ -156,6 +157,29 @@ public class DrawingSurface extends PApplet {
 		player1.draw(this, images, currentFrame);
 		drawMaze();
 		
+
+//		
+//		int y = 5;
+//		int x = 20;
+//		for(int i=0; i<874; i++) {
+//			x=20;
+//			y+=36;
+//			while(!maze.substring(i, i+1).equals("\n")) {
+//				if(!maze.substring(i, i+1).equals(" ")) {
+//					if(maze.substring(i, i+1).equals("-")) {
+//						//this.line(x, y, x+18, y);
+//						this.image(wall, x, y, width/4, height/8);
+//					}
+//					else {
+//						//this.line(x, y, x, y+18);
+//						this.image(wall, x, y, width/8, height/4);
+//						
+//					}
+//				}
+//				i++;
+//				x+=18;
+//			}
+//		}
 	}
 
 	/**
@@ -276,10 +300,10 @@ public class DrawingSurface extends PApplet {
 			while(!maze.substring(i, i+1).equals("\n")) {
 				if(!maze.substring(i, i+1).equals(" ")) {
 					if(maze.substring(i, i+1).equals("-")) {
-						this.image(wall, x, y, width/25, height/50); //change back to 50 as
-					} 
+						this.image(wall, x, y, width/18, height/36);
+					}
 					else {
-						this.image(wall, x, y, width/50, height/25);
+						this.image(wall, x, y, width/36, height/18);
 						
 					}
 				}
