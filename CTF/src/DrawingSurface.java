@@ -303,9 +303,9 @@ public class DrawingSurface extends PApplet {
 						if(i>1 && maze.substring(i-1, i).equals(" ")) {
 							this.image(wall, x, y, width/72, height/36);
 						}
-						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
-							this.image(wall, x, y, width/72, height/36);
-						}
+//						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
+//							this.image(wall, x, y, width/72, height/36);
+//						}
 						else {
 							this.image(wall, x, y, width/18, height/36);
 						}
