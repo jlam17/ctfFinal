@@ -301,10 +301,13 @@ public class DrawingSurface extends PApplet {
 				if(!maze.substring(i, i+1).equals(" ")) {
 					if(maze.substring(i, i+1).equals("-")) {
 						if(i>1 && maze.substring(i-1, i).equals(" ")) {
-							this.image(wall, x, y, width/72, height/36);
+							this.image(wall, x, y, width/72, height/144);
+						}
+						else if(i>1 && maze.substring(i+1, i+2).equals(" ") && maze.substring(i+2, i+3).equals("|")) {
+							this.image(wall, x, y, width/72, height/144);
 						}
 //						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
-//							this.image(wall, x, y, width/72, height/36);
+//							this.image(wall, x, y, width/72, height/144);
 //						}
 						else {
 							this.image(wall, x, y, width/18, height/36);
@@ -314,8 +317,8 @@ public class DrawingSurface extends PApplet {
 						if(i>1 && maze.substring(i-1, i).equals("-")) {
 							this.image(wall, x, y, width/36, height/36);
 						}
-						else if(i>1 && maze.substring(i-1, i).equals(" ") && !maze.substring(i+1, i+2).equals("\n") && maze.substring(i+1, i+2).equals(" ")) {
-							this.image(wall, x, y, width/72, height/20);
+						else if(i>1 && maze.substring(i-1, i).equals(" ") /*&& !maze.substring(i+1, i+2).equals("\n")*/ && maze.substring(i+1, i+2).equals(" ")) {
+							this.image(wall, x, y, width/72, height/40);
 						}
 						else if(i>1 && maze.substring(i-1, i).equals(" ") && !maze.substring(i+1, i+2).equals("\n") && !maze.substring(i+1, i+2).equals(" ")) {
 							this.image(wall, x, y, width/36, height/36);
