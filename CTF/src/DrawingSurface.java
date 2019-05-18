@@ -22,6 +22,11 @@ import processing.core.*;
  *
  */
 public class DrawingSurface extends PApplet {
+	/**
+	 * chooses which algorithm to draw
+	 * @author Wikipedia
+	 *
+	 */
 	enum Algorithm {
 		RANDOM_DFS_RECURSIVE,
 		RANDOM_DFS_NONRECURSIVE,
@@ -34,7 +39,15 @@ public class DrawingSurface extends PApplet {
 		BINARY_TREE
 	}
 	
-	
+	/**
+	 * generates a grid with the parameters
+	 * @param numCols number of columns
+	 * @param numRows number of rows
+	 * @param startCol start column
+	 * @param startRow start row
+	 * @param algorithm algorithm type
+	 * @return a grid that fits the parameters
+	 */
 	public static Grid maze(int numCols, int numRows, int startCol, int startRow, Algorithm algorithm) {
 		Grid grid = new Grid(numCols, numRows);
 		int startVertex = grid.vertex(startCol, startRow);
@@ -43,6 +56,12 @@ public class DrawingSurface extends PApplet {
 		return grid;
 	}
 	
+	/**
+	 * generates the maze
+	 * @param grid the grid passed in
+	 * @param v integer that helps with direction
+	 * @param visited a bit set
+	 */
 	static void randomDFSRecursive(Grid grid, int v, BitSet visited) {
 		visited.set(v);
 		for (Direction dir = unvisitedDir(grid, v, visited); dir != null; dir = unvisitedDir(grid, v,
@@ -52,11 +71,25 @@ public class DrawingSurface extends PApplet {
 		}
 	}
 	
+	/**
+	 * helps generates the maze
+	 * @param grid the grid passed in
+	 * @param v integer that helps with direction
+	 * @param visited a bit set
+	 * @return a direction
+	 */
 	static Direction unvisitedDir(Grid grid, int v, BitSet visited) {
 		List<Direction> unvisitedDirections = unvisitedDirections(grid, v, visited);
 		return unvisitedDirections.isEmpty() ? null : unvisitedDirections.get(0);
 	}
 	
+	/**
+	 * helps generates the maze
+	 * @param grid the grid passed in
+	 * @param v integer that helps with direction
+	 * @param visited a bit set
+	 * @return a list of directions
+	 */
 	static List<Direction> unvisitedDirections(Grid grid, int v, BitSet visited) {
 		List<Direction> candidates = new ArrayList<>(4);
 		for (Direction dir : Direction.values()) {
@@ -254,6 +287,9 @@ public class DrawingSurface extends PApplet {
 //		}
 	}
 	
+	/**
+	 * checks what happens if a key is released
+	 */
 	public void keyReleased() {
 		if (key == 119) { // w
 			keyDown[0] = false;
@@ -300,6 +336,9 @@ public class DrawingSurface extends PApplet {
 		}
 	}
 	
+	/**
+	 * generates the maze in a handy function
+	 */
 	public void drawMaze() {
 		int y = 5;
 		int x = 20;
