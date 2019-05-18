@@ -33,6 +33,8 @@ public class DrawingSurface extends PApplet {
 		SIDEWINDER,
 		BINARY_TREE
 	}
+	
+	
 	public static Grid maze(int numCols, int numRows, int startCol, int startRow, Algorithm algorithm) {
 		Grid grid = new Grid(numCols, numRows);
 		int startVertex = grid.vertex(startCol, startRow);
@@ -83,7 +85,9 @@ public class DrawingSurface extends PApplet {
 		super();
 		numFrames = 13;
 		player1 = new Player(1, 10, 50);
-//		player2 = new Player(2, 100, 50);
+		player2 = new Player(2, 100, 50);
+		f1 = new Flag(flag1, player1, player2, 300, 300);
+		f2 = new Flag(flag2, player2, player1, 100, 300);
 		images = new PImage[numFrames];
 		keyDown = new boolean[4];
 	}
@@ -102,6 +106,9 @@ public class DrawingSurface extends PApplet {
 		
 		settings();
 		frameRate(24);
+		
+		flag1 = loadImage("flag.png");
+		flag2 = loadImage("flag.png");
 		
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
@@ -155,6 +162,8 @@ public class DrawingSurface extends PApplet {
 		
 		this.image(images[9], 0, 0);
 		player1.draw(this, images, currentFrame);
+		f1.draw(this, flag1, (float)f1.getX(), (float)f1.getY());
+		f2.draw(this, flag2, (float)f2.getX(), (float)f2.getY());
 		drawMaze();
 		
 
