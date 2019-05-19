@@ -41,6 +41,9 @@ public class Player {
 		drawer.image(images[currentFrame], (float)x, (float)y);
 	}
 	
+	/**
+	 * makes the player move
+	 */
 	public void tick() {
 		x += velX;
 		y += velY;
@@ -221,10 +224,18 @@ public class Player {
 		}
 	}
 
+	/**
+	 * 
+	 * @return health of the player
+	 */
 	public int getHealth() {
 		return health;
 	}
 
+	/**
+	 * changes the health by deltaHealth (positive or negative)
+	 * @param deltaHealth the change in the health
+	 */
 	public void changeHealth(int deltaHealth) {
 		this.health += deltaHealth;
 	}

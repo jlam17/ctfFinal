@@ -21,11 +21,27 @@ import processing.core.*;
  *
  */
 public class DrawingSurface extends PApplet {
+	/**
+	 * chooses which algorithm to draw
+	 * 
+	 * @author Wikipedia
+	 *
+	 */
 	enum Algorithm {
-		RANDOM_DFS_RECURSIVE, RANDOM_DFS_NONRECURSIVE, RANDOM_BFS, PRIM, RECURSIVE_DIVISION, ALDOUS_BRODER, WILSON,
-		SIDEWINDER, BINARY_TREE
+	RANDOM_DFS_RECURSIVE, RANDOM_DFS_NONRECURSIVE, RANDOM_BFS, PRIM, RECURSIVE_DIVISION, ALDOUS_BRODER, WILSON,
+	SIDEWINDER, BINARY_TREE
 	}
 
+	/**
+	 * generates a grid with the parameters
+	 * 
+	 * @param numCols   number of columns
+	 * @param numRows   number of rows
+	 * @param startCol  start column
+	 * @param startRow  start row
+	 * @param algorithm algorithm type
+	 * @return a grid that fits the parameters
+	 */
 	public static Grid maze(int numCols, int numRows, int startCol, int startRow, Algorithm algorithm) {
 		Grid grid = new Grid(numCols, numRows);
 		int startVertex = grid.vertex(startCol, startRow);
@@ -34,6 +50,13 @@ public class DrawingSurface extends PApplet {
 		return grid;
 	}
 
+	/**
+	 * generates the maze
+	 * 
+	 * @param grid    the grid passed in
+	 * @param v       integer that helps with direction
+	 * @param visited a bit set
+	 */
 	static void randomDFSRecursive(Grid grid, int v, BitSet visited) {
 		visited.set(v);
 		for (Direction dir = unvisitedDir(grid, v, visited); dir != null; dir = unvisitedDir(grid, v, visited)) {
@@ -42,11 +65,27 @@ public class DrawingSurface extends PApplet {
 		}
 	}
 
+	/**
+	 * helps generates the maze
+	 * 
+	 * @param grid    the grid passed in
+	 * @param v       integer that helps with direction
+	 * @param visited a bit set
+	 * @return a direction
+	 */
 	static Direction unvisitedDir(Grid grid, int v, BitSet visited) {
 		List<Direction> unvisitedDirections = unvisitedDirections(grid, v, visited);
 		return unvisitedDirections.isEmpty() ? null : unvisitedDirections.get(0);
 	}
 
+	/**
+	 * helps generates the maze
+	 * 
+	 * @param grid    the grid passed in
+	 * @param v       integer that helps with direction
+	 * @param visited a bit set
+	 * @return a list of directions
+	 */
 	static List<Direction> unvisitedDirections(Grid grid, int v, BitSet visited) {
 		List<Direction> candidates = new ArrayList<>(4);
 		for (Direction dir : Direction.values()) {
@@ -69,7 +108,7 @@ public class DrawingSurface extends PApplet {
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
-	
+
 	/*
 	 * Private variables for defining Maze Grid
 	 */
@@ -85,6 +124,8 @@ public class DrawingSurface extends PApplet {
 	public DrawingSurface() {
 		super();
 		numFrames = 13;
+		f1 = new Flag(flag1, player1, player2, 300, 300);
+		f2 = new Flag(flag2, player2, player1, 100, 300);
 		images = new PImage[numFrames];
 		keyDown = new boolean[4];
 	}
@@ -103,6 +144,12 @@ public class DrawingSurface extends PApplet {
 
 		settings();
 		frameRate(24);
+
+		flag1 = loadImage("flag.png");
+		flag2 = loadImage("flag.png");
+
+		flag1.resize(66, 100);
+		flag2.resize(66, 100);
 
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
@@ -144,24 +191,24 @@ public class DrawingSurface extends PApplet {
 		images[11].resize(96 / 4, 126 / 4);
 		images[12] = loadImage("knightStandDown.png");
 		images[12].resize(126 / 4, 128 / 4);
-		
+
 		p1GridX = 0;
 		p1GridY = 0;
-		p2GridX = mazeGrid.numCols-1;
-		p2GridY = mazeGrid.numRows-1;
-		
+		p2GridX = mazeGrid.numCols - 1;
+		p2GridY = mazeGrid.numRows - 1;
+
 		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
 		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
 
 	}
-	
+
 	public double gridX2X(int gridX) {
-		return gridStartX + gridX * gridCellWidth+gridWallWidth;
+		return gridStartX + gridX * gridCellWidth + gridWallWidth;
 	}
-	
+
 	public double gridY2Y(int gridY) {
-		System.out.println("gridY: "+gridY+":gridCellHeight:"+gridCellHeight);
-		return gridStartY + gridY * gridCellHeight+gridWallWidth;
+		System.out.println("gridY: " + gridY + ":gridCellHeight:" + gridCellHeight);
+		return gridStartY + gridY * gridCellHeight + gridWallWidth;
 	}
 
 	/**
@@ -172,6 +219,8 @@ public class DrawingSurface extends PApplet {
 
 		this.image(images[9], 0, 0);
 		player1.draw(this, images, currentFrame);
+		f1.draw(this, flag1);
+		f2.draw(this, flag2);
 		player2.draw(this, images, currentFrame);
 		drawMazeGrid();
 
@@ -231,6 +280,8 @@ public class DrawingSurface extends PApplet {
 		}
 			player1.move(gridX2X(p1GridX),gridY2Y(p1GridY));
 
+			
+			
 			//Player 2
 		if (keyCode == UP) {
 			if ((p2GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.NORTH)) {
@@ -242,9 +293,51 @@ public class DrawingSurface extends PApplet {
 			} else {
 				currentFrame = 7;
 			}
+		}else if (keyCode == DOWN) { // s
+			if ((p2GridY + 1 < mazeGrid.numRows) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
+				p2GridY++;
+			}
+			keyDown[2] = true;
+			if (currentFrame == 4) {
+				currentFrame = 5;
+			} else {
+				currentFrame = 4;
+			}
+		} else if (keyCode == LEFT) { // a
+			if ((p2GridX - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.WEST)) {
+				p2GridX--;
+			}
+			keyDown[1] = true;
+			if (currentFrame == 11) {
+				currentFrame = 10;
+			} else {
+				currentFrame = 11;
+			}
+		} else if (keyCode == RIGHT) { // d
+			if ((p2GridX + 1 < mazeGrid.numCols) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.EAST)) {
+				p2GridX++;
+			}
+			keyDown[3] = true;
+			if (currentFrame == 1) {
+				currentFrame = 0;
+			} else {
+				currentFrame = 1;
+			}
+		}
+		player2.move(gridX2X(p2GridX),gridY2Y(p2GridY));
+
+	}
+
+	/**
+	 * checks what happens if a key is released
+	 */
+	public void keyReleased() {
+		if (key == 119) { // w
+			keyDown[0] = false;
 		}
 		if (keyCode == DOWN) {
-			if ((p2GridY + 1 < mazeGrid.numRows) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
+			if ((p2GridY + 1 < mazeGrid.numRows)
+					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
 				p2GridY++;
 			}
 			keyDown[2] = true;
@@ -255,28 +348,29 @@ public class DrawingSurface extends PApplet {
 			}
 		}
 		if (keyCode == RIGHT) {
-			if ((p2GridX + 1 < mazeGrid.numCols) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.EAST)) {
-			p2GridX++;
-		}
-		keyDown[3] = true;
-		if (currentFrame == 1) {
-			currentFrame = 0;
-		} else {
-			currentFrame = 1;
-		}
+			if ((p2GridX + 1 < mazeGrid.numCols)
+					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.EAST)) {
+				p2GridX++;
+			}
+			keyDown[3] = true;
+			if (currentFrame == 1) {
+				currentFrame = 0;
+			} else {
+				currentFrame = 1;
+			}
 		}
 		if (keyCode == LEFT) {
 			if ((p2GridX - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.WEST)) {
-			p2GridX--;
+				p2GridX--;
+			}
+			keyDown[1] = true;
+			if (currentFrame == 11) {
+				currentFrame = 10;
+			} else {
+				currentFrame = 11;
+			}
 		}
-		keyDown[1] = true;
-		if (currentFrame == 11) {
-			currentFrame = 10;
-		} else {
-			currentFrame = 11;
-		}
-		}
-		player2.move(gridX2X(p2GridX),gridY2Y(p2GridY));
+		player2.move(gridX2X(p2GridX), gridY2Y(p2GridY));
 	}
 
 //	public void keyReleased() {
@@ -324,29 +418,77 @@ public class DrawingSurface extends PApplet {
 //		}
 //	}
 
+	/**
+	 * generates the maze in a handy function
+	 */
+	public void drawMaze() {
+		int y = 5;
+		int x = 20;
+		for (int i = 0; i < 874 && i < maze.length(); i++) {
+			x = 20;
+			y += 36;
+			while (!maze.substring(i, i + 1).equals("\n")) {
+				if (!maze.substring(i, i + 1).equals(" ")) {
+					if (maze.substring(i, i + 1).equals("-")) {
+						if (i > 1 && maze.substring(i - 1, i).equals(" ")) {
+							this.image(wall, x, y, width / 72, height / 144);
+						} else if (i > 1 && maze.substring(i + 1, i + 2).equals(" ")
+								&& maze.substring(i + 2, i + 3).equals("|")) {
+							this.image(wall, x, y, width / 72, height / 144);
+						}
+//						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
+//							this.image(wall, x, y, width/72, height/144);
+//						}
+						else {
+							this.image(wall, x, y, width / 18, height / 36);
+						}
+					} else {
+						if (i > 1 && maze.substring(i - 1, i).equals("-")) {
+							this.image(wall, x, y, width / 36, height / 36);
+						} else if (i > 1
+								&& maze.substring(i - 1, i).equals(" ") /* && !maze.substring(i+1, i+2).equals("\n") */
+								&& maze.substring(i + 1, i + 2).equals(" ")) {
+							this.image(wall, x, y, width / 72, height / 40);
+						} else if (i > 1 && maze.substring(i - 1, i).equals(" ")
+								&& !maze.substring(i + 1, i + 2).equals("\n")
+								&& !maze.substring(i + 1, i + 2).equals(" ")) {
+							this.image(wall, x, y, width / 36, height / 36);
+						} else {
+							this.image(wall, x, y, width / 36, height / 18);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public void drawMazeGrid() {
 
 		for (int r = 0; r < mazeGrid.numRows; r++) {
 			for (int c = 0; c < mazeGrid.numCols; c++) {
 				if (!mazeGrid.hasEdge(mazeGrid.vertex(c, r), Direction.NORTH)) {
-					this.image(wall, gridStartX + c * gridCellWidth, gridStartY + r * gridCellHeight, gridCellWidth, gridWallWidth);
+					this.image(wall, gridStartX + c * gridCellWidth, gridStartY + r * gridCellHeight, gridCellWidth,
+							gridWallWidth);
 				}
 				if (!mazeGrid.hasEdge(mazeGrid.vertex(c, r), Direction.WEST)) {
-					this.image(wall, gridStartX + c * gridCellWidth, gridStartY + r * gridCellHeight, gridWallWidth, gridCellHeight);
+					this.image(wall, gridStartX + c * gridCellWidth, gridStartY + r * gridCellHeight, gridWallWidth,
+							gridCellHeight);
 				}
 			}
-			this.image(wall, gridStartX + mazeGrid.numCols * gridCellWidth, gridStartY + r * gridCellHeight, gridWallWidth, gridCellHeight);
+			this.image(wall, gridStartX + mazeGrid.numCols * gridCellWidth, gridStartY + r * gridCellHeight,
+					gridWallWidth, gridCellHeight);
 
 		}
 		for (int i = 0; i < mazeGrid.numCols; i++) {
 			if (i == mazeGrid.numCols - 1) {
-				this.image(wall, gridStartX + i * gridCellWidth, gridStartY + mazeGrid.numRows * gridCellHeight, gridCellWidth + gridWallWidth, gridWallWidth);
+				this.image(wall, gridStartX + i * gridCellWidth, gridStartY + mazeGrid.numRows * gridCellHeight,
+						gridCellWidth + gridWallWidth, gridWallWidth);
 			} else {
-				this.image(wall, gridStartX + i * gridCellWidth, gridStartY + mazeGrid.numRows * gridCellHeight, gridCellWidth, gridWallWidth);
+				this.image(wall, gridStartX + i * gridCellWidth, gridStartY + mazeGrid.numRows * gridCellHeight,
+						gridCellWidth, gridWallWidth);
 			}
 		}
 
 	}
-
 
 }

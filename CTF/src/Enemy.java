@@ -19,17 +19,26 @@ public class Enemy {
 		this.health = 100;
 	}
 	
+	/**
+	 * finds and attacks the closest player
+	 * @param player1 the first player
+	 * @param player2 the second player
+	 */
 	public void pursue(Player player1, Player player2) {
 		Player toAttack = findClosestPlayer(player1, player2);
 		while (this.health>0 && toAttack.getHealth()>0) {
 			moveToPlayer();
-			attack();
+			attack(toAttack);
 		}
 		
 	}
 	
+	/**
+	 * does the job of attacking the player
+	 * @param p the player to attack
+	 */
 	private void attack(Player p) {
-		if() {//touching
+		if(true) {//touching
 			p.changeHealth(-20);
 		}
 	}

@@ -29,9 +29,15 @@ public class Flag implements Carryable {
 		this.possession = false;
 	}
 
-	
-	public void draw(DrawingSurface drawer) {
-		
+	/**
+	 * draws the flag to the screen
+	 * @param drawer the DrawingSurface that the flag will be drawn onto
+	 * @param img the PImage that will be drawn
+	 * @param x the x-coord of the flag (where it will be drawn)
+	 * @param y the y-coord of the flag (where it will be drawn)
+	 */
+	public void draw(DrawingSurface drawer, PImage img) {
+		drawer.image(img, (float)x, (float)y);
 	}
 	
 	/**

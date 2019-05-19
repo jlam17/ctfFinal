@@ -73,6 +73,9 @@ public class Grid {
 	}
 
 	@Override
+	/**
+	 * @return the grid as a string
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		//sb.append(String.format("Grid: %d columns, %d rows, %d edges\n", numCols, numRows, numEdges()));
