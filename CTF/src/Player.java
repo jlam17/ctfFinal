@@ -12,6 +12,7 @@ public class Player {
 	private boolean hasFlag;
 	private double x, y;
 	private double velX, velY;
+	private int gridX, gridY;
 	private Powerup q;
 	
 	private int health;
@@ -151,30 +152,34 @@ public class Player {
 	 * Moves the player right
 	 */
 	public void moveRight() {
-		setVelX(10);
+		setVelX(60);
 	}
 	
 	/**
 	 * Moves the player left
 	 */
 	public void moveLeft() {
-		setVelX(-10);
+		setVelX(-60);
 	}
 	
 	/**
 	 * Moves the player up
 	 */
 	public void moveUp() {
-		setVelY(-10);
+		setVelY(-60);
 	}
 	
 	/**
 	 * Moves the player down
 	 */
 	public void moveDown() {
-		setVelY(10);
+		setVelY(60);
 	}
 	
+	public void move(double x, double y) {
+		setX(x);
+		setY(y);
+	}
 	/**
 	 * Stop the player from moving down
 	 */
