@@ -28,7 +28,7 @@ public class Enemy {
 		Player toAttack = findClosestPlayer(player1, player2);
 		while (this.health>0 && toAttack.getHealth()>0) {
 			moveToPlayer();
-			attack();
+			attack(toAttack);
 		}
 		
 	}
@@ -38,7 +38,7 @@ public class Enemy {
 	 * @param p the player to attack
 	 */
 	private void attack(Player p) {
-		if() {//touching
+		if(true) {//touching
 			p.changeHealth(-20);
 		}
 	}

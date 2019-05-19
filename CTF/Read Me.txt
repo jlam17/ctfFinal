@@ -65,12 +65,26 @@ Maze
 Flag
 Power up(Shovel, Staff, Bomb, etc)
 
+
+
 Credit List:
 ReadMe: Jadon and Hansel
 UML: Jadon and Hansel
 Made Classes: Hansel
 Sprites + Animations: Jadon
 DrawingSurface: Jadon and Hansel
+Grid, Direction, Maze: Wikipedia
+
+
+
+
+UML Diagram (below)
+  
+
+
+
+
+
 
 
 Comments about Intro

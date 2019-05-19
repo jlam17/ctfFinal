@@ -143,6 +143,9 @@ public class DrawingSurface extends PApplet {
 		flag1 = loadImage("flag.png");
 		flag2 = loadImage("flag.png");
 		
+		flag1.resize(66,100);
+		flag2.resize(66,100);
+		
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
 		this.image(images[9], 0, 0);
@@ -195,8 +198,8 @@ public class DrawingSurface extends PApplet {
 		
 		this.image(images[9], 0, 0);
 		player1.draw(this, images, currentFrame);
-		f1.draw(this, flag1, (float)f1.getX(), (float)f1.getY());
-		f2.draw(this, flag2, (float)f2.getX(), (float)f2.getY());
+		f1.draw(this, flag1);
+		f2.draw(this, flag2);
 		drawMaze();
 		
 

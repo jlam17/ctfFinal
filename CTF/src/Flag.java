@@ -36,7 +36,7 @@ public class Flag implements Carryable {
 	 * @param x the x-coord of the flag (where it will be drawn)
 	 * @param y the y-coord of the flag (where it will be drawn)
 	 */
-	public void draw(DrawingSurface drawer, PImage img, double x, double y) {
+	public void draw(DrawingSurface drawer, PImage img) {
 		drawer.image(img, (float)x, (float)y);
 	}
 	
