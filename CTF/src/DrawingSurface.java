@@ -369,49 +369,6 @@ public class DrawingSurface extends PApplet {
 	/**
 	 * generates the maze in a handy function
 	 */
-	public void drawMaze() {
-		int y = 5;
-		int x = 20;
-		for (int i = 0; i < 874 && i < maze.length(); i++) {
-			x = 20;
-			y += 36;
-			while (!maze.substring(i, i + 1).equals("\n")) {
-				if (!maze.substring(i, i + 1).equals(" ")) {
-					if (maze.substring(i, i + 1).equals("-")) {
-						if (i > 1 && maze.substring(i - 1, i).equals(" ")) {
-							this.image(wall, x, y, width / 72, height / 144);
-						} else if (i > 1 && maze.substring(i + 1, i + 2).equals(" ")
-								&& maze.substring(i + 2, i + 3).equals("|")) {
-							this.image(wall, x, y, width / 72, height / 144);
-						}
-//						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
-//							this.image(wall, x, y, width/72, height/144);
-//						}
-						else {
-							this.image(wall, x, y, width / 18, height / 36);
-						}
-					} else {
-						if (i > 1 && maze.substring(i - 1, i).equals("-")) {
-							this.image(wall, x, y, width / 36, height / 36);
-						} else if (i > 1 && maze.substring(i - 1, i).equals(" ") /*
-																					 * && !maze.substring(i+1,
-																					 * i+2).equals("\n")
-																					 */
-								&& maze.substring(i + 1, i + 2).equals(" ")) {
-							this.image(wall, x, y, width / 72, height / 40);
-						} else if (i > 1 && maze.substring(i - 1, i).equals(" ")
-								&& !maze.substring(i + 1, i + 2).equals("\n")
-								&& !maze.substring(i + 1, i + 2).equals(" ")) {
-							this.image(wall, x, y, width / 36, height / 36);
-						} else {
-							this.image(wall, x, y, width / 36, height / 18);
-						}
-					}
-				}
-			}
-		}
-	}
-
 	public void drawMazeGrid() {
 
 		for (int r = 0; r < mazeGrid.numRows; r++) {
