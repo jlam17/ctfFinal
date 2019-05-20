@@ -4,6 +4,7 @@ import processing.core.PImage;
 
 /**
  * This is the character that you control and use to play the game
+ * 
  * @author jadonlam
  *
  */
@@ -14,14 +15,15 @@ public class Player {
 	private double velX, velY;
 	private int gridX, gridY;
 	private Powerup q;
-	
+
 	private int health;
-	
+
 	/**
 	 * Creates the player
+	 * 
 	 * @param playerId The specific id used to identify the player
-	 * @param x The x cord of the player
-	 * @param y The y cord of the player
+	 * @param x        The x cord of the player
+	 * @param y        The y cord of the player
 	 */
 	public Player(int playerId, double x, double y) {
 		this.health = 100;
@@ -31,16 +33,23 @@ public class Player {
 		this.y = y;
 		q = null;
 	}
-	
+
 	/**
 	 * Draws the player on the screen
+	 * 
 	 * @param drawer The PApplet drawer used to draw the player on the screen
 	 */
-	public void draw(PApplet drawer, PImage[] images, int currentFrame) {
+	public void draw(PApplet drawer, PImage[] images, int currentFrame, boolean hasFlag, int r, int g, int b) {
 		tick();
-		drawer.image(images[currentFrame], (float)x, (float)y);
+		if (hasFlag) {
+			drawer.tint(r, g, b);
+			drawer.image(images[currentFrame], (float) x, (float) y);
+			drawer.noTint();
+		} else {
+			drawer.image(images[currentFrame], (float) x, (float) y);
+		}
 	}
-	
+
 	/**
 	 * makes the player move
 	 */
@@ -55,13 +64,12 @@ public class Player {
 			setY(0);
 		if (y > 680)
 			setY(680);
-		
-		
+
 	}
-	
-	
+
 	/**
 	 * Returns your player id
+	 * 
 	 * @return number which is your id
 	 */
 	public int getPlayerId() {
@@ -94,6 +102,7 @@ public class Player {
 
 	/**
 	 * Sets the x cord of your player
+	 * 
 	 * @param x the new x coord of player
 	 */
 	public void setX(double x) {
@@ -110,116 +119,120 @@ public class Player {
 
 	/**
 	 * Sets the y cord of your player
+	 * 
 	 * @param y the new y cord of your player
 	 */
 	public void setY(double y) {
 		this.y = y;
 	}
-	
+
 	public void setVelX(double velX) {
 		this.velX = velX;
 	}
-	
+
 	public void setVelY(double velY) {
 		this.velY = velY;
 	}
-	
+
 	/**
 	 * Toggles if you have the flag or not
+	 * 
 	 * @param f The current flag
 	 */
 	public void toggleFlag(Flag f) {
 		this.hasFlag = !hasFlag;
 		f.pickUp(this);
 	}
-	
+
 	/**
 	 * Picks up the powerup "p"
+	 * 
 	 * @param p the powerup
 	 */
 	public void pickUpPowerup(Powerup p) {
 		q = p;
 	}
-	
+
 	/**
 	 * Uses the powerup once, and sets it to null(gets rid of it) if you used it
 	 */
 	public void usePowerup() {
-		if(q != null) {
+		if (q != null) {
 			q.use();
 			q = null;
 		}
 	}
-	
+
 	/**
 	 * Moves the player right
 	 */
 	public void moveRight() {
 		setVelX(60);
 	}
-	
+
 	/**
 	 * Moves the player left
 	 */
 	public void moveLeft() {
 		setVelX(-60);
 	}
-	
+
 	/**
 	 * Moves the player up
 	 */
 	public void moveUp() {
 		setVelY(-60);
 	}
-	
+
 	/**
 	 * Moves the player down
 	 */
 	public void moveDown() {
 		setVelY(60);
 	}
-	
+
 	public void move(double x, double y) {
 		setX(x);
 		setY(y);
 	}
+
 	/**
 	 * Stop the player from moving down
 	 */
 	public void stopMoveDown() {
 		setVelY(0);
 	}
-	
+
 	/**
 	 * Stop the player from moving right
 	 */
 	public void stopMoveRight() {
 		setVelX(0);
 	}
-	
+
 	/**
 	 * Stop the player from moving left
 	 */
 	public void stopMoveLeft() {
 		setVelX(0);
 	}
-	
+
 	/**
 	 * Stop the player from moving up
 	 */
 	public void stopMoveUp() {
 		setVelY(0);
 	}
-	
+
 	/**
 	 * Keeps track of whether or not you have won
+	 * 
 	 * @return True or false if you have won
 	 */
 	public boolean hasWon() {
-		if(hasFlag) { //set x to 0 so there wouldnt be a compiler error for now
+		if (hasFlag) { // set x to 0 so there wouldnt be a compiler error for now
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -234,6 +247,7 @@ public class Player {
 
 	/**
 	 * changes the health by deltaHealth (positive or negative)
+	 * 
 	 * @param deltaHealth the change in the health
 	 */
 	public void changeHealth(int deltaHealth) {

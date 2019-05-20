@@ -99,7 +99,7 @@ public class DrawingSurface extends PApplet {
 	}
 
 	Player player1, player2;
-	int p1GridX, p1GridY, p2GridX, p2GridY;
+	int p1GridX, p1GridY, p2GridX, p2GridY, f1GridX, f1GridY, f2GridX, f2GridY;
 	int numFrames; // The number of frames in the animation
 	int currentFrame = 0;
 	PImage[] images;
@@ -123,9 +123,7 @@ public class DrawingSurface extends PApplet {
 	 */
 	public DrawingSurface() {
 		super();
-		numFrames = 13;
-		f1 = new Flag(flag1, player1, player2, 300, 300);
-		f2 = new Flag(flag2, player2, player1, 100, 300);
+		numFrames = 15;
 		images = new PImage[numFrames];
 		keyDown = new boolean[4];
 	}
@@ -143,13 +141,7 @@ public class DrawingSurface extends PApplet {
 	public void setup() {
 
 		settings();
-		frameRate(24);
-
-		flag1 = loadImage("flag.png");
-		flag2 = loadImage("flag.png");
-
-		flag1.resize(66, 100);
-		flag2.resize(66, 100);
+		frameRate(60);
 
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
@@ -191,7 +183,13 @@ public class DrawingSurface extends PApplet {
 		images[11].resize(96 / 4, 126 / 4);
 		images[12] = loadImage("knightStandDown.png");
 		images[12].resize(126 / 4, 128 / 4);
+		images[13] = loadImage("redFlag.png");
+		images[13].resize(40, 40);
+		images[14] = loadImage("blueFlag.png");
+		images[14].resize(40, 40);
 
+		flag1 = images[13];
+		flag2 = images[14];
 		p1GridX = 0;
 		p1GridY = 0;
 		p2GridX = mazeGrid.numCols - 1;
@@ -200,6 +198,14 @@ public class DrawingSurface extends PApplet {
 		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
 		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
 
+		f1 = new Flag(flag1, player1, gridX2X(p1GridX), gridY2Y(p1GridY));
+		f2 = new Flag(flag2, player2, gridX2X(p2GridX), gridY2Y(p2GridY));
+
+		f1GridX = p1GridX;
+		f1GridY = p1GridY;
+
+		f2GridX = p2GridX;
+		f2GridY = p2GridY;
 	}
 
 	public double gridX2X(int gridX) {
@@ -218,10 +224,18 @@ public class DrawingSurface extends PApplet {
 		background(255);
 
 		this.image(images[9], 0, 0);
-		player1.draw(this, images, currentFrame);
-		f1.draw(this, flag1);
-		f2.draw(this, flag2);
-		player2.draw(this, images, currentFrame);
+		if (!f1.isPossession()) {
+			f1.draw(this, flag1);
+			player2.draw(this, images, currentFrame, false, 0, 0, 0);
+		} else {
+			player2.draw(this, images, currentFrame, true, 250, 0, 0);
+		}
+		if (!f2.isPossession()) {
+			f2.draw(this, flag2);
+			player1.draw(this, images, currentFrame, false, 0, 0, 0);
+		} else {
+			player1.draw(this, images, currentFrame, true, 0, 0, 250);
+		}
 		drawMazeGrid();
 
 	}
@@ -248,7 +262,8 @@ public class DrawingSurface extends PApplet {
 				currentFrame = 7;
 			}
 		} else if (key == 115 || key == 83) { // s
-			if ((p1GridY + 1 < mazeGrid.numRows) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.SOUTH)) {
+			if ((p1GridY + 1 < mazeGrid.numRows)
+					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.SOUTH)) {
 				p1GridY++;
 			}
 			keyDown[2] = true;
@@ -268,7 +283,8 @@ public class DrawingSurface extends PApplet {
 				currentFrame = 11;
 			}
 		} else if (key == 100 || key == 68) { // d
-			if ((p1GridX + 1 < mazeGrid.numCols) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.EAST)) {
+			if ((p1GridX + 1 < mazeGrid.numCols)
+					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.EAST)) {
 				p1GridX++;
 			}
 			keyDown[3] = true;
@@ -278,11 +294,12 @@ public class DrawingSurface extends PApplet {
 				currentFrame = 1;
 			}
 		}
-			player1.move(gridX2X(p1GridX),gridY2Y(p1GridY));
+		if (p1GridX == f2GridX && p1GridY == f2GridY) {
+			f2.setPossession(true);
+		}
+		player1.move(gridX2X(p1GridX), gridY2Y(p1GridY));
 
-			
-			
-			//Player 2
+		// Player 2
 		if (keyCode == UP) {
 			if ((p2GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.NORTH)) {
 				p2GridY--;
@@ -293,8 +310,9 @@ public class DrawingSurface extends PApplet {
 			} else {
 				currentFrame = 7;
 			}
-		}else if (keyCode == DOWN) { // s
-			if ((p2GridY + 1 < mazeGrid.numRows) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
+		} else if (keyCode == DOWN) { // s
+			if ((p2GridY + 1 < mazeGrid.numRows)
+					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
 				p2GridY++;
 			}
 			keyDown[2] = true;
@@ -314,40 +332,6 @@ public class DrawingSurface extends PApplet {
 				currentFrame = 11;
 			}
 		} else if (keyCode == RIGHT) { // d
-			if ((p2GridX + 1 < mazeGrid.numCols) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.EAST)) {
-				p2GridX++;
-			}
-			keyDown[3] = true;
-			if (currentFrame == 1) {
-				currentFrame = 0;
-			} else {
-				currentFrame = 1;
-			}
-		}
-		player2.move(gridX2X(p2GridX),gridY2Y(p2GridY));
-
-	}
-
-	/**
-	 * checks what happens if a key is released
-	 */
-	public void keyReleased() {
-		if (key == 119) { // w
-			keyDown[0] = false;
-		}
-		if (keyCode == DOWN) {
-			if ((p2GridY + 1 < mazeGrid.numRows)
-					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
-				p2GridY++;
-			}
-			keyDown[2] = true;
-			if (currentFrame == 4) {
-				currentFrame = 5;
-			} else {
-				currentFrame = 4;
-			}
-		}
-		if (keyCode == RIGHT) {
 			if ((p2GridX + 1 < mazeGrid.numCols)
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.EAST)) {
 				p2GridX++;
@@ -359,64 +343,28 @@ public class DrawingSurface extends PApplet {
 				currentFrame = 1;
 			}
 		}
-		if (keyCode == LEFT) {
-			if ((p2GridX - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.WEST)) {
-				p2GridX--;
-			}
-			keyDown[1] = true;
-			if (currentFrame == 11) {
-				currentFrame = 10;
-			} else {
-				currentFrame = 11;
-			}
+		if (p2GridX == f1GridX && p2GridY == f1GridY) {
+			f1.setPossession(true);
 		}
 		player2.move(gridX2X(p2GridX), gridY2Y(p2GridY));
+
 	}
 
-//	public void keyReleased() {
-//		if (key == 119) { // w
-//			keyDown[0] = false;
-//		}
-//		if (key == 97) { // a
-//			keyDown[1] = false;
-//		}
-//		if (key == 115) { // s
-//			keyDown[2] = false;
-//		}
-//		if (key == 100) { // d
-//			keyDown[3] = false;
-//		}
-//
-//		if (keyDown[0] && !keyDown[2]) {
-//			player1.moveUp();
-//		}
-//		if (keyDown[2] && !keyDown[0]) {
-//			player1.moveDown();
-//		}
-//		if (keyDown[1] && !keyDown[3]) {
-//			player1.moveLeft();
-//		}
-//		if (keyDown[3] && !keyDown[1]) {
-//			player1.moveRight();
-//		}
-//
-//		if (!keyDown[0] && !keyDown[2]) {
-//			player1.stopMoveUp();
-//		}
-//		if (!keyDown[1] && !keyDown[3]) {
-//			player1.stopMoveLeft();
-//		}
-//
-//		if (currentFrame == 1) {
-//			currentFrame = 0;
-//		} else if (currentFrame == 11) {
-//			currentFrame = 10;
-//		} else if (currentFrame == 4 || currentFrame == 5) {
-//			currentFrame = 12;// change to standing down pic later
-//		} else if (currentFrame == 7 || currentFrame == 8) {
-//			currentFrame = 6;
-//		}
-//	}
+	/**
+	 * checks what happens if a key is released
+	 */
+
+	public void keyReleased() {
+		if (currentFrame == 1) {
+			currentFrame = 0;
+		} else if (currentFrame == 11) {
+			currentFrame = 10;
+		} else if (currentFrame == 4 || currentFrame == 5) {
+			currentFrame = 12;// change to standing down pic later
+		} else if (currentFrame == 7 || currentFrame == 8) {
+			currentFrame = 6;
+		}
+	}
 
 	/**
 	 * generates the maze in a handy function
@@ -445,8 +393,10 @@ public class DrawingSurface extends PApplet {
 					} else {
 						if (i > 1 && maze.substring(i - 1, i).equals("-")) {
 							this.image(wall, x, y, width / 36, height / 36);
-						} else if (i > 1
-								&& maze.substring(i - 1, i).equals(" ") /* && !maze.substring(i+1, i+2).equals("\n") */
+						} else if (i > 1 && maze.substring(i - 1, i).equals(" ") /*
+																					 * && !maze.substring(i+1,
+																					 * i+2).equals("\n")
+																					 */
 								&& maze.substring(i + 1, i + 2).equals(" ")) {
 							this.image(wall, x, y, width / 72, height / 40);
 						} else if (i > 1 && maze.substring(i - 1, i).equals(" ")

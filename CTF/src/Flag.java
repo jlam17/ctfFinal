@@ -6,7 +6,7 @@ import processing.core.PImage;
  *
  */
 public class Flag implements Carryable {
-	private Player home, enemy;
+	private Player home;
 	private boolean possession;
 	private double initialx, initialy;
 	private double y;
@@ -19,12 +19,11 @@ public class Flag implements Carryable {
 	 * @param x the x value the flag is created at
 	 * @param y the y value the flag is created at
 	 */
-	public Flag(PImage p, Player home, Player enemy, double x, double y) {
+	public Flag(PImage p, Player home, double x, double y) {
 		this.initialx = x;
 		this.initialy = y;
 		this.x = x;
 		this.y = y;
-		this.enemy = enemy;
 		this.home = home;
 		this.possession = false;
 	}
@@ -79,13 +78,13 @@ public class Flag implements Carryable {
 		return home;
 	}
 
-	/**
-	 * returns the enemy of the player whose flag it is
-	 * @return the enemy of the player whose flag it is
-	 */
-	public Player getEnemy() {
-		return enemy;
-	}
+//	/**
+//	 * returns the enemy of the player whose flag it is
+//	 * @return the enemy of the player whose flag it is
+//	 */
+//	public Player getEnemy() {
+//		return enemy;
+//	}
 	
 	/**
 	 * returns the player that controls the flag currently
