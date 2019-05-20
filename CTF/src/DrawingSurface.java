@@ -108,6 +108,7 @@ public class DrawingSurface extends PApplet {
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
+	boolean done = false;
 
 	/*
 	 * Private variables for defining Maze Grid
@@ -221,22 +222,46 @@ public class DrawingSurface extends PApplet {
 	 * draws the background and players
 	 */
 	public void draw() {
-		background(255);
+		if(!done) {
+			background(255);
+			
 
-		this.image(images[9], 0, 0);
-		if (!f1.isPossession()) {
-			f1.draw(this, flag1);
-			player2.draw(this, images, currentFrame, false, 0, 0, 0);
-		} else {
-			player2.draw(this, images, currentFrame, true, 250, 0, 0);
+			this.image(images[9], 0, 0);
+			
+			textSize(50);
+			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
+			
+			if(player1.hasWon()) {
+				player1.setScore(player1.getScore()+1);
+				//player2.draw(this, images, 1, gridX2X(p1GridX), gridY2Y(p1GridY), 0, 0, 0);
+				//player1.
+			}
+			if(player2.hasWon()) {
+				player2.setScore(player2.getScore()+1);
+			}
+			
+			if(player1.getScore()>=5 || player2.getScore()>=5) {
+				done = true;
+			}
+
+			
+			if (!f1.isPossession()) {
+				f1.draw(this, flag1);
+				player2.draw(this, images, currentFrame, false, 0, 0, 0);
+			} else {
+				player2.draw(this, images, currentFrame, true, 250, 0, 0);
+			}
+			if (!f2.isPossession()) {
+				f2.draw(this, flag2);
+				player1.draw(this, images, currentFrame, false, 0, 0, 0);
+			} else {
+				player1.draw(this, images, currentFrame, true, 0, 0, 250);
+			}
+			drawMazeGrid();
 		}
-		if (!f2.isPossession()) {
-			f2.draw(this, flag2);
-			player1.draw(this, images, currentFrame, false, 0, 0, 0);
-		} else {
-			player1.draw(this, images, currentFrame, true, 0, 0, 250);
+		else {
+			//print a player has won...
 		}
-		drawMazeGrid();
 
 	}
 
