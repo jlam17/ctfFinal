@@ -233,8 +233,6 @@ public class DrawingSurface extends PApplet {
 			
 			if(player1.hasWon()) {
 				player1.setScore(player1.getScore()+1);
-				//player2.draw(this, images, 1, gridX2X(p1GridX), gridY2Y(p1GridY), 0, 0, 0);
-				//player1.
 			}
 			if(player2.hasWon()) {
 				player2.setScore(player2.getScore()+1);
