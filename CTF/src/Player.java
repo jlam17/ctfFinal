@@ -17,6 +17,7 @@ public class Player {
 	private Powerup q;
 
 	private int health;
+	private int score;
 
 	/**
 	 * Creates the player
@@ -41,7 +42,8 @@ public class Player {
 	 */
 	public void draw(PApplet drawer, PImage[] images, int currentFrame, boolean hasFlag, int r, int g, int b) {
 		tick();
-		if (hasFlag) {
+		this.hasFlag = hasFlag;
+		if (this.hasFlag) {
 			drawer.tint(r, g, b);
 			drawer.image(images[currentFrame], (float) x, (float) y);
 			drawer.noTint();
@@ -253,4 +255,23 @@ public class Player {
 	public void changeHealth(int deltaHealth) {
 		this.health += deltaHealth;
 	}
+	
+	/**
+	 * 
+	 * @return The score of your player
+	 */
+	public int getScore() {
+		return score;
+	}
+
+	/**
+	 * Sets the score of your player
+	 * 
+	 * @param y the new score of your player
+	 */
+	public void setScore(int y) {
+		this.y = y;
+	}
+
+	
 }
