@@ -101,7 +101,7 @@ public class DrawingSurface extends PApplet {
 	Player player1, player2;
 	int p1GridX, p1GridY, p2GridX, p2GridY, f1GridX, f1GridY, f2GridX, f2GridY;
 	int numFrames; // The number of frames in the animation
-	int currentFrame, currentFrame2;
+	int currentFrame, currentFrame2, shotFrame1, shotFrame2;
 	PImage[] images;
 	PImage wall, flag1, flag2;
 	Flag f1, f2;
@@ -125,12 +125,14 @@ public class DrawingSurface extends PApplet {
 	 */
 	public DrawingSurface() {
 		super();
-		numFrames = 15;
+		numFrames = 19;
 		images = new PImage[numFrames];
 		keyDown = new boolean[4];
 		currentFrame = 0;
 		currentFrame2 = 0;
-		
+		shotFrame1 = 15;
+		shotFrame2 = 15;
+
 	}
 
 	/**
@@ -192,6 +194,14 @@ public class DrawingSurface extends PApplet {
 		images[13].resize(40, 40);
 		images[14] = loadImage("blueFlag.png");
 		images[14].resize(40, 40);
+		images[15] = loadImage("fireball1.png");
+		images[15].resize(40, 40);
+		images[16] = loadImage("fireball2.png");
+		images[16].resize(40, 40);
+		images[17] = loadImage("fireball3.png");
+		images[17].resize(40, 40);
+		images[18] = loadImage("fireball4.png");
+		images[18].resize(40, 40);
 
 		flag1 = images[13];
 		flag2 = images[14];
@@ -202,16 +212,16 @@ public class DrawingSurface extends PApplet {
 
 		f1 = new Flag(flag1, player1, gridX2X(p1GridX), gridY2Y(p1GridY));
 		f2 = new Flag(flag2, player2, gridX2X(p2GridX), gridY2Y(p2GridY));
-		
+
 		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
 		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
-		
+
 		f1GridX = p1GridX;
 		f1GridY = p1GridY;
 
 		f2GridX = p2GridX;
 		f2GridY = p2GridY;
-		
+
 		textSize(100);
 		this.text("Click Anywhere \nto Start\n\nRight Click for \nInstructions", 200, 300);
 	}
@@ -229,51 +239,50 @@ public class DrawingSurface extends PApplet {
 	 * draws the background and players
 	 */
 	public void draw() {
-		if(!done) {
+		if (!done && started) {
 			background(255);
-			
 
 			this.image(images[9], 0, 0);
-			
+
 			textSize(50);
-			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
-			
-			if(player1.hasWon()) {
+			this.text("Player 1: " + player1.getScore() + "\nPlayer 2: " + player2.getScore(), 300, 700);
+
+			if (player1.hasWon()) {
 				f1.generate();
 				f2.generate();
-				player2.setScore(player2.getScore()+1);
+				player2.setScore(player2.getScore() + 1);
 				player1.setX(gridX2X(0));
 				p1GridX = 0;
 				player1.setY(gridY2Y(0));
 				p1GridY = 0;
 				player2.setX(gridX2X(mazeGrid.numCols - 1));
-				p2GridX = mazeGrid.numCols-1;
+				p2GridX = mazeGrid.numCols - 1;
 				player2.setY(gridY2Y(mazeGrid.numRows - 1));
-				p2GridY = mazeGrid.numRows-1;
+				p2GridY = mazeGrid.numRows - 1;
 				player2.draw(this, images, 1, false, 0, 0, 0);
 				player1.draw(this, images, 1, false, 0, 0, 0);
-				
-				//f1.draw(this, flag1);
-				//f2.draw(this, flag2);
+
+				// f1.draw(this, flag1);
+				// f2.draw(this, flag2);
 			}
-			if(player2.hasWon()) {
+			if (player2.hasWon()) {
 				f1.generate();
 				f2.generate();
-				player2.setScore(player2.getScore()+1);
+				player2.setScore(player2.getScore() + 1);
 				player1.setX(gridX2X(0));
 				p1GridX = 0;
 				player1.setY(gridY2Y(0));
 				p1GridY = 0;
 				player2.setX(gridX2X(mazeGrid.numCols - 1));
-				p2GridX = mazeGrid.numCols-1;
+				p2GridX = mazeGrid.numCols - 1;
 				player2.setY(gridY2Y(mazeGrid.numRows - 1));
-				p2GridY = mazeGrid.numRows-1;
+				p2GridY = mazeGrid.numRows - 1;
 			}
-			
-			if(player1.getScore()>=5 || player2.getScore()>=5) {
+
+			if (player1.getScore() >= 5 || player2.getScore() >= 5) {
 				done = true;
 			}
-			
+
 			if (!f1.isPossession()) {
 				f1.draw(this, flag1);
 				player2.draw(this, images, currentFrame2, false, 0, 0, 0);
@@ -287,26 +296,35 @@ public class DrawingSurface extends PApplet {
 				player1.draw(this, images, currentFrame, true, 0, 0, 250);
 			}
 			drawMazeGrid();
-		}
-		else {
-			//print a player has won...
+		} else {
+			// print a player has won...
 		}
 
-	
-				
-				//f1.draw(this, flag1);
-				//f2.draw(this, flag2);
+		// f1.draw(this, flag1);
+		// f2.draw(this, flag2);
 	}
 
 	/**
 	 * checks for what to do if a mouse button is pressed
 	 */
 	public void mousePressed() {
-		if(!started && mouseButton==LEFT) {
+		if (started && mouseButton == LEFT) {
+			Direction d = Direction.NORTH;
+			if (currentFrame == 12 || currentFrame == 4 || currentFrame == 5) {
+				d = Direction.SOUTH;
+			} else if (currentFrame == 0 || currentFrame == 1) {
+				d = Direction.EAST;
+			} else if (currentFrame == 10 || currentFrame == 11) {
+				d = Direction.WEST;
+			}
+			//player2.shoot(mazeGrid, d, gridX2X(p2GridX), gridY2Y(p2GridY));
+		}
+		if (!started && mouseButton == LEFT) {
 			started = true;
 		}
-		if(mouseButton==RIGHT) {
-			if(!started) {
+
+		if (mouseButton == RIGHT) {
+			if (!started) {
 				this.background(0);
 				this.text("2 Player Capture the Flag\n", 100, 200); // instructions here
 			}
@@ -364,6 +382,17 @@ public class DrawingSurface extends PApplet {
 			} else {
 				currentFrame = 1;
 			}
+		} else if (key == 32) {
+			Direction d = Direction.NORTH;
+			if (currentFrame == 12 || currentFrame == 4 || currentFrame == 5) {
+				d = Direction.SOUTH;
+			} else if (currentFrame == 0 || currentFrame == 1) {
+				d = Direction.EAST;
+			} else if (currentFrame == 10 || currentFrame == 11) {
+				d = Direction.WEST;
+			}
+				player1.shoot(this, images, shotFrame1, mazeGrid, d, gridX2X(p1GridX), gridY2Y(p1GridY));
+
 		}
 		if (p1GridX == f2GridX && p1GridY == f2GridY) {
 			f2.setPossession(true);
@@ -444,16 +473,16 @@ public class DrawingSurface extends PApplet {
 		} else if (currentFrame2 == 7 || currentFrame2 == 8) {
 			currentFrame2 = 6;
 		}
-		if (key == 119 || key == 87) { // w
-			player1.setVelY(0);
-		} else if (key == 115 || key == 83) { // s
-			player1.setVelY(0);
-		} else if (key == 97 || key == 65) { // a
-			player1.setVelX(0);
-		} else if (key == 100 || key == 68) { // d
-			player1.setVelX(0);
-		}
-		
+//		if (key == 119 || key == 87) { // w
+//			player1.setVelY(0);
+//		} else if (key == 115 || key == 83) { // s
+//			player1.setVelY(0);
+//		} else if (key == 97 || key == 65) { // a
+//			player1.setVelX(0);
+//		} else if (key == 100 || key == 68) { // d
+//			player1.setVelX(0);
+//		}
+
 	}
 
 	/**

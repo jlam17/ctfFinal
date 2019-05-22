@@ -16,9 +16,15 @@ public class Player {
 	private double velX, velY;
 	private int gridX, gridY;
 	private Powerup q;
+	private boolean isShooting;
+	private Direction dOfShot;
+	private double shotX, shotY;
+	private int shotFrame;
 
 	private int health;
 	private int score;
+	
+
 
 	/**
 	 * Creates the player
@@ -36,6 +42,7 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		q = null;
+		isShooting = false;
 	}
 
 	/**
@@ -53,6 +60,35 @@ public class Player {
 		} else {
 			drawer.image(images[currentFrame], (float) x, (float) y);
 		}
+		if (isShooting) {
+			int deltaX = 0;
+			int deltaY = 0;
+			if(dOfShot == Direction.NORTH) {
+				deltaY = -5;
+			} else if (dOfShot == Direction.EAST) {
+				deltaX = 5;
+			} else if (dOfShot == Direction.WEST) {
+				deltaX = -5;
+			} else {
+				deltaY = 5;
+			}
+			shotX += deltaX;
+			shotY += deltaY;
+			if (shotFrame == 15) {
+				setShotFrame(16);
+			} else if (shotFrame == 16) {
+				setShotFrame(17);
+			} else if (shotFrame == 17) {
+				setShotFrame(18);
+			} else {
+				setShotFrame(15);
+			} 
+			drawer.image(images[shotFrame], (float)shotX, (float)shotY);
+		}
+	}
+	
+	public void drawShot(PApplet drawer, PImage[] images, int frame) {
+		
 	}
 
 	/**
@@ -61,14 +97,6 @@ public class Player {
 	public void tick() {
 		x += velX;
 		y += velY;
-		if (x < 0)
-			setX(0);
-		if (x > 880)
-			setX(880);
-		if (y < 0)
-			setY(0);
-		if (y > 680)
-			setY(680);
 
 	}
 
@@ -276,6 +304,38 @@ public class Player {
 	 */
 	public void setScore(int y) {
 		this.score = y;
+	}
+	
+	/**
+	 * Shoots a sword beam in the direction of the player
+	 */
+	public void shoot(PApplet drawer, PImage[] images, int frame, Grid mazeGrid, Direction d, double x, double y) {
+		setIsShooting(true);
+		dOfShot = d;
+		shotX = x;
+		shotY = y;
+		shotFrame = frame;
+		drawer.image(images[frame], (float)x, (float)y);
+		
+	}
+	
+	/**
+	 * 
+	 * @return Whether or not the player is currently shooting
+	 */
+	public boolean getIsShooting() {
+		return isShooting;
+	}
+	
+	/**
+	 * Set whether or not the player is currently shooting
+	 */
+	public void setIsShooting(boolean v) {
+		isShooting = v;
+	}
+	
+	public void setShotFrame(int frame) {
+		shotFrame = frame;
 	}
 
 	
