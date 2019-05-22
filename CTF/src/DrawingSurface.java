@@ -108,7 +108,8 @@ public class DrawingSurface extends PApplet {
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
-	boolean done;
+
+	boolean done = false, started = false;
 
 	/*
 	 * Private variables for defining Maze Grid
@@ -127,7 +128,6 @@ public class DrawingSurface extends PApplet {
 		numFrames = 15;
 		images = new PImage[numFrames];
 		keyDown = new boolean[4];
-		done =false;
 	}
 
 	/**
@@ -153,6 +153,7 @@ public class DrawingSurface extends PApplet {
 		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
 		maze = mazeGrid.toString();
 
+		System.out.println(maze);
 
 		// this.text("", 100, 100);
 		wall = loadImage("wall.png");
@@ -196,17 +197,20 @@ public class DrawingSurface extends PApplet {
 		p2GridX = mazeGrid.numCols - 1;
 		p2GridY = mazeGrid.numRows - 1;
 
-		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
-		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
-
 		f1 = new Flag(flag1, player1, gridX2X(p1GridX), gridY2Y(p1GridY));
 		f2 = new Flag(flag2, player2, gridX2X(p2GridX), gridY2Y(p2GridY));
-
+		
+		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
+		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
+		
 		f1GridX = p1GridX;
 		f1GridY = p1GridY;
 
 		f2GridX = p2GridX;
 		f2GridY = p2GridY;
+		
+		textSize(100);
+		this.text("Click Anywhere \nto Start\n\nRight Click for \nInstructions", 200, 300);
 	}
 
 	public double gridX2X(int gridX) {
@@ -232,20 +236,32 @@ public class DrawingSurface extends PApplet {
 			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
 			
 			if(player1.hasWon()) {
+				f1.generate();
+				f2.generate();
 				player1.setScore(player1.getScore()+1);
-				player1.setX(gridX2X(p1GridX));
-				player1.setY(gridY2Y(p1GridY));
+				player1.setX(gridX2X(0));
+				player1.setY(gridY2Y(0));
+				player2.setX(gridX2X(mazeGrid.numCols - 1));
+				player2.setY(gridY2Y(mazeGrid.numRows - 1));
+				player2.draw(this, images, 1, false, 0, 0, 0);
 				player1.draw(this, images, 1, false, 0, 0, 0);
-				//player1.
+				
+				//f1.draw(this, flag1);
+				//f2.draw(this, flag2);
 			}
 			if(player2.hasWon()) {
+				f1.generate();
+				f2.generate();
 				player2.setScore(player2.getScore()+1);
+				player1.setX(gridX2X(0));
+				player1.setY(gridY2Y(0));
+				player2.setX(gridX2X(mazeGrid.numCols - 1));
+				player2.setY(gridY2Y(mazeGrid.numRows - 1));
 			}
 			
 			if(player1.getScore()>=5 || player2.getScore()>=5) {
 				done = true;
 			}
-
 			
 			if (!f1.isPossession()) {
 				f1.draw(this, flag1);
@@ -265,13 +281,25 @@ public class DrawingSurface extends PApplet {
 			//print a player has won...
 		}
 
+	
+				
+				//f1.draw(this, flag1);
+				//f2.draw(this, flag2);
 	}
 
 	/**
 	 * checks for what to do if a mouse button is pressed
 	 */
 	public void mousePressed() {
-
+		if(!started && mouseButton==LEFT) {
+			started = true;
+		}
+		if(mouseButton==RIGHT) {
+			if(!started) {
+				this.background(0);
+				this.text("2 Player Capture the Flag\n", 100, 200); // instructions here
+			}
+		}
 	}
 
 	/**
@@ -396,6 +424,49 @@ public class DrawingSurface extends PApplet {
 	/**
 	 * generates the maze in a handy function
 	 */
+	public void drawMaze() {
+		int y = 5;
+		int x = 20;
+		for (int i = 0; i < 874 && i < maze.length(); i++) {
+			x = 20;
+			y += 36;
+			while (!maze.substring(i, i + 1).equals("\n")) {
+				if (!maze.substring(i, i + 1).equals(" ")) {
+					if (maze.substring(i, i + 1).equals("-")) {
+						if (i > 1 && maze.substring(i - 1, i).equals(" ")) {
+							this.image(wall, x, y, width / 72, height / 144);
+						} else if (i > 1 && maze.substring(i + 1, i + 2).equals(" ")
+								&& maze.substring(i + 2, i + 3).equals("|")) {
+							this.image(wall, x, y, width / 72, height / 144);
+						}
+//						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
+//							this.image(wall, x, y, width/72, height/144);
+//						}
+						else {
+							this.image(wall, x, y, width / 18, height / 36);
+						}
+					} else {
+						if (i > 1 && maze.substring(i - 1, i).equals("-")) {
+							this.image(wall, x, y, width / 36, height / 36);
+						} else if (i > 1 && maze.substring(i - 1, i).equals(" ") /*
+																					 * && !maze.substring(i+1,
+																					 * i+2).equals("\n")
+																					 */
+								&& maze.substring(i + 1, i + 2).equals(" ")) {
+							this.image(wall, x, y, width / 72, height / 40);
+						} else if (i > 1 && maze.substring(i - 1, i).equals(" ")
+								&& !maze.substring(i + 1, i + 2).equals("\n")
+								&& !maze.substring(i + 1, i + 2).equals(" ")) {
+							this.image(wall, x, y, width / 36, height / 36);
+						} else {
+							this.image(wall, x, y, width / 36, height / 18);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public void drawMazeGrid() {
 
 		for (int r = 0; r < mazeGrid.numRows; r++) {
