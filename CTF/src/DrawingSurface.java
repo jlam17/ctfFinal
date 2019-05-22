@@ -108,7 +108,7 @@ public class DrawingSurface extends PApplet {
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
-	boolean done = false;
+	boolean done;
 
 	/*
 	 * Private variables for defining Maze Grid
@@ -127,6 +127,7 @@ public class DrawingSurface extends PApplet {
 		numFrames = 15;
 		images = new PImage[numFrames];
 		keyDown = new boolean[4];
+		done =false;
 	}
 
 	/**
@@ -152,7 +153,6 @@ public class DrawingSurface extends PApplet {
 		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
 		maze = mazeGrid.toString();
 
-		System.out.println(maze);
 
 		// this.text("", 100, 100);
 		wall = loadImage("wall.png");
@@ -233,6 +233,10 @@ public class DrawingSurface extends PApplet {
 			
 			if(player1.hasWon()) {
 				player1.setScore(player1.getScore()+1);
+				player1.setX(gridX2X(p1GridX));
+				player1.setY(gridY2Y(p1GridY));
+				player1.draw(this, images, 1, false, 0, 0, 0);
+				//player1.
 			}
 			if(player2.hasWon()) {
 				player2.setScore(player2.getScore()+1);

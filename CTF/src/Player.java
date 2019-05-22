@@ -232,7 +232,7 @@ public class Player {
 	 * @return True or false if you have won
 	 */
 	public boolean hasWon() {
-		if (hasFlag) { // set x to 0 so there wouldnt be a compiler error for now
+		if (hasFlag) { 
 			return true;
 		} else {
 			return false;
