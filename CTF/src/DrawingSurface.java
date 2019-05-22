@@ -99,12 +99,13 @@ public class DrawingSurface extends PApplet {
 	}
 
 	Player player1, player2;
-	int p1GridX, p1GridY, p2GridX, p2GridY, f1GridX, f1GridY, f2GridX, f2GridY;
+	int p1GridX, p1GridY, p2GridX, p2GridY, f1GridX, f1GridY, f2GridX, f2GridY, eGridX, eGridY;
 	int numFrames; // The number of frames in the animation
 	int currentFrame, currentFrame2;
-	PImage[] images;
+	PImage[] images, enemies;
 	PImage wall, flag1, flag2;
 	Flag f1, f2;
+	Enemy e;
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
@@ -127,10 +128,12 @@ public class DrawingSurface extends PApplet {
 		super();
 		numFrames = 15;
 		images = new PImage[numFrames];
+		enemies = new PImage[4];
 		keyDown = new boolean[4];
 		currentFrame = 0;
 		currentFrame2 = 0;
-		
+		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
+		e = new Enemy(gridX2X(0), gridY2Y(mazeGrid.numRows - 1));
 	}
 
 	/**
@@ -147,17 +150,17 @@ public class DrawingSurface extends PApplet {
 
 		settings();
 		frameRate(60);
-
+		
 		images[9] = loadImage("background.png");
 		images[9].resize(1000, 1000);
 		this.image(images[9], 0, 0);
 
 		// change the first two values in the maze call to change width/height
-		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
+		
 		maze = mazeGrid.toString();
 
-		System.out.println(maze);
-
+		//System.out.println(maze);
+		
 		// this.text("", 100, 100);
 		wall = loadImage("wall.png");
 
@@ -193,6 +196,11 @@ public class DrawingSurface extends PApplet {
 		images[14] = loadImage("blueFlag.png");
 		images[14].resize(40, 40);
 
+		enemies[0] = loadImage("ghostWalkUp.png");
+		enemies[1] = loadImage("ghostWalkDown.png");
+		enemies[2] = loadImage("ghostWalkLeft.png");
+		enemies[3] = loadImage("ghostWalkLeft.png");
+		
 		flag1 = images[13];
 		flag2 = images[14];
 		p1GridX = 0;
@@ -229,11 +237,61 @@ public class DrawingSurface extends PApplet {
 	 * draws the background and players
 	 */
 	public void draw() {
-		if(!done) {
+		if(!done && started) {
 			background(255);
 			
-
 			this.image(images[9], 0, 0);
+			
+			e.draw(this, enemies[0]);
+			if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int) e.getY())), Direction.NORTH) && e.getDirection() == 1) {
+				//e.draw(this, enemies[1]);
+				int toSet = e.getDirection()+1;
+				if(toSet>4) {
+					toSet = 1;
+				}
+				e.setDirection(toSet);
+			}
+			else if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int) e.getY())), Direction.EAST) && e.getDirection() == 2) {
+				//e.draw(this, enemies[0]);
+				int toSet = e.getDirection()+1;
+				if(toSet>4) {
+					toSet = 1;
+				}
+				e.setDirection(toSet);
+
+			}
+			else if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int) e.getY())), Direction.SOUTH) && e.getDirection() == 3) {
+				//e.draw(this, enemies[0]);
+				int toSet = e.getDirection()+1;
+				if(toSet>4) {
+					toSet = 1;
+				}
+				e.setDirection(toSet);
+
+			}
+			else if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int)e.getY())), Direction.WEST) && e.getDirection() == 4) {
+				//e.draw(this, enemies[0]);
+				int toSet = e.getDirection()+1;
+				if(toSet>4) {
+					toSet = 1;
+				}
+				e.setDirection(toSet);
+
+			}
+			else {
+				if(e.getDirection() == 1) {
+					e.setY(e.getY()-2);
+				}
+				else if(e.getDirection() == 2) {
+					e.setX(e.getX()+2);
+				}
+				else if(e.getDirection() == 3) {
+					e.setY(e.getY()+2);
+				}
+				else if(e.getDirection() == 4) {
+					e.setX(e.getX()-2);
+				}
+			}
 			
 			textSize(50);
 			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
@@ -290,6 +348,15 @@ public class DrawingSurface extends PApplet {
 		}
 		else {
 			//print a player has won...
+			if(player1.getScore()>=5 || player2.getScore()>=5) {
+				background(0);
+				if(player1.getScore()>=5) {
+					this.text("Player 1 Has WON", 100, 100);
+				}
+				else {
+					this.text("Player 2 Has WON", 100, 100);
+				}
+			}
 		}
 
 	
@@ -366,7 +433,7 @@ public class DrawingSurface extends PApplet {
 			}
 		}
 		if (p1GridX == f2GridX && p1GridY == f2GridY) {
-			f2.setPossession(true);
+			f2.pickUp(player1);
 		}
 		player1.move(gridX2X(p1GridX), gridY2Y(p1GridY));
 
@@ -415,7 +482,7 @@ public class DrawingSurface extends PApplet {
 			}
 		}
 		if (p2GridX == f1GridX && p2GridY == f1GridY) {
-			f1.setPossession(true);
+			f1.pickUp(player2);
 		}
 		player2.move(gridX2X(p2GridX), gridY2Y(p2GridY));
 
