@@ -12,6 +12,7 @@ public class Player {
 	private int playerId;
 	private boolean hasFlag;
 	private double x, y;
+	private double initialx, initialy;
 	private double velX, velY;
 	private int gridX, gridY;
 	private Powerup q;
@@ -30,6 +31,8 @@ public class Player {
 		this.health = 100;
 		this.playerId = playerId;
 		hasFlag = false;
+		this.initialx = x;
+		this.initialy = y;
 		this.x = x;
 		this.y = y;
 		q = null;
@@ -232,7 +235,7 @@ public class Player {
 	 * @return True or false if you have won
 	 */
 	public boolean hasWon() {
-		if (hasFlag) { // set x to 0 so there wouldnt be a compiler error for now
+		if (hasFlag && Math.abs(x-initialx)<=5 && Math.abs(y-initialy)<=5) { // set x to 0 so there wouldnt be a compiler error for now
 			return true;
 		} else {
 			return false;
@@ -270,7 +273,7 @@ public class Player {
 	 * @param y the new score of your player
 	 */
 	public void setScore(int y) {
-		this.y = y;
+		this.score = y;
 	}
 
 	

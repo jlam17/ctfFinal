@@ -108,7 +108,7 @@ public class DrawingSurface extends PApplet {
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
-	boolean done = false;
+	boolean done = false, started = false;
 
 	/*
 	 * Private variables for defining Maze Grid
@@ -196,17 +196,20 @@ public class DrawingSurface extends PApplet {
 		p2GridX = mazeGrid.numCols - 1;
 		p2GridY = mazeGrid.numRows - 1;
 
-		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
-		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
-
 		f1 = new Flag(flag1, player1, gridX2X(p1GridX), gridY2Y(p1GridY));
 		f2 = new Flag(flag2, player2, gridX2X(p2GridX), gridY2Y(p2GridY));
-
+		
+		player1 = new Player(1, gridX2X(p1GridX), gridY2Y(p1GridY));
+		player2 = new Player(2, gridX2X(p2GridX), gridY2Y(p2GridY));
+		
 		f1GridX = p1GridX;
 		f1GridY = p1GridY;
 
 		f2GridX = p2GridX;
 		f2GridY = p2GridY;
+		
+		textSize(100);
+		this.text("Click Anywhere \nto Start\n\nRight Click for \nInstructions", 200, 300);
 	}
 
 	public double gridX2X(int gridX) {
@@ -222,30 +225,47 @@ public class DrawingSurface extends PApplet {
 	 * draws the background and players
 	 */
 	public void draw() {
-		if(!done) {
+		if(!done && started) {
+			
 			background(255);
 			
-
 			this.image(images[9], 0, 0);
 			
 			textSize(50);
 			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
 			
 			if(player1.hasWon()) {
+				f1.generate();
+				f2.generate();
 				player1.setScore(player1.getScore()+1);
-				player1.setX(gridX2X(p2GridX));
-				player1.setY(gridY2Y(p2GridY));
+				player1.setX(gridX2X(0));
+				player1.setY(gridY2Y(0));
+				player2.setX(gridX2X(mazeGrid.numCols - 1));
+				player2.setY(gridY2Y(mazeGrid.numRows - 1));
 				player2.draw(this, images, 1, false, 0, 0, 0);
-				//player1.
+				player1.draw(this, images, 1, false, 0, 0, 0);
+				
+				//f1.draw(this, flag1);
+				//f2.draw(this, flag2);
 			}
 			if(player2.hasWon()) {
+				f1.generate();
+				f2.generate();
 				player2.setScore(player2.getScore()+1);
+				player1.setX(gridX2X(0));
+				player1.setY(gridY2Y(0));
+				player2.setX(gridX2X(mazeGrid.numCols - 1));
+				player2.setY(gridY2Y(mazeGrid.numRows - 1));
+				player2.draw(this, images, 1, false, 0, 0, 0);
+				player1.draw(this, images, 1, false, 0, 0, 0);
+				
+				//f1.draw(this, flag1);
+				//f2.draw(this, flag2);
 			}
 			
 			if(player1.getScore()>=5 || player2.getScore()>=5) {
 				done = true;
 			}
-
 			
 			if (!f1.isPossession()) {
 				f1.draw(this, flag1);
@@ -271,7 +291,15 @@ public class DrawingSurface extends PApplet {
 	 * checks for what to do if a mouse button is pressed
 	 */
 	public void mousePressed() {
-
+		if(!started && mouseButton==LEFT) {
+			started = true;
+		}
+		if(mouseButton==RIGHT) {
+			if(!started) {
+				this.background(0);
+				this.text("2 Player Capture the Flag\n", 100, 200); // instructions here
+			}
+		}
 	}
 
 	/**
