@@ -171,32 +171,34 @@ public class Player {
 	/**
 	 * Moves the player right
 	 */
-	public void moveRight() {
-		setVelX(60);
+	public void moveRight(double m) {
+		setVelX(m);
 	}
 
 	/**
 	 * Moves the player left
 	 */
-	public void moveLeft() {
-		setVelX(-60);
+	public void moveLeft(double m) {
+		setVelX(m);
 	}
 
 	/**
 	 * Moves the player up
 	 */
-	public void moveUp() {
-		setVelY(-60);
+	public void moveUp(double m) {
+		setVelY(m);
 	}
 
 	/**
 	 * Moves the player down
 	 */
-	public void moveDown() {
-		setVelY(60);
+	public void moveDown(double m) {
+		setVelY(m);
 	}
 
 	public void move(double x, double y) {
+//		setVelX(x - this.x);
+//		setVelY(y - this.y);
 		setX(x);
 		setY(y);
 	}
