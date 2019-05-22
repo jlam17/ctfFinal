@@ -1,4 +1,6 @@
 import java.util.Random;
+
+import processing.core.PImage;
 /**
  * an AI enemy that heads for and attacks players while they are playing
  * @author hdesouza538
@@ -7,16 +9,24 @@ import java.util.Random;
 public class Enemy {
 	private double x, y;
 	private int health;
+	private int direction;
 	
+	
+
 	/**
 	 * initializes Enemy as well as its x and y variables
 	 * @param x the initial x value of the enemy
 	 * @param y the initial y value of the enemy
 	 */
-	public Enemy(int x, int y) {
+	public Enemy(double x, double y) {
 		this.x = x;
 		this.y = y;
 		this.health = 100;
+		this.direction = 1;
+	}
+	
+	public void draw(DrawingSurface drawer, PImage img) {
+		drawer.image(img, (float)x, (float)y);
 	}
 	
 	/**
@@ -27,7 +37,7 @@ public class Enemy {
 	public void pursue(Player player1, Player player2) {
 		Player toAttack = findClosestPlayer(player1, player2);
 		while (this.health>0 && toAttack.getHealth()>0) {
-			moveToPlayer();
+			//moveToPlayer(toAttack);
 			attack(toAttack);
 		}
 		
@@ -42,11 +52,44 @@ public class Enemy {
 			p.changeHealth(-20);
 		}
 	}
-
-	private void moveToPlayer() {
-		// move through maze to player
-		
+	
+	public int getDirection() {
+		return direction;
 	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+	public double getX() {
+		return x;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+//	private void moveToPlayer(Player toAttack) {
+//		// move through maze to player
+//		if(!(Math.abs(x-toAttack.getX())<=1 && Math.abs(y-toAttack.getY())<=1)){
+//			moveToPlayer(toAttack);
+//		}
+//	}
 
 	/**
 	 * finds the closest player to head for and attack
