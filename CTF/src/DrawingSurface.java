@@ -109,6 +109,7 @@ public class DrawingSurface extends PApplet {
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
+	int enemyImage;
 
 	boolean done = false, started = false;
 
@@ -136,7 +137,8 @@ public class DrawingSurface extends PApplet {
 		shotFrame2 = 15;
 
 		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
-		e = new Enemy(gridX2X(0), gridY2Y(mazeGrid.numRows - 1));
+		e = new Enemy(gridX2X(mazeGrid.numCols - 1), gridY2Y(0));
+		enemyImage = 0;
 	}
 
 	/**
@@ -208,9 +210,13 @@ public class DrawingSurface extends PApplet {
 		images[18].resize(40, 40);
 
 		enemies[0] = loadImage("ghostWalkUp.png");
+		enemies[0].resize(14, 24);
 		enemies[1] = loadImage("ghostWalkDown.png");
+		enemies[1].resize(15, 25);
 		enemies[2] = loadImage("ghostWalkLeft.png");
+		enemies[2].resize(13, 24);
 		enemies[3] = loadImage("ghostWalkLeft.png");
+		enemies[3].resize(13, 24);
 		
 		flag1 = images[13];
 		flag2 = images[14];
@@ -231,6 +237,9 @@ public class DrawingSurface extends PApplet {
 		f2GridX = p2GridX;
 		f2GridY = p2GridY;
 
+		eGridX = mazeGrid.numCols - 1;
+		eGridY = 0;
+		
 		textSize(100);
 		this.text("Click Anywhere \nto Start\n\nRight Click for \nInstructions", 200, 300);
 	}
@@ -252,54 +261,59 @@ public class DrawingSurface extends PApplet {
 			background(255);
 			this.image(images[9], 0, 0);
 			
-			e.draw(this, enemies[0]);
-			if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int) e.getY())), Direction.NORTH) && e.getDirection() == 1) {
+			e.draw(this, enemies[enemyImage]);
+			if(((eGridY < 0) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.NORTH)) && e.getDirection() == 1) {
 				//e.draw(this, enemies[1]);
 				int toSet = e.getDirection()+1;
 				if(toSet>4) {
 					toSet = 1;
 				}
 				e.setDirection(toSet);
+				enemyImage = toSet - 1;
 			}
-			else if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int) e.getY())), Direction.EAST) && e.getDirection() == 2) {
+			else if(((eGridX + 1 > mazeGrid.numCols) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.EAST)) && e.getDirection() == 2) {
 				//e.draw(this, enemies[0]);
 				int toSet = e.getDirection()+1;
 				if(toSet>4) {
 					toSet = 1;
 				}
 				e.setDirection(toSet);
-
+				enemyImage = toSet - 1;
 			}
-			else if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int) e.getY())), Direction.SOUTH) && e.getDirection() == 3) {
+			else if(((eGridY + 1 > mazeGrid.numRows) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.SOUTH)) && e.getDirection() == 3) {
 				//e.draw(this, enemies[0]);
 				int toSet = e.getDirection()+1;
 				if(toSet>4) {
 					toSet = 1;
 				}
 				e.setDirection(toSet);
-
+				enemyImage = toSet - 1;
 			}
-			else if(mazeGrid.hasEdge(mazeGrid.vertex((int)gridX2X((int) e.getX()), (int)gridY2Y((int)e.getY())), Direction.WEST) && e.getDirection() == 4) {
+			else if(((eGridX < 0) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.WEST)) && e.getDirection() == 4) {
 				//e.draw(this, enemies[0]);
 				int toSet = e.getDirection()+1;
 				if(toSet>4) {
 					toSet = 1;
 				}
 				e.setDirection(toSet);
-
+				enemyImage = toSet - 1;
 			}
 			else {
 				if(e.getDirection() == 1) {
-					e.setY(e.getY()-2);
+					eGridY-=1;
+					e.setY(e.getY()-1);
 				}
 				else if(e.getDirection() == 2) {
-					e.setX(e.getX()+2);
+					eGridX+=1;
+					e.setX(e.getX()+1);
 				}
 				else if(e.getDirection() == 3) {
-					e.setY(e.getY()+2);
+					eGridY+=1;
+					e.setY(e.getY()+1);
 				}
 				else if(e.getDirection() == 4) {
-					e.setX(e.getX()-2);
+					eGridX-=1;
+					e.setX(e.getX()-1);
 				}
 			}
 
