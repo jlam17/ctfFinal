@@ -302,14 +302,13 @@ public class DrawingSurface extends PApplet {
 					e.setX(e.getX()-2);
 				}
 			}
-
 			textSize(50);
 			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
 			
 			if(player1.hasWon()) {
 				f1.generate();
 				f2.generate();
-				player2.setScore(player2.getScore()+1);
+				player1.setScore(player1.getScore()+1);
 				player1.setX(gridX2X(0));
 				p1GridX = 0;
 				player1.setY(gridY2Y(0));
@@ -459,7 +458,7 @@ public class DrawingSurface extends PApplet {
 			} else if (currentFrame == 10 || currentFrame == 11) {
 				d = Direction.WEST;
 			}
-				player1.shoot(this, images, shotFrame1, mazeGrid, d, gridX2X(p1GridX), gridY2Y(p1GridY));
+				player1.shoot(this, images, shotFrame1, mazeGrid, d, gridX2X(p1GridX), gridY2Y(p1GridY), p1GridX, p1GridY);
 
 		}
 		if (p1GridX == f2GridX && p1GridY == f2GridY) {

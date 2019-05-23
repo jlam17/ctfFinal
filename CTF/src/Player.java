@@ -19,12 +19,13 @@ public class Player {
 	private boolean isShooting;
 	private Direction dOfShot;
 	private double shotX, shotY;
+	private int shotGridX, shotGridY;
 	private int shotFrame;
+	private Grid maze;
+	private int deltaX, deltaY;
 
 	private int health;
 	private int score;
-	
-
 
 	/**
 	 * Creates the player
@@ -61,19 +62,24 @@ public class Player {
 			drawer.image(images[currentFrame], (float) x, (float) y);
 		}
 		if (isShooting) {
-			int deltaX = 0;
-			int deltaY = 0;
-			if(dOfShot == Direction.NORTH) {
-				deltaY = -5;
-			} else if (dOfShot == Direction.EAST) {
-				deltaX = 5;
-			} else if (dOfShot == Direction.WEST) {
-				deltaX = -5;
-			} else {
-				deltaY = 5;
+			deltaX = 0;
+			deltaY = 0;
+			if (maze.hasEdge(maze.vertex(shotGridX, shotGridY), dOfShot)) {
+				if (dOfShot == Direction.NORTH) {
+					deltaY = -60;
+					shotGridY--;
+				} else if (dOfShot == Direction.SOUTH) {
+					deltaY = 60;
+					shotGridY++;
+				} else if(dOfShot == Direction.EAST) {
+					deltaX = 60;
+					shotGridX++;
+				} else {
+					deltaX = -60;
+					shotGridX--;
+				}
 			}
-			shotX += deltaX;
-			shotY += deltaY;
+
 			if (shotFrame == 15) {
 				setShotFrame(16);
 			} else if (shotFrame == 16) {
@@ -82,13 +88,26 @@ public class Player {
 				setShotFrame(18);
 			} else {
 				setShotFrame(15);
-			} 
-			drawer.image(images[shotFrame], (float)shotX, (float)shotY);
+			}
+
+			shotX += deltaX;
+			shotY += deltaY;
+			System.out.println("shotX: " + shotX + ", shotY:" + shotY);
+			System.out.println(deltaX + "," + deltaY);
+			if (deltaX == 0 && deltaY == 0) {
+				isShooting = false;
+				deltaX = 0;
+				deltaY = 0;
+			} else {
+				drawer.image(images[shotFrame], (float) shotX, (float) shotY);
+				deltaX = 0;
+				deltaY = 0;
+			}
 		}
 	}
-	
+
 	public void drawShot(PApplet drawer, PImage[] images, int frame) {
-		
+
 	}
 
 	/**
@@ -265,7 +284,8 @@ public class Player {
 	 * @return True or false if you have won
 	 */
 	public boolean hasWon() {
-		if (hasFlag && Math.abs(x-initialx)<=5 && Math.abs(y-initialy)<=5) { // set x to 0 so there wouldnt be a compiler error for now
+		if (hasFlag && Math.abs(x - initialx) <= 5 && Math.abs(y - initialy) <= 5) { // set x to 0 so there wouldnt be a
+																						// compiler error for now
 			return true;
 		} else {
 			return false;
@@ -288,7 +308,7 @@ public class Player {
 	public void changeHealth(int deltaHealth) {
 		this.health += deltaHealth;
 	}
-	
+
 	/**
 	 * 
 	 * @return The score of your player
@@ -305,20 +325,26 @@ public class Player {
 	public void setScore(int y) {
 		this.score = y;
 	}
-	
+
 	/**
 	 * Shoots a sword beam in the direction of the player
 	 */
-	public void shoot(PApplet drawer, PImage[] images, int frame, Grid mazeGrid, Direction d, double x, double y) {
-		setIsShooting(true);
-		dOfShot = d;
-		shotX = x;
-		shotY = y;
-		shotFrame = frame;
-		drawer.image(images[frame], (float)x, (float)y);
-		
+	public void shoot(PApplet drawer, PImage[] images, int frame, Grid mazeGrid, Direction d, double x, double y,
+			int gridX, int gridY) {
+		if (!isShooting) {
+			setIsShooting(true);
+			dOfShot = d;
+			shotX = x;
+			shotY = y;
+			shotFrame = frame;
+			maze = mazeGrid;
+			shotGridX = gridX;
+			shotGridY = gridY;
+			drawer.image(images[frame], (float) x, (float) y);
+		}
+
 	}
-	
+
 	/**
 	 * 
 	 * @return Whether or not the player is currently shooting
@@ -326,17 +352,16 @@ public class Player {
 	public boolean getIsShooting() {
 		return isShooting;
 	}
-	
+
 	/**
 	 * Set whether or not the player is currently shooting
 	 */
 	public void setIsShooting(boolean v) {
 		isShooting = v;
 	}
-	
+
 	public void setShotFrame(int frame) {
 		shotFrame = frame;
 	}
 
-	
 }
