@@ -26,8 +26,6 @@ public class main {
 		window.setResizable(false);
 
 		window.setVisible(true);
-		
-		
 
 	}
 

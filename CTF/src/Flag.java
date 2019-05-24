@@ -77,14 +77,6 @@ public class Flag implements Carryable {
 	public Player getHome() {
 		return home;
 	}
-
-//	/**
-//	 * returns the enemy of the player whose flag it is
-//	 * @return the enemy of the player whose flag it is
-//	 */
-//	public Player getEnemy() {
-//		return enemy;
-//	}
 	
 	/**
 	 * returns the player that controls the flag currently
