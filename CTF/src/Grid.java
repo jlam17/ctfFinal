@@ -4,6 +4,7 @@ import java.util.BitSet;
 
 /**
  * Grid graph implementation. Vertices are represented by integers, edge set by a single bit-set.
+ * @author Wikipedia
  */
 public class Grid {
 

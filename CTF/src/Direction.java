@@ -1,5 +1,5 @@
 /**
- * 
+ * makes directions work
  * @author Wikipedia
  *
  */
