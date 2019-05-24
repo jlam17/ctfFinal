@@ -110,6 +110,7 @@ public class DrawingSurface extends PApplet {
 	String maze;
 	Grid mazeGrid;
 	int enemyImage;
+	int resetTime;
 
 	boolean done = false, started = false;
 
@@ -139,6 +140,8 @@ public class DrawingSurface extends PApplet {
 		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
 		e = new Enemy(gridX2X(mazeGrid.numCols - 1), gridY2Y(0));
 		enemyImage = 0;
+		
+		resetTime = 300;
 	}
 
 	/**
@@ -316,6 +319,14 @@ public class DrawingSurface extends PApplet {
 					e.setX(gridX2X(eGridX));
 				}
 			}
+			
+			if() { //player touching fireball or ghost
+				player1.setDead(true);
+			}
+			if() { //player touching fireball or ghost
+				player2.setDead(true);
+			}
+			
 
 			textSize(50);
 			this.text("Player 1: "+player1.getScore()+"\nPlayer 2: "+player2.getScore(), 300, 700);
@@ -323,7 +334,7 @@ public class DrawingSurface extends PApplet {
 			if(player1.hasWon()) {
 				f1.generate();
 				f2.generate();
-				player2.setScore(player2.getScore()+1);
+				player1.setScore(player1.getScore()+1);
 				player1.setX(gridX2X(0));
 				p1GridX = 0;
 				player1.setY(gridY2Y(0));
@@ -358,15 +369,74 @@ public class DrawingSurface extends PApplet {
 
 			if (!f1.isPossession()) {
 				f1.draw(this, flag1);
-				player2.draw(this, images, currentFrame2, false, 0, 0, 0);
+				if(!player2.isDead()) {
+					resetTime = 300;
+					player2.draw(this, images, currentFrame2, false, 0, 0, 0);
+					
+				}
+				else {
+					resetTime--;
+					if(resetTime<=0) {
+						player2.setDead(false);
+						player2.setX(gridX2X(mazeGrid.numCols - 1));
+						p2GridX = mazeGrid.numCols-1;
+						player2.setY(gridY2Y(mazeGrid.numRows - 1));
+						p2GridY = mazeGrid.numRows-1;
+						player2.draw(this, images, 1, false, 0, 0, 0);
+					}
+				}
 			} else {
-				player2.draw(this, images, currentFrame2, true, 250, 0, 0);
+				if(!player2.isDead()) {
+					resetTime = 300;
+					player2.draw(this, images, currentFrame2, true, 250, 0, 0);
+					
+				}
+				else {
+					resetTime--;
+					if(resetTime<=0) {
+						player2.setDead(false);
+						player2.setX(gridX2X(mazeGrid.numCols - 1));
+						p2GridX = mazeGrid.numCols-1;
+						player2.setY(gridY2Y(mazeGrid.numRows - 1));
+						p2GridY = mazeGrid.numRows-1;
+						player2.draw(this, images, 1, false, 0, 0, 0);
+					}
+				}
 			}
 			if (!f2.isPossession()) {
 				f2.draw(this, flag2);
-				player1.draw(this, images, currentFrame, false, 0, 0, 0);
+				if(!player1.isDead()) {
+					resetTime = 300;
+					player1.draw(this, images, currentFrame, false, 0, 0, 0);
+				}
+				else {
+					resetTime--;
+					if(resetTime<=0) {
+						player1.setDead(false);
+						player1.setX(gridX2X(0));
+						p1GridX = 0;
+						player1.setY(gridY2Y(0));
+						p1GridY = 0;
+						player1.draw(this, images, 1, false, 0, 0, 0);
+					}
+				}
 			} else {
-				player1.draw(this, images, currentFrame, true, 0, 0, 250);
+				if(!player1.isDead()) {
+					resetTime = 300;
+					player1.draw(this, images, currentFrame, true, 0, 0, 250);
+					
+				}
+				else {
+					resetTime--;
+					if(resetTime<=0) {
+						player1.setDead(false);
+						player1.setX(gridX2X(0));
+						p1GridX = 0;
+						player1.setY(gridY2Y(0));
+						p1GridY = 0;
+						player1.draw(this, images, 1, false, 0, 0, 0);
+					}
+				}
 			}
 			drawMazeGrid();
 		} else {
@@ -408,7 +478,14 @@ public class DrawingSurface extends PApplet {
 		if (mouseButton == RIGHT) {
 			if (!started) {
 				this.background(0);
-				this.text("2 Player Capture the Flag\n", 100, 200); // instructions here
+				this.text("2 Player \nCapture the Flag", 50, 100); // instructions here
+				textSize(30);
+				this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 50, 600);
+				this.text("Player 1: WASD Controls\n Space to Shoot", 50, 400);
+				
+				textSize(50);
+				this.text("Left Click to Start Game!", 50, 740);
+				
 			}
 		}
 	}

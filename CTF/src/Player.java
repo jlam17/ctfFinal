@@ -20,11 +20,14 @@ public class Player {
 	private Direction dOfShot;
 	private double shotX, shotY;
 	private int shotFrame;
-
+	
 	private int health;
 	private int score;
+	private boolean isDead;
 	
 
+
+	
 
 	/**
 	 * Creates the player
@@ -43,6 +46,7 @@ public class Player {
 		this.y = y;
 		q = null;
 		isShooting = false;
+		isDead = false;
 	}
 
 	/**
@@ -117,6 +121,14 @@ public class Player {
 		return hasFlag;
 	}
 
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
+	}
+	
 	/**
 	 * 
 	 * @param hasFlag Sets whoever has the flag at the moment based on hasFlag
