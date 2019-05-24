@@ -439,15 +439,15 @@ public class DrawingSurface extends PApplet {
 			
 			if (e1SlowCount == 0) {
 				if (e1.getDirection() == Direction.SOUTH) {
-					if (e1.getGridY() < mazeGrid.numRows - 1) {
-						e1.move(e.getGridX(), e1.getGridY() + 1);
+					if (e1.getGridY() < mazeGrid.numRows-1) {
+						e1.move(e1.getGridX(), e1.getGridY() + 1);
 						enemyImage1 = 1;
 					} else {
 						e1.setDirection(Direction.WEST);
 					}
 				} else if (e1.getDirection() == Direction.WEST) {
 					if (e1.getGridX() > 0) {
-						e1.move(e.getGridX() - 1, e1.getGridY());
+						e1.move(e1.getGridX() - 1, e1.getGridY());
 						enemyImage1 = 2;
 					} else {
 						e1.setDirection(Direction.NORTH);
@@ -455,14 +455,14 @@ public class DrawingSurface extends PApplet {
 				} else if (e1.getDirection() == Direction.NORTH) {
 					if (e1.getGridY() > 0) {
 						enemyImage1 = 0;
-						e1.move(e.getGridX(), e1.getGridY() - 1);
+						e1.move(e1.getGridX(), e1.getGridY() - 1);
 					} else {
 						e1.setDirection(Direction.EAST);
 					}
 				} else if (e1.getDirection() == Direction.EAST) {
 					if (e1.getGridX() <= mazeGrid.numRows) {
 						enemyImage1 = 3;
-						e1.move(e.getGridX() + 1, e1.getGridY());
+						e1.move(e1.getGridX() + 1, e1.getGridY());
 					} else {
 						e1.setDirection(Direction.SOUTH);
 					}
@@ -474,9 +474,9 @@ public class DrawingSurface extends PApplet {
 			e1.draw(this, enemies[enemyImage1], gridX2X(e1.getGridX()), gridY2Y(e1.getGridY()));
 			
 			
-			if (e.getGridX() == p1GridX && e.getGridY() == p1GridY) {
+			if (e1.getGridX() == p1GridX && e1.getGridY() == p1GridY) {
 				player1.setDead(true);
-			} else if (e.getGridX() == p2GridX && e.getGridY() == p2GridY) {
+			} else if (e1.getGridX() == p2GridX && e1.getGridY() == p2GridY) {
 				player2.setDead(true);
 			}
 			
