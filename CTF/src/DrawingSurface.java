@@ -329,10 +329,12 @@ public class DrawingSurface extends PApplet {
 					player2.draw(this, images, currentFrame2, false, 0,0, 0);
 					if(resetTime2<=0) {
 						player2.setDead(false);
-						player2.setX(gridX2X(mazeGrid.numCols-1));
+						
 						p2GridX = mazeGrid.numCols-1;
-						player2.setY(gridY2Y(mazeGrid.numRows-1));
-						p2GridY = mazeGrid.numCols-1;
+						p2GridY = mazeGrid.numRows-1;
+						player2.setX(gridX2X(p2GridX));
+						player2.setY(gridY2Y(p2GridY));
+						
 						player2.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
@@ -349,10 +351,11 @@ public class DrawingSurface extends PApplet {
 						player2.setDead(false);
 						player2.setHasFlag(false);
 						f1.setPossession(false);
-						player2.setX(gridX2X(mazeGrid.numCols-1));
 						p2GridX = mazeGrid.numCols-1;
-						player2.setY(gridY2Y(mazeGrid.numRows-1));
+						player2.setX(gridX2X(p2GridX));
 						p2GridY = mazeGrid.numRows-1;
+						player2.setY(gridY2Y(p2GridY));
+						
 						player2.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
@@ -393,10 +396,11 @@ public class DrawingSurface extends PApplet {
 						player1.setDead(false);
 						player1.setHasFlag(false);
 						f2.setPossession(false);
-						player1.setX(gridX2X(0));
 						p1GridX = 0;
-						player1.setY(gridY2Y(0));
+						player1.setX(gridX2X(p1GridX));
 						p1GridY = 0;
+						player1.setY(gridY2Y(p1GridY));
+						
 						player1.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
