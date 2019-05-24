@@ -377,10 +377,11 @@ public class DrawingSurface extends PApplet {
 					System.out.println(resetTime1);
 					if(resetTime1<=0) {
 						player1.setDead(false);
-						player1.setX(gridX2X(0));
 						p1GridX = 0;
-						player1.setY(gridY2Y(0));
+						player1.setX(gridX2X(p1GridX));
 						p1GridY = 0;
+						player1.setY(gridY2Y(p1GridY));
+						
 						player1.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
