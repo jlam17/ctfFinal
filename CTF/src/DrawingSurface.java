@@ -173,10 +173,7 @@ public class DrawingSurface extends PApplet {
 		// change the first two values in the maze call to change width/height
 		
 		maze = mazeGrid.toString();
-
-		//System.out.println(maze);
 		
-		// this.text("", 100, 100);
 		wall = loadImage("wall.png");
 
 		// Loading and resizing the images
@@ -265,7 +262,6 @@ public class DrawingSurface extends PApplet {
 	}
 
 	public double gridY2Y(int gridY) {
-//		System.out.println("gridY: " + gridY + ":gridCellHeight:" + gridCellHeight);
 		return gridStartY + gridY * gridCellHeight + gridWallWidth;
 	}
 
@@ -329,7 +325,6 @@ public class DrawingSurface extends PApplet {
 					resetTime2--;
 					if(resetTime2<=0) {
 						player2.setDead(false);
-						
 						p2GridX = mazeGrid.numCols-1;
 						player2.setX(gridX2X(p2GridX));
 						p2GridY = mazeGrid.numRows-1;
@@ -372,7 +367,6 @@ public class DrawingSurface extends PApplet {
 					player1.setX(gridX2X(p1GridX));
 					player1.setY(gridY2Y(p1GridY));
 					player1.draw(this, images, currentFrame, false, 0,0, 0);
-					System.out.println(resetTime1);
 					if(resetTime1<=0) {
 						player1.setDead(false);
 						p1GridX = 0;
@@ -383,7 +377,6 @@ public class DrawingSurface extends PApplet {
 					}
 				}
 			} else {
-				//f2.draw(this, flag2);
 				if(!player1.isDead()) {
 					resetTime1 = 50;
 					player1.draw(this, images, currentFrame, true, 0, 0, 250);
@@ -473,7 +466,6 @@ public class DrawingSurface extends PApplet {
 		if (p2SlowCount > 0) {
 			p2SlowCount--;
 		}
-		System.out.println(p1SlowCount);
 	}
 
 	/**
@@ -502,10 +494,9 @@ public class DrawingSurface extends PApplet {
 					fill(255);
 					this.text("2 Player \nCapture the Flag", 50, 100); // instructions here
 					textSize(30);
-					this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 50, 600);
-					this.text("Player 1: WASD Controls\n Space to Shoot", 50, 400);
-					this.text("Be Careful! Both players can die to the ghost or their opponent's \nfireballs. If you die, you will respawn and be able to \nmove a couple seconds later", 50, 700);
-					//this.text("If you die, you will respawn and \nbe able to move a couple seconds later", 50, 800);
+					this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 25, 550);
+					this.text("Player 1: WASD Controls\n Space to Shoot",25, 400);
+					this.text("Be Careful! Both players can die to the ghost. Your opponent's \nfireballs will stun you. If you die, you will respawn and be able to \nmove a couple seconds later.", 25, 700);
 					textSize(50);
 					rect(10, 250, 400, 70);
 					fill(0);
@@ -522,10 +513,6 @@ public class DrawingSurface extends PApplet {
 			}
 			
 		}
-
-		if (mouseButton == RIGHT) {
-			
-		}
 	}
 
 	/**
@@ -535,7 +522,6 @@ public class DrawingSurface extends PApplet {
 		if (p1SlowCount <= 0) {
 		if (key == 119 || key == 87) { // w
 			if ((p1GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.NORTH)) {
-//				player1.setVelY(-60);
 				p1GridY--;
 			}
 			keyDown[0] = true;
@@ -547,7 +533,6 @@ public class DrawingSurface extends PApplet {
 		} else if (key == 115 || key == 83) { // s
 			if ((p1GridY + 1 < mazeGrid.numRows)
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.SOUTH)) {
-//				player1.setVelY(60);
 				p1GridY++;
 			}
 			keyDown[2] = true;
@@ -558,7 +543,6 @@ public class DrawingSurface extends PApplet {
 			}
 		} else if (key == 97 || key == 65) { // a
 			if ((p1GridX - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.WEST)) {
-//				player1.setVelX(-60);
 				p1GridX--;
 			}
 			keyDown[1] = true;
@@ -570,7 +554,6 @@ public class DrawingSurface extends PApplet {
 		} else if (key == 100 || key == 68) { // d
 			if ((p1GridX + 1 < mazeGrid.numCols)
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.EAST)) {
-//				player1.setVelX(60);
 				p1GridX++;
 			}
 			keyDown[3] = true;
@@ -673,53 +656,7 @@ public class DrawingSurface extends PApplet {
 		}
 
 	}
-
-	/**
-	 * generates the maze in a handy function
-	 */
-	public void drawMaze() {
-		int y = 5;
-		int x = 20;
-		for (int i = 0; i < 874 && i < maze.length(); i++) {
-			x = 20;
-			y += 36;
-			while (!maze.substring(i, i + 1).equals("\n")) {
-				if (!maze.substring(i, i + 1).equals(" ")) {
-					if (maze.substring(i, i + 1).equals("-")) {
-						if (i > 1 && maze.substring(i - 1, i).equals(" ")) {
-							this.image(wall, x, y, width / 72, height / 144);
-						} else if (i > 1 && maze.substring(i + 1, i + 2).equals(" ")
-								&& maze.substring(i + 2, i + 3).equals("|")) {
-							this.image(wall, x, y, width / 72, height / 144);
-						}
-//						else if(i>1 && maze.substring(i+1, i+1).equals(" ")) {
-//							this.image(wall, x, y, width/72, height/144);
-//						}
-						else {
-							this.image(wall, x, y, width / 18, height / 36);
-						}
-					} else {
-						if (i > 1 && maze.substring(i - 1, i).equals("-")) {
-							this.image(wall, x, y, width / 36, height / 36);
-						} else if (i > 1 && maze.substring(i - 1, i).equals(" ") /*
-																					 * && !maze.substring(i+1,
-																					 * i+2).equals("\n")
-																					 */
-								&& maze.substring(i + 1, i + 2).equals(" ")) {
-							this.image(wall, x, y, width / 72, height / 40);
-						} else if (i > 1 && maze.substring(i - 1, i).equals(" ")
-								&& !maze.substring(i + 1, i + 2).equals("\n")
-								&& !maze.substring(i + 1, i + 2).equals(" ")) {
-							this.image(wall, x, y, width / 36, height / 36);
-						} else {
-							this.image(wall, x, y, width / 36, height / 18);
-						}
-					}
-				}
-			}
-		}
-	}
-
+	
 	public void drawMazeGrid() {
 
 		for (int r = 0; r < mazeGrid.numRows; r++) {

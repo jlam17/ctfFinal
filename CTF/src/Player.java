@@ -13,7 +13,6 @@ public class Player {
 	private boolean hasFlag;
 	private double x, y;
 	private double initialx, initialy;
-	private double velX, velY;
 	private Powerup q;
 	private boolean isShooting;
 	private Direction dOfShot;
@@ -22,8 +21,6 @@ public class Player {
 	private int shotFrame;
 	private Grid maze;
 	private int deltaX, deltaY;
-
-	private int health;
 	private int score;
 	private boolean isDead;
 
@@ -35,7 +32,6 @@ public class Player {
 	 * @param y        The y cord of the player
 	 */
 	public Player(int playerId, double x, double y) {
-		this.health = 100;
 		this.playerId = playerId;
 		hasFlag = false;
 		this.initialx = x;
@@ -55,7 +51,6 @@ public class Player {
 	 * @param drawer The PApplet drawer used to draw the player on the screen
 	 */
 	public void draw(PApplet drawer, PImage[] images, int currentFrame, boolean hasFlag, int r, int g, int b) {
-		tick();
 		this.hasFlag = hasFlag;
 		if (this.hasFlag) {
 			drawer.tint(r, g, b);
@@ -109,15 +104,6 @@ public class Player {
 				deltaY = 0;
 			}
 		}
-	}
-
-	/**
-	 * makes the player move
-	 */
-	public void tick() {
-		x += velX;
-		y += velY;
-
 	}
 
 	/**
@@ -187,14 +173,6 @@ public class Player {
 		this.y = y;
 	}
 
-	public void setVelX(double velX) {
-		this.velX = velX;
-	}
-
-	public void setVelY(double velY) {
-		this.velY = velY;
-	}
-
 	public int getShotGridX() {
 		return shotGridX;
 	}
@@ -240,65 +218,10 @@ public class Player {
 		}
 	}
 
-	/**
-	 * Moves the player right
-	 */
-	public void moveRight(double m) {
-		setVelX(m);
-	}
-
-	/**
-	 * Moves the player left
-	 */
-	public void moveLeft(double m) {
-		setVelX(m);
-	}
-
-	/**
-	 * Moves the player up
-	 */
-	public void moveUp(double m) {
-		setVelY(m);
-	}
-
-	/**
-	 * Moves the player down
-	 */
-	public void moveDown(double m) {
-		setVelY(m);
-	}
-
+	
 	public void move(double x, double y) {
 		setX(x);
 		setY(y);
-	}
-
-	/**
-	 * Stop the player from moving down
-	 */
-	public void stopMoveDown() {
-		setVelY(0);
-	}
-
-	/**
-	 * Stop the player from moving right
-	 */
-	public void stopMoveRight() {
-		setVelX(0);
-	}
-
-	/**
-	 * Stop the player from moving left
-	 */
-	public void stopMoveLeft() {
-		setVelX(0);
-	}
-
-	/**
-	 * Stop the player from moving up
-	 */
-	public void stopMoveUp() {
-		setVelY(0);
 	}
 
 	/**
@@ -312,23 +235,6 @@ public class Player {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * 
-	 * @return health of the player
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	/**
-	 * changes the health by deltaHealth (positive or negative)
-	 * 
-	 * @param deltaHealth the change in the health
-	 */
-	public void changeHealth(int deltaHealth) {
-		this.health += deltaHealth;
 	}
 
 	/**
@@ -349,7 +255,7 @@ public class Player {
 	}
 
 	/**
-	 * Shoots a sword beam in the direction of the player
+	 * Shoots a fireball in the direction of the player
 	 */
 	public void shoot(PApplet drawer, PImage[] images, int frame, Grid mazeGrid, Direction d, double x, double y,
 			int gridX, int gridY) {
