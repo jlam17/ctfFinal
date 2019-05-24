@@ -151,7 +151,7 @@ public class Player {
 	}
 
 	/**
-	 * 
+	 * gets the x coord of the player
 	 * @return The x coord of your player
 	 */
 	public double getX() {
@@ -168,42 +168,50 @@ public class Player {
 	}
 
 	/**
-	 * 
-	 * @return The y cord of your player
+	 * gets the y coord of the player
+	 * @return The y coord of your player
 	 */
 	public double getY() {
 		return y;
 	}
 
 	/**
-	 * Sets the y cord of your player
+	 * Sets the y coord of your player
 	 * 
-	 * @param y the new y cord of your player
+	 * @param y the new y coord of your player
 	 */
 	public void setY(double y) {
 		this.y = y;
 	}
 
 	/**
-	 * returns the gridX value of the shot
-	 * @return the gridX value of the shot
+	 * returns the gridX value (2D int coord) of the shot
+	 * @return the gridX value (2D int coord) of the shot
 	 */
 	public int getShotGridX() {
 		return shotGridX;
 	}
 	
 	/**
-	 * returns the gridY value of the shot
-	 * @return the gridY value of the shot
+	 * returns the gridY value (2D int coord) of the shot
+	 * @return the gridY value (2D int coord) of the shot
 	 */
 	public int getShotGridY() {
 		return shotGridY;
 	}
 	
+	/**
+	 * sets the gridX value (2D int coord) of the shot
+	 * @param gX the gridX value to change to
+	 */
 	public void setShotGridX(int gX) {
 		shotGridX = gX;
 	}
 	
+	/**
+	 * sets the gridY value (2D int coord) of the shot
+	 * @param gY the gridY value to change to
+	 */
 	public void setShotGridY(int gY) {
 		shotGridY = gY;
 	}
@@ -237,7 +245,11 @@ public class Player {
 		}
 	}
 
-	
+	/**
+	 * changes the x and y coordinates of the player
+	 * @param x the x coordinate to move to
+	 * @param y the y coordinate to move to
+	 */
 	public void move(double x, double y) {
 		setX(x);
 		setY(y);
@@ -257,7 +269,7 @@ public class Player {
 	}
 
 	/**
-	 * 
+	 * returns the score of your player
 	 * @return The score of your player
 	 */
 	public int getScore() {
@@ -275,6 +287,15 @@ public class Player {
 
 	/**
 	 * Shoots a fireball in the direction of the player
+	 * @param drawer the PApplet that the shot will be drawn on
+	 * @param images the array of images of the shot
+	 * @param frame the frame of the image of the shot
+	 * @param mazeGrid the maze
+	 * @param d the direction of the shot
+	 * @param x the x value of the shot originally
+	 * @param y the y value of the shot originally
+	 * @param gridX the 2D int x coordinate of the shot
+	 * @param gridY the 2D int y coordinate of the shot
 	 */
 	public void shoot(PApplet drawer, PImage[] images, int frame, Grid mazeGrid, Direction d, double x, double y,
 			int gridX, int gridY) {
@@ -296,7 +317,7 @@ public class Player {
 	}
 
 	/**
-	 * 
+	 * returns whether or not the player is currently shooting
 	 * @return Whether or not the player is currently shooting
 	 */
 	public boolean getIsShooting() {
@@ -305,11 +326,16 @@ public class Player {
 
 	/**
 	 * Set whether or not the player is currently shooting
+	 * @param v the boolean that changes whether the player is shooting
 	 */
 	public void setIsShooting(boolean v) {
 		isShooting = v;
 	}
 
+	/**
+	 * changes the frame of the shot
+	 * @param frame the frame that the shot is in
+	 */
 	public void setShotFrame(int frame) {
 		shotFrame = frame;
 	}

@@ -272,8 +272,8 @@ public class DrawingSurface extends PApplet {
 	}
 
 	/**
-	 * converts 2-D coordinate type into normal x coordinates
-	 * @param gridX the 2-D coordinate y value
+	 * converts 2-D int coordinate type into normal x coordinates
+	 * @param gridX the 2-D int coordinate y value
 	 * @return the normal x-coordinate (used in drawing)
 	 */
 	public double gridX2X(int gridX) {
@@ -281,8 +281,8 @@ public class DrawingSurface extends PApplet {
 	}
 
 	/**
-	 * converts 2-D coordinate type into normal y coordinates
-	 * @param gridY the 2-D coordinate y value
+	 * converts 2-D int coordinate type into normal y coordinates
+	 * @param gridY the 2-D int coordinate y value
 	 * @return the normal y-coordinate (used in drawing)
 	 */
 	public double gridY2Y(int gridY) {
