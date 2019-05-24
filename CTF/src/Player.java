@@ -90,8 +90,6 @@ public class Player {
 
 			shotX += deltaX;
 			shotY += deltaY;
-			System.out.println("shotX: " + shotX + ", shotY:" + shotY);
-			System.out.println(deltaX + "," + deltaY);
 			if (deltaX == 0 && deltaY == 0) {
 				isShooting = false;
 				setShotGridX(-1);
