@@ -126,10 +126,18 @@ public class Player {
 		return hasFlag;
 	}
 
+	/**
+	 * checks if the player is dead
+	 * @return true if the player is dead, false if not
+	 */
 	public boolean isDead() {
 		return isDead;
 	}
 
+	/**
+	 * changes whether the player is dead or not
+	 * @param isDead the value that will become whether the player is dead or not
+	 */
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
 	}
@@ -144,14 +152,14 @@ public class Player {
 
 	/**
 	 * 
-	 * @return The x cord of your player
+	 * @return The x coord of your player
 	 */
 	public double getX() {
 		return x;
 	}
 
 	/**
-	 * Sets the x cord of your player
+	 * Sets the x coord of your player
 	 * 
 	 * @param x the new x coord of player
 	 */
@@ -176,10 +184,18 @@ public class Player {
 		this.y = y;
 	}
 
+	/**
+	 * returns the gridX value of the shot
+	 * @return the gridX value of the shot
+	 */
 	public int getShotGridX() {
 		return shotGridX;
 	}
 	
+	/**
+	 * returns the gridY value of the shot
+	 * @return the gridY value of the shot
+	 */
 	public int getShotGridY() {
 		return shotGridY;
 	}
