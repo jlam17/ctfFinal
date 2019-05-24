@@ -8,6 +8,7 @@ import processing.core.PImage;
  */
 public class Enemy {
 	private double x, y;
+	private int gridX, gridY;
 	private int health;
 	private Direction direction;
 	
@@ -18,17 +19,38 @@ public class Enemy {
 	 * @param x the initial x value of the enemy
 	 * @param y the initial y value of the enemy
 	 */
-	public Enemy(double x, double y) {
+	public Enemy(double x, double y, int gridX, int gridY, Direction d) {
 		this.x = x;
 		this.y = y;
+		this.gridX = gridX;
+		this.gridY = gridY;
 		this.health = 100;
-		this.direction = Direction.NORTH;
+		this.direction = d;
 	}
 	
-	public void draw(DrawingSurface drawer, PImage img) {
+	public int getGridX() {
+		return gridX;
+	}
+	
+	public int getGridY() {
+		return gridY;
+	}
+	
+	public void setGridX(int g) {
+		gridX = g;
+	}
+	
+	public void setGridY(int g) {
+		gridY = g;
+	}
+	public void draw(DrawingSurface drawer, PImage img, double x, double y) {
 		drawer.image(img, (float)x, (float)y);
 	}
 	
+	public void move(int newX, int newY) {
+		setGridX(newX);
+		setGridY(newY);
+	}
 	/**
 	 * finds and attacks the closest player
 	 * @param player1 the first player

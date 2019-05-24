@@ -244,8 +244,6 @@ public class Player {
 	}
 
 	public void move(double x, double y) {
-//		setVelX(x - this.x);
-//		setVelY(y - this.y);
 		setX(x);
 		setY(y);
 	}
@@ -284,8 +282,7 @@ public class Player {
 	 * @return True or false if you have won
 	 */
 	public boolean hasWon() {
-		if (hasFlag && Math.abs(x - initialx) <= 5 && Math.abs(y - initialy) <= 5) { // set x to 0 so there wouldnt be a
-																						// compiler error for now
+		if (hasFlag && Math.abs(x - initialx) <= 5 && Math.abs(y - initialy) <= 5) { 
 			return true;
 		} else {
 			return false;
