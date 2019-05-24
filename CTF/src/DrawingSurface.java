@@ -271,7 +271,7 @@ public class DrawingSurface extends PApplet {
 				e.setDirection(toSet);
 				enemyImage = toSet - 1;
 			}
-			else if(((eGridX + 1 > mazeGrid.numCols) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.EAST)) && e.getDirection() == 2) {
+			else if(((eGridX > mazeGrid.numCols-1) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.EAST)) && e.getDirection() == 3) {
 				//e.draw(this, enemies[0]);
 				int toSet = e.getDirection()+1;
 				if(toSet>4) {
@@ -280,7 +280,7 @@ public class DrawingSurface extends PApplet {
 				e.setDirection(toSet);
 				enemyImage = toSet - 1;
 			}
-			else if(((eGridY + 1 > mazeGrid.numRows) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.SOUTH)) && e.getDirection() == 3) {
+			else if(((eGridY > mazeGrid.numRows-1) || !mazeGrid.hasEdge(mazeGrid.vertex(eGridX, eGridY), Direction.SOUTH)) && e.getDirection() == 2) {
 				//e.draw(this, enemies[0]);
 				int toSet = e.getDirection()+1;
 				if(toSet>4) {
@@ -301,19 +301,19 @@ public class DrawingSurface extends PApplet {
 			else {
 				if(e.getDirection() == 1) {
 					eGridY-=1;
-					e.setY(e.getY()-1);
-				}
-				else if(e.getDirection() == 2) {
-					eGridX+=1;
-					e.setX(e.getX()+1);
+					e.setY(gridY2Y(eGridY));
 				}
 				else if(e.getDirection() == 3) {
+					eGridX+=1;
+					e.setX(gridX2X(eGridX));
+				}
+				else if(e.getDirection() == 2) {
 					eGridY+=1;
-					e.setY(e.getY()+1);
+					e.setY(gridY2Y(eGridY));
 				}
 				else if(e.getDirection() == 4) {
 					eGridX-=1;
-					e.setX(e.getX()-1);
+					e.setX(gridX2X(eGridX));
 				}
 			}
 
