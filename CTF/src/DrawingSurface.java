@@ -339,13 +339,14 @@ public class DrawingSurface extends PApplet {
 					}
 				}
 			} else {
-				f1.draw(this, flag1);
+				//f1.draw(this, flag1);
 				if(!player2.isDead()) {
 					resetTime2 = 50;
 					player2.draw(this, images, currentFrame2, true, 250, 0, 0);
 					
 				}
 				else {
+					f1.draw(this, flag1);
 					resetTime2--;
 					if(resetTime2<=0) {
 						player2.setDead(false);
@@ -384,13 +385,14 @@ public class DrawingSurface extends PApplet {
 					}
 				}
 			} else {
-				f2.draw(this, flag2);
+				//f2.draw(this, flag2);
 				if(!player1.isDead()) {
 					resetTime1 = 50;
 					player1.draw(this, images, currentFrame, true, 0, 0, 250);
 					
 				}
 				else {
+					f2.draw(this, flag2);
 					resetTime1--;
 					if(resetTime1<=0) {
 						player1.setDead(false);
