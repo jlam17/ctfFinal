@@ -257,10 +257,20 @@ public class DrawingSurface extends PApplet {
 		this.text("Instructions", 375, 600);
 	}
 
+	/**
+	 * converts 2-D coordinate type into normal x coordinates
+	 * @param gridX the 2-D coordinate y value
+	 * @return the normal x-coordinate (used in drawing)
+	 */
 	public double gridX2X(int gridX) {
 		return gridStartX + gridX * gridCellWidth + gridWallWidth;
 	}
 
+	/**
+	 * converts 2-D coordinate type into normal y coordinates
+	 * @param gridY the 2-D coordinate y value
+	 * @return the normal y-coordinate (used in drawing)
+	 */
 	public double gridY2Y(int gridY) {
 		return gridStartY + gridY * gridCellHeight + gridWallWidth;
 	}
@@ -634,7 +644,6 @@ public class DrawingSurface extends PApplet {
 	/**
 	 * checks what happens if a key is released
 	 */
-
 	public void keyReleased() {
 		if (currentFrame == 1) {
 			currentFrame = 0;
@@ -657,6 +666,9 @@ public class DrawingSurface extends PApplet {
 
 	}
 	
+	/**
+	 * draws the maze with precise proportions and no extra jutting out walls
+	 */
 	public void drawMazeGrid() {
 
 		for (int r = 0; r < mazeGrid.numRows; r++) {
