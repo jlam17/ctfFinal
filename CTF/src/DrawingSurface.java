@@ -114,7 +114,7 @@ public class DrawingSurface extends PApplet {
 	int enemyImage;
 	int resetTime1, resetTime2;
 
-	boolean done = false, started = false;
+	boolean done = false, started = false, instructions = false;
 
 	/*
 	 * Private variables for defining Maze Grid
@@ -247,8 +247,17 @@ public class DrawingSurface extends PApplet {
 		f2GridX = p2GridX;
 		f2GridY = p2GridY;
 
+		fill(30,100,50);
+		rect(350,300,350,150);
 		textSize(100);
-		this.text("Click Anywhere \nto Start\n\nRight Click for \nInstructions", 200, 300);
+		fill(0,0,0);
+		this.text("Start", 400, 400);
+		
+		fill(30,100,50);
+		rect(350,500,350,150);
+		textSize(50);
+		fill(0,0,0);
+		this.text("Instructions", 375, 600);
 	}
 
 	public double gridX2X(int gridX) {
@@ -465,21 +474,38 @@ public class DrawingSurface extends PApplet {
 			// player2.shoot(mazeGrid, d, gridX2X(p2GridX), gridY2Y(p2GridY));
 		}
 		if (!started && mouseButton == LEFT) {
-			started = true;
+			if(!instructions) {
+				if(mouseX<=700 && mouseX>=350 && mouseY<=450 && mouseY>=300) {
+					started = true;
+					fill(255);
+				}
+				else if(mouseX<=700 && mouseX>=350 && mouseY<=650 && mouseY>=500) {
+					this.background(0);
+					fill(255);
+					this.text("2 Player \nCapture the Flag", 50, 100); // instructions here
+					textSize(30);
+					this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 50, 600);
+					this.text("Player 1: WASD Controls\n Space to Shoot", 50, 400);
+					
+					textSize(50);
+					rect(10, 250, 400, 70);
+					fill(0);
+					this.text("Start Game!", 50, 300);
+					instructions = true;
+					fill(255);
+				}
+			}
+			else {
+				if(mouseX<=410 && mouseX>=10 && mouseY<=320 && mouseY>=250) {
+					started = true;
+					fill(255);
+				}
+			}
+			
 		}
 
 		if (mouseButton == RIGHT) {
-			if (!started) {
-				this.background(0);
-				this.text("2 Player \nCapture the Flag", 50, 100); // instructions here
-				textSize(30);
-				this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 50, 600);
-				this.text("Player 1: WASD Controls\n Space to Shoot", 50, 400);
-				
-				textSize(50);
-				this.text("Left Click to Start Game!", 50, 740);
-				
-			}
+			
 		}
 	}
 
