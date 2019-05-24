@@ -14,7 +14,6 @@ public class Player {
 	private double x, y;
 	private double initialx, initialy;
 	private double velX, velY;
-	private int gridX, gridY;
 	private Powerup q;
 	private boolean isShooting;
 	private Direction dOfShot;
@@ -43,6 +42,8 @@ public class Player {
 		this.initialy = y;
 		this.x = x;
 		this.y = y;
+		shotGridX = -1;
+		shotGridY = -1;
 		q = null;
 		isShooting = false;
 		isDead = false;
@@ -98,6 +99,8 @@ public class Player {
 			System.out.println(deltaX + "," + deltaY);
 			if (deltaX == 0 && deltaY == 0) {
 				isShooting = false;
+				setShotGridX(-1);
+				setShotGridY(-1);
 				deltaX = 0;
 				deltaY = 0;
 			} else {
@@ -106,10 +109,6 @@ public class Player {
 				deltaY = 0;
 			}
 		}
-	}
-
-	public void drawShot(PApplet drawer, PImage[] images, int frame) {
-
 	}
 
 	/**
@@ -196,6 +195,22 @@ public class Player {
 		this.velY = velY;
 	}
 
+	public int getShotGridX() {
+		return shotGridX;
+	}
+	
+	public int getShotGridY() {
+		return shotGridY;
+	}
+	
+	public void setShotGridX(int gX) {
+		shotGridX = gX;
+	}
+	
+	public void setShotGridY(int gY) {
+		shotGridY = gY;
+	}
+	
 	/**
 	 * Toggles if you have the flag or not
 	 * 
@@ -348,6 +363,9 @@ public class Player {
 			shotGridX = gridX;
 			shotGridY = gridY;
 			drawer.image(images[frame], (float) x, (float) y);
+		} else {
+			shotGridX = -1;
+			shotGridY = -1;
 		}
 
 	}
@@ -370,5 +388,4 @@ public class Player {
 	public void setShotFrame(int frame) {
 		shotFrame = frame;
 	}
-
 }

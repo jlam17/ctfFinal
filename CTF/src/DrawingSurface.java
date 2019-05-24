@@ -225,7 +225,7 @@ public class DrawingSurface extends PApplet {
 		enemies[1].resize(15 * 2, 25 * 2);
 		enemies[2] = loadImage("ghostWalkLeft.png");
 		enemies[2].resize(13 * 2, 24 * 2);
-		enemies[3] = loadImage("ghostWalkLeft.png");
+		enemies[3] = loadImage("ghostWalkRight.png");
 		enemies[3].resize(13 * 2, 24 * 2);
 
 		flag1 = images[13];
@@ -321,18 +321,18 @@ public class DrawingSurface extends PApplet {
 					player2.draw(this, images, currentFrame2, false, 0, 0, 0);
 				} else {
 					f1.draw(this, flag1);
-					resetTime2--;
 					p2GridX = mazeGrid.numCols-1;
 					p2GridY = mazeGrid.numRows-1;
 					player2.setX(gridX2X(p2GridX));
 					player2.setY(gridY2Y(p2GridY));
 					player2.draw(this, images, currentFrame2, false, 0,0, 0);
+					resetTime2--;
 					if(resetTime2<=0) {
 						player2.setDead(false);
-						player2.setX(gridX2X(mazeGrid.numCols-1));
 						p2GridX = mazeGrid.numCols-1;
-						player2.setY(gridY2Y(mazeGrid.numRows-1));
-						p2GridY = mazeGrid.numCols-1;
+						player2.setX(gridX2X(p2GridX));
+						p2GridY = mazeGrid.numRows-1;
+						player2.setY(gridY2Y(p2GridY));
 						player2.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
@@ -437,9 +437,11 @@ public class DrawingSurface extends PApplet {
 			}
 			e.draw(this, enemies[enemyImage], gridX2X(e.getGridX()), gridY2Y(e.getGridY()));
 			
+			
 			if (e.getGridX() == p1GridX && e.getGridY() == p1GridY) {
 				player1.setDead(true);
-			} else if (e.getGridX() == p2GridX && e.getGridY() == p2GridY) {
+			} 
+			if (e.getGridX() == p2GridX && e.getGridY() == p2GridY) {
 				player2.setDead(true);
 			}
 			
@@ -456,6 +458,19 @@ public class DrawingSurface extends PApplet {
 			}
 		}
 
+		if (player1.getShotGridX() == p2GridX && player1.getShotGridY() == p2GridY) {
+			p2SlowCount = 20;
+		} 
+		if (player2.getShotGridX() == p1GridX && player2.getShotGridY() == p1GridY) {
+			p1SlowCount = 20;
+		}
+		if (p1SlowCount > 0) {
+			p1SlowCount--;
+		}
+		if (p2SlowCount > 0) {
+			p2SlowCount--;
+		}
+		System.out.println(p1SlowCount);
 	}
 
 	/**
@@ -464,14 +479,14 @@ public class DrawingSurface extends PApplet {
 	public void mousePressed() {
 		if (started && mouseButton == LEFT) {
 			Direction d = Direction.NORTH;
-			if (currentFrame == 12 || currentFrame == 4 || currentFrame == 5) {
+			if (currentFrame2 == 12 || currentFrame2 == 4 || currentFrame2 == 5) {
 				d = Direction.SOUTH;
-			} else if (currentFrame == 0 || currentFrame == 1) {
+			} else if (currentFrame2 == 0 || currentFrame2 == 1) {
 				d = Direction.EAST;
-			} else if (currentFrame == 10 || currentFrame == 11) {
+			} else if (currentFrame2 == 10 || currentFrame2 == 11) {
 				d = Direction.WEST;
 			}
-			// player2.shoot(mazeGrid, d, gridX2X(p2GridX), gridY2Y(p2GridY));
+			 player2.shoot(this, images, shotFrame2, mazeGrid, d, gridX2X(p2GridX), gridY2Y(p2GridY), p2GridX, p2GridY);
 		}
 		if (!started && mouseButton == LEFT) {
 			if(!instructions) {
@@ -513,7 +528,7 @@ public class DrawingSurface extends PApplet {
 	 * checks for what to do if a certain key is pressed
 	 */
 	public void keyPressed() {
-		System.out.println("Player2: " + player2.getX() + ", " + p2GridX);
+		if (p1SlowCount <= 0) {
 		if (key == 119 || key == 87) { // w
 			if ((p1GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.NORTH)) {
 //				player1.setVelY(-60);
@@ -575,6 +590,7 @@ public class DrawingSurface extends PApplet {
 		if (p1GridX == f2GridX && p1GridY == f2GridY) {
 			f2.pickUp(player1);
 		}
+		}
 		player1.move(gridX2X(p1GridX), gridY2Y(p1GridY));
 
 		// Player 2
@@ -620,7 +636,7 @@ public class DrawingSurface extends PApplet {
 			} else {
 				currentFrame2 = 1;
 			}
-		}
+		} 
 		if (p2GridX == f1GridX && p2GridY == f1GridY) {
 			f1.pickUp(player2);
 		}
@@ -651,15 +667,6 @@ public class DrawingSurface extends PApplet {
 		} else if (currentFrame2 == 7 || currentFrame2 == 8) {
 			currentFrame2 = 6;
 		}
-//		if (key == 119 || key == 87) { // w
-//			player1.setVelY(0);
-//		} else if (key == 115 || key == 83) { // s
-//			player1.setVelY(0);
-//		} else if (key == 97 || key == 65) { // a
-//			player1.setVelX(0);
-//		} else if (key == 100 || key == 68) { // d
-//			player1.setVelX(0);
-//		}
 
 	}
 
