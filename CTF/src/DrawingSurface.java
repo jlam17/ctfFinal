@@ -112,7 +112,7 @@ public class DrawingSurface extends PApplet {
 	String maze;
 	Grid mazeGrid;
 	int enemyImage;
-	int resetTime;
+	int resetTime1, resetTime2;
 
 	boolean done = false, started = false;
 
@@ -147,7 +147,8 @@ public class DrawingSurface extends PApplet {
 		p1SlowCount = 0;
 		p2SlowCount = 0;
 		
-		resetTime = 300;
+		resetTime1 = 100;
+		resetTime2 = 100;
 	}
 
 	/**
@@ -307,34 +308,42 @@ public class DrawingSurface extends PApplet {
 			if (!f1.isPossession()) {
 				f1.draw(this, flag1);
 				if(!player2.isDead()) {
-					resetTime = 300;
+					resetTime2 = 100;
 					player2.draw(this, images, currentFrame2, false, 0, 0, 0);
-					
 				}
 				else {
-					resetTime--;
-					if(resetTime<=0) {
+					f1.draw(this, flag1);
+					resetTime2--;
+					p2GridX = mazeGrid.numCols-1;
+					p2GridY = mazeGrid.numRows-1;
+					player2.setX(gridX2X(p2GridX));
+					player2.setY(gridY2Y(p2GridY));
+					player2.draw(this, images, currentFrame2, false, 0,0, 0);
+					if(resetTime2<=0) {
 						player2.setDead(false);
-						player2.setX(gridX2X(mazeGrid.numCols - 1));
+						player2.setX(gridX2X(mazeGrid.numCols-1));
 						p2GridX = mazeGrid.numCols-1;
-						player2.setY(gridY2Y(mazeGrid.numRows - 1));
-						p2GridY = mazeGrid.numRows-1;
+						player2.setY(gridY2Y(mazeGrid.numRows-1));
+						p2GridY = mazeGrid.numCols-1;
 						player2.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
 			} else {
+				f1.draw(this, flag1);
 				if(!player2.isDead()) {
-					resetTime = 300;
+					resetTime2 = 50;
 					player2.draw(this, images, currentFrame2, true, 250, 0, 0);
 					
 				}
 				else {
-					resetTime--;
-					if(resetTime<=0) {
+					resetTime2--;
+					if(resetTime2<=0) {
 						player2.setDead(false);
-						player2.setX(gridX2X(mazeGrid.numCols - 1));
+						player2.setHasFlag(false);
+						f1.setPossession(false);
+						player2.setX(gridX2X(mazeGrid.numCols-1));
 						p2GridX = mazeGrid.numCols-1;
-						player2.setY(gridY2Y(mazeGrid.numRows - 1));
+						player2.setY(gridY2Y(mazeGrid.numRows-1));
 						p2GridY = mazeGrid.numRows-1;
 						player2.draw(this, images, 1, false, 0, 0, 0);
 					}
@@ -343,12 +352,18 @@ public class DrawingSurface extends PApplet {
 			if (!f2.isPossession()) {
 				f2.draw(this, flag2);
 				if(!player1.isDead()) {
-					resetTime = 300;
+					resetTime1 = 100;
 					player1.draw(this, images, currentFrame, false, 0, 0, 0);
 				}
 				else {
-					resetTime--;
-					if(resetTime<=0) {
+					resetTime1--;
+					p1GridX = 0;
+					p1GridY = 0;
+					player1.setX(gridX2X(p1GridX));
+					player1.setY(gridY2Y(p1GridY));
+					player1.draw(this, images, currentFrame, false, 0,0, 0);
+					System.out.println(resetTime1);
+					if(resetTime1<=0) {
 						player1.setDead(false);
 						player1.setX(gridX2X(0));
 						p1GridX = 0;
@@ -358,15 +373,18 @@ public class DrawingSurface extends PApplet {
 					}
 				}
 			} else {
+				f2.draw(this, flag2);
 				if(!player1.isDead()) {
-					resetTime = 300;
+					resetTime1 = 50;
 					player1.draw(this, images, currentFrame, true, 0, 0, 250);
 					
 				}
 				else {
-					resetTime--;
-					if(resetTime<=0) {
+					resetTime1--;
+					if(resetTime1<=0) {
 						player1.setDead(false);
+						player1.setHasFlag(false);
+						f2.setPossession(false);
 						player1.setX(gridX2X(0));
 						p1GridX = 0;
 						player1.setY(gridY2Y(0));
@@ -411,6 +429,12 @@ public class DrawingSurface extends PApplet {
 				eSlowCount--;
 			}
 			e.draw(this, enemies[enemyImage], gridX2X(e.getGridX()), gridY2Y(e.getGridY()));
+			
+			if (e.getGridX() == p1GridX && e.getGridY() == p1GridY) {
+				player1.setDead(true);
+			} else if (e.getGridX() == p2GridX && e.getGridY() == p2GridY) {
+				player2.setDead(true);
+			}
 			
 			drawMazeGrid();
 		} else {
