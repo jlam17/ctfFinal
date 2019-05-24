@@ -104,11 +104,10 @@ public class DrawingSurface extends PApplet {
 	int p1SlowCount, p2SlowCount;
 	int numFrames; // The number of frames in the animation
 	int currentFrame, currentFrame2, shotFrame1, shotFrame2;
-	PImage[] images, enemies;
+	PImage[] images, enemies, title;
 	PImage wall, flag1, flag2;
 	Flag f1, f2;
 	Enemy e, e1;
-	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
 	int enemyImage, enemyImage1;
@@ -133,7 +132,7 @@ public class DrawingSurface extends PApplet {
 		numFrames = 19;
 		images = new PImage[numFrames];
 		enemies = new PImage[4];
-		keyDown = new boolean[4];
+		title = new PImage[3];
 		currentFrame = 0;
 		currentFrame2 = 0;
 		shotFrame1 = 15;
@@ -227,7 +226,14 @@ public class DrawingSurface extends PApplet {
 		enemies[2].resize(13 * 2, 24 * 2);
 		enemies[3] = loadImage("ghostWalkRight.png");
 		enemies[3].resize(13 * 2, 24 * 2);
-
+		
+		title[0] = loadImage("C.png");
+		title[0].resize(31 * 3, 35 * 3);
+		title[1] = loadImage("T.png");
+		title[1].resize(37 * 3, 35 * 3);
+		title[2] = loadImage("F.png");
+		title[2].resize(31 * 3, 35 * 3);
+		
 		flag1 = images[13];
 		flag2 = images[14];
 		p1GridX = 0;
@@ -247,17 +253,22 @@ public class DrawingSurface extends PApplet {
 		f2GridX = p2GridX;
 		f2GridY = p2GridY;
 
-		fill(30,100,50);
-		rect(350,300,350,150);
-		textSize(100);
-		fill(0,0,0);
-		this.text("Start", 400, 400);
+		
+		this.image(title[0], 300, 150);
+		this.image(title[1], 412, 150);
+		this.image(title[2], 550,150);
 		
 		fill(30,100,50);
-		rect(350,500,350,150);
+		rect(300,300,350,150);
+		textSize(100);
+		fill(0,0,0);
+		this.text("Start", 360, 400);
+		
+		fill(30,100,50);
+		rect(300,500,350,150);
 		textSize(50);
 		fill(0,0,0);
-		this.text("Instructions", 375, 600);
+		this.text("Instructions", 335, 600);
 	}
 
 	/**
@@ -536,11 +547,11 @@ public class DrawingSurface extends PApplet {
 		}
 		if (!started && mouseButton == LEFT) {
 			if(!instructions) {
-				if(mouseX<=700 && mouseX>=350 && mouseY<=450 && mouseY>=300) {
+				if(mouseX<=650 && mouseX>=300 && mouseY<=450 && mouseY>=300) {
 					started = true;
 					fill(255);
 				}
-				else if(mouseX<=700 && mouseX>=350 && mouseY<=650 && mouseY>=500) {
+				else if(mouseX<=650 && mouseX>=300 && mouseY<=650 && mouseY>=500) {
 					this.background(0);
 					fill(255);
 					this.text("2 Player \nCapture the Flag", 50, 100); // instructions here
@@ -575,7 +586,6 @@ public class DrawingSurface extends PApplet {
 			if ((p1GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.NORTH)) {
 				p1GridY--;
 			}
-			keyDown[0] = true;
 			if (currentFrame == 7) {
 				currentFrame = 8;
 			} else {
@@ -586,7 +596,6 @@ public class DrawingSurface extends PApplet {
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.SOUTH)) {
 				p1GridY++;
 			}
-			keyDown[2] = true;
 			if (currentFrame == 4) {
 				currentFrame = 5;
 			} else {
@@ -596,7 +605,6 @@ public class DrawingSurface extends PApplet {
 			if ((p1GridX - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.WEST)) {
 				p1GridX--;
 			}
-			keyDown[1] = true;
 			if (currentFrame == 11) {
 				currentFrame = 10;
 			} else {
@@ -607,7 +615,6 @@ public class DrawingSurface extends PApplet {
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.EAST)) {
 				p1GridX++;
 			}
-			keyDown[3] = true;
 			if (currentFrame == 1) {
 				currentFrame = 0;
 			} else {
@@ -636,7 +643,6 @@ public class DrawingSurface extends PApplet {
 			if ((p2GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.NORTH)) {
 				p2GridY--;
 			}
-			keyDown[0] = true;
 			if (currentFrame2 == 7) {
 				currentFrame2 = 8;
 			} else {
@@ -647,7 +653,6 @@ public class DrawingSurface extends PApplet {
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.SOUTH)) {
 				p2GridY++;
 			}
-			keyDown[2] = true;
 			if (currentFrame2 == 4) {
 				currentFrame2 = 5;
 			} else {
@@ -657,7 +662,6 @@ public class DrawingSurface extends PApplet {
 			if ((p2GridX - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.WEST)) {
 				p2GridX--;
 			}
-			keyDown[1] = true;
 			if (currentFrame2 == 11) {
 				currentFrame2 = 10;
 			} else {
@@ -668,7 +672,6 @@ public class DrawingSurface extends PApplet {
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p2GridX, p2GridY), Direction.EAST)) {
 				p2GridX++;
 			}
-			keyDown[3] = true;
 			if (currentFrame2 == 1) {
 				currentFrame2 = 0;
 			} else {
