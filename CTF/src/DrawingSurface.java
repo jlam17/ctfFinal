@@ -329,6 +329,7 @@ public class DrawingSurface extends PApplet {
 					resetTime2--;
 					if(resetTime2<=0) {
 						player2.setDead(false);
+						
 						p2GridX = mazeGrid.numCols-1;
 						player2.setX(gridX2X(p2GridX));
 						p2GridY = mazeGrid.numRows-1;
@@ -344,15 +345,16 @@ public class DrawingSurface extends PApplet {
 					
 				}
 				else {
+					f1.draw(this, flag1);
 					resetTime2--;
 					if(resetTime2<=0) {
 						player2.setDead(false);
 						player2.setHasFlag(false);
 						f1.setPossession(false);
-						player2.setX(gridX2X(mazeGrid.numCols-1));
 						p2GridX = mazeGrid.numCols-1;
-						player2.setY(gridY2Y(mazeGrid.numRows-1));
+						player2.setX(gridX2X(p2GridX));
 						p2GridY = mazeGrid.numRows-1;
+						player2.setY(gridY2Y(p2GridY));
 						player2.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
@@ -370,32 +372,34 @@ public class DrawingSurface extends PApplet {
 					player1.setX(gridX2X(p1GridX));
 					player1.setY(gridY2Y(p1GridY));
 					player1.draw(this, images, currentFrame, false, 0,0, 0);
+					System.out.println(resetTime1);
 					if(resetTime1<=0) {
 						player1.setDead(false);
-						player1.setX(gridX2X(0));
 						p1GridX = 0;
-						player1.setY(gridY2Y(0));
+						player1.setX(gridX2X(p1GridX));
 						p1GridY = 0;
+						player1.setY(gridY2Y(p1GridY));
 						player1.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
 			} else {
-				f2.draw(this, flag2);
+				//f2.draw(this, flag2);
 				if(!player1.isDead()) {
 					resetTime1 = 50;
 					player1.draw(this, images, currentFrame, true, 0, 0, 250);
 					
 				}
 				else {
+					f2.draw(this, flag2);
 					resetTime1--;
 					if(resetTime1<=0) {
 						player1.setDead(false);
 						player1.setHasFlag(false);
 						f2.setPossession(false);
-						player1.setX(gridX2X(0));
 						p1GridX = 0;
-						player1.setY(gridY2Y(0));
+						player1.setX(gridX2X(p1GridX));
 						p1GridY = 0;
+						player1.setY(gridY2Y(p1GridY));
 						player1.draw(this, images, 1, false, 0, 0, 0);
 					}
 				}
@@ -440,8 +444,7 @@ public class DrawingSurface extends PApplet {
 			
 			if (e.getGridX() == p1GridX && e.getGridY() == p1GridY) {
 				player1.setDead(true);
-			} 
-			if (e.getGridX() == p2GridX && e.getGridY() == p2GridY) {
+			} else if (e.getGridX() == p2GridX && e.getGridY() == p2GridY) {
 				player2.setDead(true);
 			}
 			
@@ -501,7 +504,8 @@ public class DrawingSurface extends PApplet {
 					textSize(30);
 					this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 50, 600);
 					this.text("Player 1: WASD Controls\n Space to Shoot", 50, 400);
-					
+					this.text("Be Careful! Both players can die to the ghost or their opponent's \nfireballs. If you die, you will respawn and be able to \nmove a couple seconds later", 50, 700);
+					//this.text("If you die, you will respawn and \nbe able to move a couple seconds later", 50, 800);
 					textSize(50);
 					rect(10, 250, 400, 70);
 					fill(0);
