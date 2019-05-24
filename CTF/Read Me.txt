@@ -1,0 +1,104 @@
+﻿ReadMe Proposal
+
+
+Header:
+CTF by Jadon Lam and Hansel Desouza
+
+
+Description/Introduction: 
+Marooned on a deserted island in a maze by vengeful pirates in the magic age, you are made to fight another pirate exile. The winner of a best of nine match will survive to be picked up by the pirate ship. Steal your opponent’s flag and make it back to your base to score a point. Power-ups of different types may manifest around the maze for your benefit. Be wary though, impartial enemies may appear to attack either player. 
+
+
+Instructions:
+
+
+Player 1
+W- Move up
+A- Move Left
+S- Move Down
+D- Move Right
+Space- Shoot
+
+
+Player 2
+Up arrow key- Move up
+Left arrow key- Move Left
+Down arrow key- Move Down
+Right arrow key- Move Right
+Left Click- Shoot
+
+
+Must-have:
+* A set map that we always generate
+* Fluid movement
+* Player flags you can pick up
+* Multiplayer
+* Able to fight AI enemies
+* Player Interaction (Can kill/hurt the other player)
+Want-to-Have:
+* A couple different maps (randomly chosen)
+* Ranged weapons available
+* Shovel (dig through walls or map)
+* Server-based gameplay
+* Detailed Sprites
+
+
+Stretch:
+* Random Map Generation
+* Randomly generated AI
+* Teleportation power up
+* Portable Bomb (destroys 3x3 part of the map and damages players)
+* Fog around player
+* Mini-map or prompting showing location of flag
+
+
+Class List:
+Player
+Main
+Flag
+Powerup
+Grid
+Enemy
+DrawingSurface
+Direction
+Carryable
+
+
+
+
+
+Credit List:
+ReadMe: Jadon and Hansel
+UML: Jadon and Hansel
+Made Classes: Hansel
+Sprites + Animations: Jadon
+Buttons and Instructions: Hansel
+All Classes Design and Development: Jadon and Hansel
+Grid, Direction, Maze: Wikipedia
+
+
+
+
+UML Diagram (below)
+  
+
+
+
+
+
+
+
+Comments about Intro
+* Will you have different classes for each type of power up and weapon?
+* Are you going to have one window or 2 windows?
+* What is the perspective (bird view, first person…)?
+* Are there going to be different enemies?
+* What will happen if you meet the opponent? Will they fight?
+
+
+Comments about UML
+* Main method/class?
+   * State where the main method is
+* Map should have flags
+* Use depends-on / has -a
+* Something should point to shovel, staff, and flag
