@@ -15,6 +15,9 @@ public class Enemy {
 	 * initializes Enemy as well as its x and y variables
 	 * @param x the initial x value of the enemy
 	 * @param y the initial y value of the enemy
+	 * @param gridX the 2D int x value
+	 * @param gridY the 2D int y value
+	 * @param d the direction of the enemy
 	 */
 	public Enemy(double x, double y, int gridX, int gridY, Direction d) {
 		this.x = x;
@@ -69,8 +72,8 @@ public class Enemy {
 	
 	/**
 	 * changes the 2D int coordinates of the enemy
-	 * @param x the x int coordinate to move to
-	 * @param y the y int coordinate to move to
+	 * @param newX the x int coordinate to move to
+	 * @param newY the y int coordinate to move to
 	 */
 	public void move(int newX, int newY) {
 		setGridX(newX);

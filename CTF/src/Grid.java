@@ -15,68 +15,53 @@ public class Grid {
 	public final int numRows;
 
 	private BitSet edges;
-
-	/* The bit-set index of the edge leaving vertex {@code v} towards direction {@code dir}. */
+	
 	private int bit(int v, Direction dir) {
 		return 4 * v + dir.ordinal();
 	}
 
-	/** Creates an empty grid of the given size. */
 	public Grid(int numCols, int numRows) {
 		this.numCols = numCols;
 		this.numRows = numRows;
 		this.edges = new BitSet(numCols * numRows * 4);
 	}
 
-	/** Vertex at column {@code col} and row {@code row}. */
 	public int vertex(int col, int row) {
 		return numCols * row + col;
 	}
 
-	/** Column of vertex {@code v}. */
 	public int col(int v) {
 		return v % numCols;
 	}
 
-	/** Row of vertex {@code v}. */
 	public int row(int v) {
 		return v / numCols;
 	}
 
-	/** Returns the number of (undirected) edges. */
 	public int numEdges() {
 		return edges.cardinality() / 2;
 	}
 
-	/** Adds the (undirected) edge from vertex {@code v} towards direction {@code dir}. */
 	public void addEdge(int v, Direction dir) {
 		edges.set(bit(v, dir));
 		edges.set(bit(neighbor(v, dir), dir.opposite()));
 	}
 	
-	/** Removes the (undirected) edge from vertex {@code v} towards direction {@code dir}. */
 	public void removeEdge(int v, Direction dir) {
 		edges.clear(bit(v, dir));
 		edges.clear(bit(neighbor(v, dir), dir.opposite()));
 	}
 
-	/** Tells if the edge from vertex {@code v} towards direction {@code dir} exists. */
 	public boolean hasEdge(int v, Direction dir) {
 		return edges.get(bit(v, dir));
 	}
 
-	/**
-	 * Returns the neighbor of vertex {@code v} towards direction {@code dir} or {@link #NO_VERTEX}.
-	 */
 	public int neighbor(int v, Direction dir) {
 		int col = col(v) + dir.x, row = row(v) + dir.y;
 		return col >= 0 && col < numCols && row >= 0 && row < numRows ? vertex(col, row) : NO_VERTEX;
 	}
 
-	@Override
-	/**
-	 * @return the grid as a string
-	 */
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		//sb.append(String.format("Grid: %d columns, %d rows, %d edges\n", numCols, numRows, numEdges()));
@@ -96,23 +81,4 @@ public class Grid {
 		sb.append("+\n");
 		return sb.toString();
 	}
-	
-//	public String[][] toGrid(){
-//		String[][] g = new String[numRows][numCols];
-//		for (int row = 0; row < numRows; row++) {
-//			for (int col = 0; col < numCols; col++) {
-//				sb.append(!hasEdge(vertex(col, row), Direction.NORTH) ? "+---" : "+   ");
-//			}
-//			sb.append("+\n");
-//			for (int col = 0; col < numCols; col++) {
-//				sb.append(!hasEdge(vertex(col, row), Direction.WEST) ? "|   " : "    ");
-//			}
-//			sb.append("|\n");
-//		}
-//		for (int col = 0; col < numCols; col++) {
-//			sb.append("+---");
-//		}
-//		sb.append("+\n");
-//		return sb.toString();
-//	}
 }

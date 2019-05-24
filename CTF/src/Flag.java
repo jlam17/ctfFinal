@@ -14,8 +14,8 @@ public class Flag implements Carryable {
 	
 	/**
 	 * initializes Flag object by initializing variables home, enemy, x, y, initalx, initialy
+	 * @param p the PImage of the flag
 	 * @param home the player whose flag it is
-	 * @param enemy the enemy of the player whose flag it is
 	 * @param x the x value the flag is created at
 	 * @param y the y value the flag is created at
 	 */
@@ -32,8 +32,6 @@ public class Flag implements Carryable {
 	 * draws the flag to the screen
 	 * @param drawer the DrawingSurface that the flag will be drawn onto
 	 * @param img the PImage that will be drawn
-	 * @param x the x-coord of the flag (where it will be drawn)
-	 * @param y the y-coord of the flag (where it will be drawn)
 	 */
 	public void draw(DrawingSurface drawer, PImage img) {
 		drawer.image(img, (float)x, (float)y);

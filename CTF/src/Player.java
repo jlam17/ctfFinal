@@ -49,6 +49,12 @@ public class Player {
 	 * Draws the player on the screen
 	 * 
 	 * @param drawer The PApplet drawer used to draw the player on the screen
+	 * @param images the set of images you draw
+	 * @param currentFrame the current image you draw
+	 * @param hasFlag if the player has the flag
+	 * @param r your rgb "r" value
+	 * @param g your rgb "g" value
+	 * @param b your rgb "b" value
 	 */
 	public void draw(PApplet drawer, PImage[] images, int currentFrame, boolean hasFlag, int r, int g, int b) {
 		this.hasFlag = hasFlag;
