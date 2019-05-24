@@ -100,18 +100,18 @@ public class DrawingSurface extends PApplet {
 
 	Player player1, player2;
 	int p1GridX, p1GridY, p2GridX, p2GridY, f1GridX, f1GridY, f2GridX, f2GridY;
-	int eSlowCount;
+	int eSlowCount, e1SlowCount;
 	int p1SlowCount, p2SlowCount;
 	int numFrames; // The number of frames in the animation
 	int currentFrame, currentFrame2, shotFrame1, shotFrame2;
 	PImage[] images, enemies;
 	PImage wall, flag1, flag2;
 	Flag f1, f2;
-	Enemy e;
+	Enemy e, e1;
 	boolean[] keyDown;
 	String maze;
 	Grid mazeGrid;
-	int enemyImage;
+	int enemyImage, enemyImage1;
 	int resetTime1, resetTime2;
 
 	boolean done = false, started = false, instructions = false;
@@ -141,8 +141,11 @@ public class DrawingSurface extends PApplet {
 
 		mazeGrid = maze(11, 9, 0, 0, Algorithm.values()[0]);
 		e = new Enemy(gridX2X(mazeGrid.numCols - 1), gridY2Y(0), mazeGrid.numCols - 1, 0, Direction.SOUTH);
+		e1 = new Enemy(gridX2X(0), gridY2Y(mazeGrid.numRows-1), 0, mazeGrid.numRows-1, Direction.NORTH);
 		enemyImage = 0;
+		enemyImage1 = 0;
 		eSlowCount = 3;
+		e1SlowCount = 3;
 		
 		p1SlowCount = 0;
 		p2SlowCount = 0;
@@ -441,6 +444,42 @@ public class DrawingSurface extends PApplet {
 			}
 			e.draw(this, enemies[enemyImage], gridX2X(e.getGridX()), gridY2Y(e.getGridY()));
 			
+			if (e1SlowCount == 0) {
+				if (e1.getDirection() == Direction.SOUTH) {
+					if (e1.getGridY() < mazeGrid.numRows - 1) {
+						e1.move(e.getGridX(), e1.getGridY() + 1);
+						enemyImage1 = 1;
+					} else {
+						e1.setDirection(Direction.WEST);
+					}
+				} else if (e1.getDirection() == Direction.WEST) {
+					if (e1.getGridX() > 0) {
+						e1.move(e.getGridX() - 1, e1.getGridY());
+						enemyImage1 = 2;
+					} else {
+						e1.setDirection(Direction.NORTH);
+					}
+				} else if (e1.getDirection() == Direction.NORTH) {
+					if (e1.getGridY() > 0) {
+						enemyImage1 = 0;
+						e1.move(e.getGridX(), e1.getGridY() - 1);
+					} else {
+						e1.setDirection(Direction.EAST);
+					}
+				} else if (e1.getDirection() == Direction.EAST) {
+					if (e1.getGridX() <= mazeGrid.numRows) {
+						enemyImage1 = 3;
+						e1.move(e.getGridX() + 1, e1.getGridY());
+					} else {
+						e1.setDirection(Direction.SOUTH);
+					}
+				}
+				e1SlowCount = 3;
+			} else {
+				e1SlowCount--;
+			}
+			e1.draw(this, enemies[enemyImage1], gridX2X(e1.getGridX()), gridY2Y(e1.getGridY()));
+			
 			
 			if (e.getGridX() == p1GridX && e.getGridY() == p1GridY) {
 				player1.setDead(true);
@@ -463,9 +502,11 @@ public class DrawingSurface extends PApplet {
 
 		if (player1.getShotGridX() == p2GridX && player1.getShotGridY() == p2GridY) {
 			p2SlowCount = 20;
+			player1.setIsShooting(false);
 		} 
 		if (player2.getShotGridX() == p1GridX && player2.getShotGridY() == p1GridY) {
 			p1SlowCount = 20;
+			player2.setIsShooting(false);
 		}
 		if (p1SlowCount > 0) {
 			p1SlowCount--;
@@ -570,7 +611,6 @@ public class DrawingSurface extends PApplet {
 		} else if (key == 100 || key == 68) { // d
 			if ((p1GridX + 1 < mazeGrid.numCols)
 					&& mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.EAST)) {
-//				player1.setVelX(60);
 				p1GridX++;
 			}
 			keyDown[3] = true;
@@ -667,7 +707,7 @@ public class DrawingSurface extends PApplet {
 		} else if (currentFrame2 == 11) {
 			currentFrame2 = 10;
 		} else if (currentFrame2 == 4 || currentFrame2 == 5) {
-			currentFrame = 12;// change to standing down pic later
+			currentFrame2 = 12;// change to standing down pic later
 		} else if (currentFrame2 == 7 || currentFrame2 == 8) {
 			currentFrame2 = 6;
 		}

@@ -108,6 +108,9 @@ public class Player {
 				deltaX = 0;
 				deltaY = 0;
 			}
+		} else {
+			setShotGridX(-1);
+			setShotGridY(-1);
 		}
 	}
 
