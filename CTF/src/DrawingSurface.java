@@ -361,7 +361,6 @@ public class DrawingSurface extends PApplet {
 					player1.setX(gridX2X(p1GridX));
 					player1.setY(gridY2Y(p1GridY));
 					player1.draw(this, images, currentFrame, false, 0,0, 0);
-					System.out.println(resetTime1);
 					if(resetTime1<=0) {
 						player1.setDead(false);
 						player1.setX(gridX2X(0));
@@ -488,7 +487,7 @@ public class DrawingSurface extends PApplet {
 	 * checks for what to do if a certain key is pressed
 	 */
 	public void keyPressed() {
-		System.out.println("Player1: " + player1.getX() + ", " + p1GridX);
+		System.out.println("Player2: " + player2.getX() + ", " + p2GridX);
 		if (key == 119 || key == 87) { // w
 			if ((p1GridY - 1 >= 0) && mazeGrid.hasEdge(mazeGrid.vertex(p1GridX, p1GridY), Direction.NORTH)) {
 //				player1.setVelY(-60);
