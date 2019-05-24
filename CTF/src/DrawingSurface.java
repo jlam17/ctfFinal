@@ -494,7 +494,8 @@ public class DrawingSurface extends PApplet {
 					textSize(30);
 					this.text("Player 2: Arrow Key Controls\n Left Click to Shoot", 50, 600);
 					this.text("Player 1: WASD Controls\n Space to Shoot", 50, 400);
-					
+					this.text("Be Careful! Both players can die to the ghost or their opponent's \nfireballs. If you die, you will respawn and be able to \nmove a couple seconds later", 50, 700);
+					//this.text("If you die, you will respawn and \nbe able to move a couple seconds later", 50, 800);
 					textSize(50);
 					rect(10, 250, 400, 70);
 					fill(0);
