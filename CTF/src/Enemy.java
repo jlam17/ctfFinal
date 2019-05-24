@@ -9,7 +9,7 @@ import processing.core.PImage;
 public class Enemy {
 	private double x, y;
 	private int health;
-	private int direction;
+	private Direction direction;
 	
 	
 
@@ -22,7 +22,7 @@ public class Enemy {
 		this.x = x;
 		this.y = y;
 		this.health = 100;
-		this.direction = 1;
+		this.direction = Direction.NORTH;
 	}
 	
 	public void draw(DrawingSurface drawer, PImage img) {
@@ -53,11 +53,11 @@ public class Enemy {
 		}
 	}
 	
-	public int getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 
-	public void setDirection(int direction) {
+	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 	public double getX() {

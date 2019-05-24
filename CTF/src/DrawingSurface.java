@@ -210,13 +210,13 @@ public class DrawingSurface extends PApplet {
 		images[18].resize(40, 40);
 
 		enemies[0] = loadImage("ghostWalkUp.png");
-		enemies[0].resize(14, 24);
+		enemies[0].resize(14 * 2, 24 * 2);
 		enemies[1] = loadImage("ghostWalkDown.png");
-		enemies[1].resize(15, 25);
+		enemies[1].resize(15 * 2, 25 * 2);
 		enemies[2] = loadImage("ghostWalkLeft.png");
-		enemies[2].resize(13, 24);
+		enemies[2].resize(13 * 2, 24 * 2);
 		enemies[3] = loadImage("ghostWalkLeft.png");
-		enemies[3].resize(13, 24);
+		enemies[3].resize(13 * 2, 24 * 2);
 		
 		flag1 = images[13];
 		flag2 = images[14];
