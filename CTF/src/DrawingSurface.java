@@ -310,8 +310,7 @@ public class DrawingSurface extends PApplet {
 				if(!player2.isDead()) {
 					resetTime2 = 100;
 					player2.draw(this, images, currentFrame2, false, 0, 0, 0);
-				}
-				else {
+				} else {
 					f1.draw(this, flag1);
 					resetTime2--;
 					p2GridX = mazeGrid.numCols-1;
