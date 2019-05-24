@@ -60,8 +60,10 @@ public class Enemy {
 	 * draws the enemy on the DrawingSurface using the passed in variables
 	 * @param drawer the DrawingSurface the enemy will be drawn upon
 	 * @param img the image of the enemy
+	 * @param x the x coordinate of the enemy you are drawing
+	 * @param y the y coordinate of the enemy you are drawing
 	 */
-	public void draw(DrawingSurface drawer, PImage img) {
+	public void draw(DrawingSurface drawer, PImage img, double x, double y) {
 		drawer.image(img, (float)x, (float)y);
 	}
 	
